@@ -15,10 +15,30 @@ const t = useTranslations(lang);
     </p>
     <button
       type="button"
-      onclick="Calendly.initPopupWidget({url: 'https://calendly.com/whiteboard-co/30min'}); return false;"
-      class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-black bg-white rounded hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white"
+      id="calendly-cta"
+      data-calendly-locale={lang}
+      class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-black bg-white rounded hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white disabled:opacity-50 disabled:cursor-wait"
     >
       {t("contact.cta")}
     </button>
+
+    <script>
+      import { loadCalendly, openCalendlyPopup } from '@scripts/calendly';
+
+      const button = document.getElementById('calendly-cta') as HTMLButtonElement;
+      const locale = button.dataset.calendlyLocale || 'en';
+
+      button.addEventListener('click', async () => {
+        button.disabled = true;
+        try {
+          await loadCalendly();
+          openCalendlyPopup(locale);
+        } catch (error) {
+          console.error('Failed to load Calendly:', error);
+        } finally {
+          button.disabled = false;
+        }
+      });
+    </script>
   </div>
 </section>
