@@ -1,0 +1,16 @@
+<svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Abstract tech partnership visual -->
+  <rect width="400" height="300" fill="#FAFAFA"/>
+
+  <!-- Two overlapping circles representing partnership -->
+  <circle cx="160" cy="150" r="80" stroke="#E5E5E5" stroke-width="2" fill="none"/>
+  <circle cx="240" cy="150" r="80" stroke="#E5E5E5" stroke-width="2" fill="none"/>
+
+  <!-- Connection point -->
+  <circle cx="200" cy="150" r="12" fill="#000000"/>
+
+  <!-- Radiating lines suggesting growth/expansion -->
+  <line x1="200" y1="150" x2="200" y2="50" stroke="#D4D4D4" stroke-width="1"/>
+  <line x1="200" y1="150" x2="280" y2="80" stroke="#D4D4D4" stroke-width="1"/>
+  <line x1="200" y1="150" x2="120" y2="80" stroke="#D4D4D4" stroke-width="1"/>
+</svg>
