@@ -46,11 +46,11 @@ Plans:
   3. User sees a clear "Schedule a Call" CTA with specific duration displayed (e.g., "Book a 30-min call")
   4. User has a secondary path if not ready to schedule (visible alternative action)
   5. All hero text displays correctly in both Spanish and English (no broken layouts from text expansion)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Layout components (Logo, CTAButton, Footer) and translations
+- [ ] 02-02-PLAN.md — Hero section with dual CTAs and index page updates
 
 ### Phase 3: Content Sections
 **Goal**: Build trust and communicate offerings through content sections that explain what Whiteboard does, who they are, and how they work
@@ -106,7 +106,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-20 |
-| 2. Core Layout and Hero | 0/TBD | Not started | - |
+| 2. Core Layout and Hero | 0/2 | Planned | - |
 | 3. Content Sections | 0/TBD | Not started | - |
 | 4. Integrations | 0/TBD | Not started | - |
 | 5. Polish and Launch | 0/TBD | Not started | - |
