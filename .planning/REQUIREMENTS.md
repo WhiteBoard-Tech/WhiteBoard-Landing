@@ -19,11 +19,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Hero & Conversion
 
-- [ ] **HERO-01**: Hero section with clear value proposition visible in 3-5 seconds
-- [ ] **HERO-02**: Primary CTA "Schedule a Call" with specific duration displayed
-- [ ] **HERO-03**: Secondary CTA path for not-ready visitors (video overview or similar)
-- [ ] **HERO-04**: Hero fully translated in both languages
-- [ ] **HERO-05**: Hero image/graphics optimized (no lazy load, fetchpriority high)
+- [x] **HERO-01**: Hero section with clear value proposition visible in 3-5 seconds
+- [x] **HERO-02**: Primary CTA "Schedule a Call" with specific duration displayed
+- [x] **HERO-03**: Secondary CTA path for not-ready visitors (video overview or similar)
+- [x] **HERO-04**: Hero fully translated in both languages
+- [x] **HERO-05**: Hero image/graphics optimized (no lazy load, fetchpriority high)
 
 ### Content Sections
 
@@ -36,10 +36,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Layout & Navigation
 
-- [ ] **LAYO-01**: Header with logo and language toggle
-- [ ] **LAYO-02**: Footer with basic links and copyright
-- [ ] **LAYO-03**: Smooth scroll navigation between sections
-- [ ] **LAYO-04**: Minimal navigation (single-CTA discipline)
+- [x] **LAYO-01**: Header with logo and language toggle
+- [x] **LAYO-02**: Footer with basic links and copyright
+- [x] **LAYO-03**: Smooth scroll navigation between sections
+- [x] **LAYO-04**: Minimal navigation (single-CTA discipline)
 
 ### Integrations
 
@@ -99,15 +99,15 @@ Deferred to future release. Tracked but not in current roadmap.
 | FOUN-05 | Phase 1 | Complete |
 | FOUN-06 | Phase 1 | Complete |
 | FOUN-07 | Phase 1 | Complete |
-| LAYO-01 | Phase 2 | Pending |
-| LAYO-02 | Phase 2 | Pending |
-| LAYO-03 | Phase 2 | Pending |
-| LAYO-04 | Phase 2 | Pending |
-| HERO-01 | Phase 2 | Pending |
-| HERO-02 | Phase 2 | Pending |
-| HERO-03 | Phase 2 | Pending |
-| HERO-04 | Phase 2 | Pending |
-| HERO-05 | Phase 2 | Pending |
+| LAYO-01 | Phase 2 | Complete |
+| LAYO-02 | Phase 2 | Complete |
+| LAYO-03 | Phase 2 | Complete |
+| LAYO-04 | Phase 2 | Complete |
+| HERO-01 | Phase 2 | Complete |
+| HERO-02 | Phase 2 | Complete |
+| HERO-03 | Phase 2 | Complete |
+| HERO-04 | Phase 2 | Complete |
+| HERO-05 | Phase 2 | Complete |
 | CONT-01 | Phase 3 | Pending |
 | CONT-02 | Phase 3 | Pending |
 | CONT-03 | Phase 3 | Pending |

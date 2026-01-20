@@ -13,7 +13,7 @@ This roadmap delivers a high-conversion bilingual landing page for Whiteboard, a
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Astro project with i18n routing, design system, and performance foundations
-- [ ] **Phase 2: Core Layout and Hero** - Site shell, navigation, and primary conversion section
+- [x] **Phase 2: Core Layout and Hero** - Site shell, navigation, and primary conversion section
 - [ ] **Phase 3: Content Sections** - Services, Team, Equity Model, and Process sections
 - [ ] **Phase 4: Integrations** - Calendly popup, Plausible analytics, and conversion tracking
 - [ ] **Phase 5: Polish and Launch** - Performance optimization, Lighthouse audit, and production deployment
@@ -49,8 +49,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Layout components (Logo, CTAButton, Footer) and translations
-- [ ] 02-02-PLAN.md — Hero section with dual CTAs and index page updates
+- [x] 02-01-PLAN.md — Layout components (Logo, CTAButton, Footer) and translations
+- [x] 02-02-PLAN.md — Hero section with dual CTAs and index page updates
 
 ### Phase 3: Content Sections
 **Goal**: Build trust and communicate offerings through content sections that explain what Whiteboard does, who they are, and how they work
@@ -106,7 +106,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-20 |
-| 2. Core Layout and Hero | 0/2 | Planned | - |
+| 2. Core Layout and Hero | 2/2 | Complete | 2026-01-20 |
 | 3. Content Sections | 0/TBD | Not started | - |
 | 4. Integrations | 0/TBD | Not started | - |
 | 5. Polish and Launch | 0/TBD | Not started | - |
