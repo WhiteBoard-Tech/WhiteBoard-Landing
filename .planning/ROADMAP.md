@@ -94,10 +94,11 @@ Plans:
   3. CLS (Cumulative Layout Shift) is under 0.1
   4. Site is deployed to Vercel and accessible at production URL
   5. Both `/en/` and `/es/` routes work correctly in production with proper caching
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 05-01-PLAN.md — Performance audit and bundle analysis
+- [ ] 05-02-PLAN.md — Vercel deployment with Accept-Language redirect
 
 ## Progress
 
@@ -110,7 +111,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Core Layout and Hero | 2/2 | Complete | 2026-01-20 |
 | 3. Content Sections | 3/3 | Complete | 2026-01-20 |
 | 4. Integrations | 2/2 | Complete | 2026-01-20 |
-| 5. Polish and Launch | 0/TBD | Not started | - |
+| 5. Polish and Launch | 0/2 | Not started | - |
 
 ---
 *Roadmap created: 2026-01-20*
