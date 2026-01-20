@@ -50,11 +50,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Performance & Deployment
 
-- [ ] **PERF-01**: LCP < 2.5 seconds
-- [ ] **PERF-02**: CLS < 0.1
-- [ ] **PERF-03**: Lighthouse score > 90
-- [ ] **PERF-04**: Static export to Vercel
-- [ ] **PERF-05**: Production deployment live
+- [x] **PERF-01**: LCP < 2.5 seconds
+- [x] **PERF-02**: CLS < 0.1
+- [x] **PERF-03**: Lighthouse score > 90
+- [x] **PERF-04**: Static export to Vercel
+- [x] **PERF-05**: Production deployment live
 
 ## v2 Requirements
 
@@ -118,11 +118,11 @@ Deferred to future release. Tracked but not in current roadmap.
 | INTG-02 | Phase 4 | Complete |
 | INTG-03 | Phase 4 | Complete |
 | INTG-04 | Phase 4 | Complete |
-| PERF-01 | Phase 5 | Pending |
-| PERF-02 | Phase 5 | Pending |
-| PERF-03 | Phase 5 | Pending |
-| PERF-04 | Phase 5 | Pending |
-| PERF-05 | Phase 5 | Pending |
+| PERF-01 | Phase 5 | Complete |
+| PERF-02 | Phase 5 | Complete |
+| PERF-03 | Phase 5 | Complete |
+| PERF-04 | Phase 5 | Complete |
+| PERF-05 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 31 total
@@ -131,4 +131,4 @@ Deferred to future release. Tracked but not in current roadmap.
 
 ---
 *Requirements defined: 2026-01-20*
-*Last updated: 2026-01-20 after roadmap creation*
+*Last updated: 2026-01-20 - All v1 requirements complete*
