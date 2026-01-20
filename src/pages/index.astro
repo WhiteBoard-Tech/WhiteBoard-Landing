@@ -1,22 +1,5 @@
 ---
-// Minimal placeholder - will be replaced in Plan 02
-import "@fontsource-variable/inter";
-import "../styles/global.css";
+// Root page - Astro's i18n config handles redirect to /en/
+// This file exists for clarity; redirectToDefaultLocale: true does the work
+return Astro.redirect("/en/");
 ---
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Whiteboard</title>
-  </head>
-  <body class="min-h-screen bg-white text-black font-sans">
-    <main class="flex items-center justify-center min-h-screen">
-      <div class="text-center">
-        <h1 class="text-4xl font-bold tracking-tight">Whiteboard</h1>
-        <p class="mt-4 text-gray-600">Foundation setup complete</p>
-      </div>
-    </main>
-  </body>
-</html>
