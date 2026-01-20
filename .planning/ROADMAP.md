@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Core Layout and Hero** - Site shell, navigation, and primary conversion section
 - [x] **Phase 3: Content Sections** - Services, Team, Equity Model, and Process sections
 - [x] **Phase 4: Integrations** - Calendly popup, Plausible analytics, and conversion tracking
-- [ ] **Phase 5: Polish and Launch** - Performance optimization, Lighthouse audit, and production deployment
+- [x] **Phase 5: Polish and Launch** - Performance optimization, Lighthouse audit, and production deployment
 
 ## Phase Details
 
@@ -97,8 +97,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Performance audit and bundle analysis
-- [ ] 05-02-PLAN.md — Vercel deployment with Accept-Language redirect
+- [x] 05-01-PLAN.md — Performance audit and bundle analysis
+- [x] 05-02-PLAN.md — Vercel deployment with Accept-Language redirect
 
 ## Progress
 
@@ -111,7 +111,9 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Core Layout and Hero | 2/2 | Complete | 2026-01-20 |
 | 3. Content Sections | 3/3 | Complete | 2026-01-20 |
 | 4. Integrations | 2/2 | Complete | 2026-01-20 |
-| 5. Polish and Launch | 0/2 | Not started | - |
+| 5. Polish and Launch | 2/2 | Complete | 2026-01-20 |
+
+**MILESTONE COMPLETE** - Production URL: https://wb-landing-liard.vercel.app
 
 ---
 *Roadmap created: 2026-01-20*

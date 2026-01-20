@@ -5,23 +5,25 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Convert qualified startup founders into scheduled calls
-**Current focus:** Phase 5 Polish - Page Speed Optimization complete
+**Current focus:** MILESTONE COMPLETE - Site deployed to production
 
 ## Current Position
 
 Phase: 5 of 5 (Polish and Launch)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-01-20 - Completed 05-01-PLAN.md (Page Speed Optimization)
+Plan: 2 of 2 in current phase
+Status: COMPLETE
+Last activity: 2026-01-20 - Completed 05-02-PLAN.md (Vercel Deployment)
 
-Progress: [##########] 95%
+Progress: [##########] 100%
+
+**Production URL:** https://wb-landing-liard.vercel.app
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
-- Average duration: 5 min
-- Total execution time: 53 min
+- Total plans completed: 11
+- Average duration: 6 min
+- Total execution time: 61 min
 
 **By Phase:**
 
@@ -31,11 +33,11 @@ Progress: [##########] 95%
 | 02-core-layout-and-hero | 2 | 20 min | 10 min |
 | 03-content-sections | 3 | 11 min | 4 min |
 | 04-integrations | 2 | 7 min | 4 min |
-| 05-polish-and-launch | 1 | 3 min | 3 min |
+| 05-polish-and-launch | 2 | 11 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-02 (2 min), 03-03 (3 min), 04-01 (4 min), 04-02 (3 min), 05-01 (3 min)
-- Trend: Polish/optimization plans executing quickly (3 min)
+- Last 5 plans: 03-03 (3 min), 04-01 (4 min), 04-02 (3 min), 05-01 (3 min), 05-02 (8 min)
+- Trend: Final deployment plan included human verification checkpoint
 
 *Updated after each plan completion*
 
@@ -83,6 +85,9 @@ Recent decisions affecting current work:
 - [04-02]: Optional chaining for plausible calls handles ad blockers gracefully
 - [05-01]: Keep rollup-plugin-visualizer as dev dependency (enable on-demand for audits)
 - [05-01]: Use PUBLIC_CALENDLY_URL env var with fallback for production flexibility
+- [05-02]: Edge middleware for Accept-Language redirect (302 to /en/ or /es/)
+- [05-02]: Static assets cached with max-age=31536000, immutable
+- [05-02]: Spanish detection checks for "es" anywhere in Accept-Language header
 
 ### Pending Todos
 
@@ -96,8 +101,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-20T15:48:00Z
-Stopped at: Completed 05-01-PLAN.md (Page Speed Optimization)
+Last session: 2026-01-20T21:02:04Z
+Stopped at: MILESTONE COMPLETE - All phases executed
 Resume file: None
 
 ---
