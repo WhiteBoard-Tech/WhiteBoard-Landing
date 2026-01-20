@@ -27,6 +27,17 @@ export const ui = {
 
     // Common
     "common.loading": "Loading...",
+
+    // Hero section
+    "hero.headline": "Your Tech Co-Founder",
+    "hero.subheadline": "We build your product for equity. No hourly rates. No endless invoices. Just aligned incentives and real outcomes.",
+    "hero.cta.primary": "Book a 30-min Call",
+    "hero.cta.secondary": "Watch How It Works",
+
+    // Footer
+    "footer.copyright": "All rights reserved.",
+    "footer.privacy": "Privacy Policy",
+    "footer.terms": "Terms of Service",
   },
   es: {
     // Site metadata
@@ -44,6 +55,17 @@ export const ui = {
 
     // Common
     "common.loading": "Cargando...",
+
+    // Hero section
+    "hero.headline": "Tu Socio Tecnologico",
+    "hero.subheadline": "Construimos tu producto a cambio de equity. Sin tarifas por hora. Sin facturas interminables. Solo incentivos alineados y resultados reales.",
+    "hero.cta.primary": "Agenda una Llamada de 30 min",
+    "hero.cta.secondary": "Mira Como Funciona",
+
+    // Footer
+    "footer.copyright": "Todos los derechos reservados.",
+    "footer.privacy": "Politica de Privacidad",
+    "footer.terms": "Terminos de Servicio",
   },
 } as const;
 
