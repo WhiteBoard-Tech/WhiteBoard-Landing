@@ -58,16 +58,16 @@ Plans:
 **Requirements**: CONT-01, CONT-02, CONT-03, CONT-04, CONT-05, CONT-06
 **Success Criteria** (what must be TRUE):
   1. User can scroll through Services section and understand the four productized offerings (Venture Launch, Venture Scale, AI Enablement, Integrations)
-  2. User sees Team section with all 4 co-founders, their names, and their roles
+  2. User sees Team section with 3 co-founders, their names, and their roles
   3. User understands the equity partnership model through a visual explainer (not just text)
   4. User sees the process flow (Discovery, Build, Scale) and understands the engagement journey
   5. All content sections are fully translated and render correctly in both languages
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md — Translations and Services/Team sections
+- [ ] 03-02-PLAN.md — Equity Model and Process sections
+- [ ] 03-03-PLAN.md — Contact section with Calendly and index page wiring
 
 ### Phase 4: Integrations
 **Goal**: Connect third-party services that enable conversion tracking and call scheduling - the actual mechanism for lead capture
@@ -107,7 +107,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-20 |
 | 2. Core Layout and Hero | 2/2 | Complete | 2026-01-20 |
-| 3. Content Sections | 0/TBD | Not started | - |
+| 3. Content Sections | 0/3 | Not started | - |
 | 4. Integrations | 0/TBD | Not started | - |
 | 5. Polish and Launch | 0/TBD | Not started | - |
 
