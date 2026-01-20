@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Astro project with i18n routing, design system, and performance foundations
 - [x] **Phase 2: Core Layout and Hero** - Site shell, navigation, and primary conversion section
-- [ ] **Phase 3: Content Sections** - Services, Team, Equity Model, and Process sections
+- [x] **Phase 3: Content Sections** - Services, Team, Equity Model, and Process sections
 - [ ] **Phase 4: Integrations** - Calendly popup, Plausible analytics, and conversion tracking
 - [ ] **Phase 5: Polish and Launch** - Performance optimization, Lighthouse audit, and production deployment
 
@@ -65,9 +65,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Translations and Services/Team sections
-- [ ] 03-02-PLAN.md — Equity Model and Process sections
-- [ ] 03-03-PLAN.md — Contact section with Calendly and index page wiring
+- [x] 03-01-PLAN.md — Translations and Services/Team sections
+- [x] 03-02-PLAN.md — Equity Model and Process sections
+- [x] 03-03-PLAN.md — Contact section with Calendly and index page wiring
 
 ### Phase 4: Integrations
 **Goal**: Connect third-party services that enable conversion tracking and call scheduling - the actual mechanism for lead capture
@@ -107,7 +107,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-20 |
 | 2. Core Layout and Hero | 2/2 | Complete | 2026-01-20 |
-| 3. Content Sections | 0/3 | Not started | - |
+| 3. Content Sections | 3/3 | Complete | 2026-01-20 |
 | 4. Integrations | 0/TBD | Not started | - |
 | 5. Polish and Launch | 0/TBD | Not started | - |
 
