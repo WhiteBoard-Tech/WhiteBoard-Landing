@@ -43,10 +43,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Integrations
 
-- [ ] **INTG-01**: Calendly popup widget (lazy-loaded on click)
-- [ ] **INTG-02**: Plausible Analytics integration
-- [ ] **INTG-03**: Conversion tracking for Calendly bookings (postMessage listener)
-- [ ] **INTG-04**: Calendly language matches page locale
+- [x] **INTG-01**: Calendly popup widget (lazy-loaded on click)
+- [x] **INTG-02**: Plausible Analytics integration
+- [x] **INTG-03**: Conversion tracking for Calendly bookings (postMessage listener)
+- [x] **INTG-04**: Calendly language matches page locale
 
 ### Performance & Deployment
 
@@ -114,10 +114,10 @@ Deferred to future release. Tracked but not in current roadmap.
 | CONT-04 | Phase 3 | Complete |
 | CONT-05 | Phase 3 | Complete |
 | CONT-06 | Phase 3 | Complete |
-| INTG-01 | Phase 4 | Pending |
-| INTG-02 | Phase 4 | Pending |
-| INTG-03 | Phase 4 | Pending |
-| INTG-04 | Phase 4 | Pending |
+| INTG-01 | Phase 4 | Complete |
+| INTG-02 | Phase 4 | Complete |
+| INTG-03 | Phase 4 | Complete |
+| INTG-04 | Phase 4 | Complete |
 | PERF-01 | Phase 5 | Pending |
 | PERF-02 | Phase 5 | Pending |
 | PERF-03 | Phase 5 | Pending |
