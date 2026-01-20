@@ -15,20 +15,27 @@ const sizes = {
 
 <svg
   class:list={[sizes[size], className]}
-  viewBox="0 0 40 40"
+  viewBox="0 0 100 90"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
   role="img"
   aria-labelledby="logo-title"
 >
   <title id="logo-title">Whiteboard</title>
-  <!-- Angular W mark with wing-like geometry -->
+  <!-- Exact W mark from brand reference -->
+  <!-- Left wing: outer-top → bottom-point → center-meet → inner-top -->
   <path
-    d="M4 8L12 32L20 16L28 32L36 8"
-    stroke="currentColor"
-    stroke-width="3"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    fill="none"
+    d="M0 0 L22 90 L50 45 L40 0 Z"
+    fill="currentColor"
+  />
+  <!-- Right wing: mirror of left -->
+  <path
+    d="M100 0 L78 90 L50 45 L60 0 Z"
+    fill="currentColor"
+  />
+  <!-- Center notch: small downward triangle -->
+  <path
+    d="M40 0 L50 20 L60 0 Z"
+    fill="currentColor"
   />
 </svg>
