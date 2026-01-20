@@ -27,3 +27,11 @@ pnpm-debug.log*
 .idea/
 
 .vercel
+
+# local planning and tooling
+.planning/
+.claude/
+
+# reference documents
+*.pdf
+brief.md
