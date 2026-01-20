@@ -30,7 +30,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **CONT-01**: What We Do / Services section explaining productized offerings
 - [ ] **CONT-02**: Team/Credentials section with 4 founders and their roles
 - [ ] **CONT-03**: Equity Model Explainer visual explaining partnership model
-- [ ] **CONT-04**: Process Section showing Discovery → Build → Scale flow
+- [ ] **CONT-04**: Process Section showing Discovery -> Build -> Scale flow
 - [ ] **CONT-05**: All content sections fully translated in both languages
 - [ ] **CONT-06**: Contact/CTA section with Calendly trigger
 
@@ -125,10 +125,10 @@ Deferred to future release. Tracked but not in current roadmap.
 | PERF-05 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 28 total
-- Mapped to phases: 28
-- Unmapped: 0 ✓
+- v1 requirements: 31 total
+- Mapped to phases: 31
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-20*
-*Last updated: 2026-01-20 after initial definition*
+*Last updated: 2026-01-20 after roadmap creation*
