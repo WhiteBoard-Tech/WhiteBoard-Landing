@@ -1,11 +1,22 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Minimal placeholder - will be replaced in Plan 02
+import "@fontsource-variable/inter";
+import "../styles/global.css";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whiteboard</title>
+  </head>
+  <body class="min-h-screen bg-white text-black font-sans">
+    <main class="flex items-center justify-center min-h-screen">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold tracking-tight">Whiteboard</h1>
+        <p class="mt-4 text-gray-600">Foundation setup complete</p>
+      </div>
+    </main>
+  </body>
+</html>
