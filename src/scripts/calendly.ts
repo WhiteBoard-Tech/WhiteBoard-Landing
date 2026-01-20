@@ -28,7 +28,7 @@ export async function loadCalendly(): Promise<void> {
 }
 
 export function openCalendlyPopup(locale: string): void {
-  const baseUrl = 'https://calendly.com/whiteboard-co/30min';
+  const baseUrl = import.meta.env.PUBLIC_CALENDLY_URL || 'https://calendly.com/whiteboard-co/30min';
   const url = `${baseUrl}?locale=${locale}`;
   window.Calendly.initPopupWidget({ url });
 }
