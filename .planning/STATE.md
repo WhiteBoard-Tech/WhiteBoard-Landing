@@ -5,33 +5,33 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Convert qualified startup founders into scheduled calls
-**Current focus:** Phase 2 - Core Layout and Hero
+**Current focus:** Phase 2 complete - Core Layout and Hero
 
 ## Current Position
 
-Phase: 2 of 5 (Core Layout and Hero)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-01-20 - Completed 02-01-PLAN.md
+Phase: 2 of 5 (Core Layout and Hero) - COMPLETE
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-01-20 - Completed 02-02-PLAN.md
 
-Progress: [###.......] 30%
+Progress: [####......] 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 7 min
-- Total execution time: 20 min
+- Total plans completed: 4
+- Average duration: 8 min
+- Total execution time: 32 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 12 min | 6 min |
-| 02-core-layout-and-hero | 1 | 8 min | 8 min |
+| 02-core-layout-and-hero | 2 | 20 min | 10 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (7 min), 01-02 (5 min), 02-01 (8 min)
+- Last 5 plans: 01-01 (7 min), 01-02 (5 min), 02-01 (8 min), 02-02 (12 min)
 - Trend: Stable
 
 *Updated after each plan completion*
@@ -56,10 +56,13 @@ Recent decisions affecting current work:
 - [02-01]: Logo uses inline SVG with currentColor for theming flexibility
 - [02-01]: CTAButton renders as anchor element (all CTAs are navigation)
 - [02-01]: scroll-margin-top: 5rem accounts for fixed header in anchor navigation
+- [02-02]: Native <img> tag for hero (fetchpriority="high" requires native element)
+- [02-02]: Secondary CTA is text link with play icon (visual hierarchy)
+- [02-02]: Hero placeholder SVG in place (user note: "improve logo last")
 
 ### Pending Todos
 
-None yet.
+- Improve logo design (user requested this be done last)
 
 ### Blockers/Concerns
 
@@ -67,8 +70,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-20T17:35:00Z
-Stopped at: Completed 02-01-PLAN.md (Layout Components and Translations)
+Last session: 2026-01-20T18:00:00Z
+Stopped at: Completed 02-02-PLAN.md (Hero Section and Index Pages)
 Resume file: None
 
 ---
