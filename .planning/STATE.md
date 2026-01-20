@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Convert qualified startup founders into scheduled calls
-**Current focus:** Phase 4 complete - ready for Phase 5 Polish
+**Current focus:** Phase 5 Polish - Page Speed Optimization complete
 
 ## Current Position
 
-Phase: 4 of 5 (Integrations)
-Plan: 2 of 2 in current phase
-Status: Phase complete
-Last activity: 2026-01-20 - Completed 04-02-PLAN.md (Plausible Analytics)
+Phase: 5 of 5 (Polish and Launch)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-01-20 - Completed 05-01-PLAN.md (Page Speed Optimization)
 
-Progress: [#########.] 90%
+Progress: [##########] 95%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
-- Average duration: 6 min
-- Total execution time: 50 min
+- Total plans completed: 10
+- Average duration: 5 min
+- Total execution time: 53 min
 
 **By Phase:**
 
@@ -31,10 +31,11 @@ Progress: [#########.] 90%
 | 02-core-layout-and-hero | 2 | 20 min | 10 min |
 | 03-content-sections | 3 | 11 min | 4 min |
 | 04-integrations | 2 | 7 min | 4 min |
+| 05-polish-and-launch | 1 | 3 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (4 min), 03-02 (2 min), 03-03 (3 min), 04-01 (4 min), 04-02 (3 min)
-- Trend: Integration plans executing quickly (3-4 min)
+- Last 5 plans: 03-02 (2 min), 03-03 (3 min), 04-01 (4 min), 04-02 (3 min), 05-01 (3 min)
+- Trend: Polish/optimization plans executing quickly (3 min)
 
 *Updated after each plan completion*
 
@@ -80,6 +81,8 @@ Recent decisions affecting current work:
 - [04-02]: Calendly postMessage origin validation for security
 - [04-02]: Analytics auto-initializes on import (just import the module)
 - [04-02]: Optional chaining for plausible calls handles ad blockers gracefully
+- [05-01]: Keep rollup-plugin-visualizer as dev dependency (enable on-demand for audits)
+- [05-01]: Use PUBLIC_CALENDLY_URL env var with fallback for production flexibility
 
 ### Pending Todos
 
@@ -93,8 +96,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-20T14:47:00Z
-Stopped at: Completed 04-02-PLAN.md (Plausible Analytics) - Phase 4 complete
+Last session: 2026-01-20T15:48:00Z
+Stopped at: Completed 05-01-PLAN.md (Page Speed Optimization)
 Resume file: None
 
 ---
