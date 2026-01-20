@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 Phase: 3 of 5 (Content Sections)
 Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-01-20 - Completed 03-02-PLAN.md
+Last activity: 2026-01-20 - Completed 03-01-PLAN.md (Services and Team)
 
 Progress: [######....] 60%
 
@@ -20,8 +20,8 @@ Progress: [######....] 60%
 
 **Velocity:**
 - Total plans completed: 6
-- Average duration: 7 min
-- Total execution time: 36 min
+- Average duration: 6 min
+- Total execution time: 40 min
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [######....] 60%
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 12 min | 6 min |
 | 02-core-layout-and-hero | 2 | 20 min | 10 min |
-| 03-content-sections | 2 | 4 min | 2 min |
+| 03-content-sections | 2 | 8 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (5 min), 02-01 (8 min), 02-02 (12 min), 03-01 (2 min), 03-02 (2 min)
+- Last 5 plans: 01-02 (5 min), 02-01 (8 min), 02-02 (12 min), 03-01 (4 min), 03-02 (4 min)
 - Trend: Improving (sections execute quickly)
 
 *Updated after each plan completion*
@@ -60,6 +60,10 @@ Recent decisions affecting current work:
 - [02-02]: Native <img> tag for hero (fetchpriority="high" requires native element)
 - [02-02]: Secondary CTA is text link with play icon (visual hierarchy)
 - [02-02]: Hero placeholder SVG in place (user note: "improve logo last")
+- [03-01]: Translation keys added upfront for all Phase 03 sections (parallel development)
+- [03-01]: sections/ subdirectory for page-level section components
+- [03-01]: Inline SVG icons in ServiceCard (Lucide-style, no external deps)
+- [03-01]: Alternating section backgrounds (white/gray-50) for visual rhythm
 - [03-02]: Inline SVG icons rather than icon library (no additional dependencies)
 - [03-02]: Overlapping circles for handshake icon (cleaner than complex hand paths)
 - [03-02]: Desktop process shows connected numbered circles above content grid
@@ -75,8 +79,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-20T18:59:10Z
-Stopped at: Completed 03-02-PLAN.md (Equity Model and Process Sections)
+Last session: 2026-01-20T14:00:00Z
+Stopped at: Completed 03-01-PLAN.md (Services and Team Sections)
 Resume file: None
 
 ---
