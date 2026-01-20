@@ -9,13 +9,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Foundation
 
-- [ ] **FOUN-01**: Astro project with TypeScript configured
-- [ ] **FOUN-02**: Tailwind CSS v4 integrated with design tokens
-- [ ] **FOUN-03**: URL-based i18n routing (`/en/`, `/es/`)
-- [ ] **FOUN-04**: Translation system with JSON files per locale
-- [ ] **FOUN-05**: Font loading optimized (swap, preload, no CLS)
-- [ ] **FOUN-06**: Mobile-first responsive foundation
-- [ ] **FOUN-07**: Design system matching brand (black/white/gray, geometric)
+- [x] **FOUN-01**: Astro project with TypeScript configured
+- [x] **FOUN-02**: Tailwind CSS v4 integrated with design tokens
+- [x] **FOUN-03**: URL-based i18n routing (`/en/`, `/es/`)
+- [x] **FOUN-04**: Translation system with JSON files per locale
+- [x] **FOUN-05**: Font loading optimized (swap, preload, no CLS)
+- [x] **FOUN-06**: Mobile-first responsive foundation
+- [x] **FOUN-07**: Design system matching brand (black/white/gray, geometric)
 
 ### Hero & Conversion
 
@@ -92,13 +92,13 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUN-01 | Phase 1 | Pending |
-| FOUN-02 | Phase 1 | Pending |
-| FOUN-03 | Phase 1 | Pending |
-| FOUN-04 | Phase 1 | Pending |
-| FOUN-05 | Phase 1 | Pending |
-| FOUN-06 | Phase 1 | Pending |
-| FOUN-07 | Phase 1 | Pending |
+| FOUN-01 | Phase 1 | Complete |
+| FOUN-02 | Phase 1 | Complete |
+| FOUN-03 | Phase 1 | Complete |
+| FOUN-04 | Phase 1 | Complete |
+| FOUN-05 | Phase 1 | Complete |
+| FOUN-06 | Phase 1 | Complete |
+| FOUN-07 | Phase 1 | Complete |
 | LAYO-01 | Phase 2 | Pending |
 | LAYO-02 | Phase 2 | Pending |
 | LAYO-03 | Phase 2 | Pending |

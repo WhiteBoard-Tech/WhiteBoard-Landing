@@ -12,7 +12,7 @@ This roadmap delivers a high-conversion bilingual landing page for Whiteboard, a
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Astro project with i18n routing, design system, and performance foundations
+- [x] **Phase 1: Foundation** - Astro project with i18n routing, design system, and performance foundations
 - [ ] **Phase 2: Core Layout and Hero** - Site shell, navigation, and primary conversion section
 - [ ] **Phase 3: Content Sections** - Services, Team, Equity Model, and Process sections
 - [ ] **Phase 4: Integrations** - Calendly popup, Plausible analytics, and conversion tracking
@@ -33,8 +33,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Initialize Astro project with TypeScript, Tailwind CSS v4, and Inter font
-- [ ] 01-02-PLAN.md — Implement i18n routing with bilingual placeholder pages
+- [x] 01-01-PLAN.md — Initialize Astro project with TypeScript, Tailwind CSS v4, and Inter font
+- [x] 01-02-PLAN.md — Implement i18n routing with bilingual placeholder pages
 
 ### Phase 2: Core Layout and Hero
 **Goal**: Deliver the site shell and primary conversion point - the hero section where most visitors decide to engage or bounce
@@ -105,7 +105,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Planned | - |
+| 1. Foundation | 2/2 | Complete | 2026-01-20 |
 | 2. Core Layout and Hero | 0/TBD | Not started | - |
 | 3. Content Sections | 0/TBD | Not started | - |
 | 4. Integrations | 0/TBD | Not started | - |
