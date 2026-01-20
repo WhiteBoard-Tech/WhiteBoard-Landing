@@ -5,9 +5,7 @@ import vercel from "@astrojs/vercel";
 
 export default defineConfig({
   output: "static",
-  adapter: vercel({
-    edgeMiddleware: true,
-  }),
+  adapter: vercel(),
   i18n: {
     locales: ["en", "es"],
     defaultLocale: "en",

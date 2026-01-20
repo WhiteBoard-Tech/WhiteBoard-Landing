@@ -1,5 +1,13 @@
 ---
-// Root page - Astro's i18n config handles redirect to /en/
-// This file exists for clarity; redirectToDefaultLocale: true does the work
-return Astro.redirect("/en/");
+// Root page - Vercel's vercel.json handles Accept-Language redirect
+// This file exists as a fallback for local development
+// In production, users are redirected to /en/ or /es/ via vercel.json
 ---
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0;url=/en/" />
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
