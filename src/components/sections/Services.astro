@@ -1,0 +1,34 @@
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import ServiceCard from '../ServiceCard.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const services = [
+  { key: 'ventureLaunch', icon: 'rocket' as const },
+  { key: 'ventureScale', icon: 'chart' as const },
+  { key: 'aiEnablement', icon: 'cpu' as const },
+  { key: 'integrations', icon: 'plug' as const },
+];
+---
+
+<section id="services" class="py-16 sm:py-20 lg:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section title -->
+    <h2 class="text-3xl sm:text-4xl font-bold text-black text-center mb-12 lg:mb-16">
+      {t('services.title')}
+    </h2>
+
+    <!-- Services grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      {services.map((service) => (
+        <ServiceCard
+          title={t(`services.${service.key}.title` as any)}
+          tagline={t(`services.${service.key}.tagline` as any)}
+          icon={service.icon}
+        />
+      ))}
+    </div>
+  </div>
+</section>
