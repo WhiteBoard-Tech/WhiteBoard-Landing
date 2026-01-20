@@ -5,33 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Convert qualified startup founders into scheduled calls
-**Current focus:** Phase 1 - Foundation
+**Current focus:** Phase 2 - Core Layout and Hero
 
 ## Current Position
 
-Phase: 1 of 5 (Foundation)
-Plan: 2 of 2 in current phase (COMPLETE)
-Status: Phase 1 complete
-Last activity: 2026-01-20 - Completed 01-02-PLAN.md
+Phase: 2 of 5 (Core Layout and Hero)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-01-20 - Completed 02-01-PLAN.md
 
-Progress: [##........] 20%
+Progress: [###.......] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 6 min
-- Total execution time: 12 min
+- Total plans completed: 3
+- Average duration: 7 min
+- Total execution time: 20 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 12 min | 6 min |
+| 02-core-layout-and-hero | 1 | 8 min | 8 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (7 min), 01-02 (5 min)
-- Trend: Improving
+- Last 5 plans: 01-01 (7 min), 01-02 (5 min), 02-01 (8 min)
+- Trend: Stable
 
 *Updated after each plan completion*
 
@@ -52,6 +53,9 @@ Recent decisions affecting current work:
 - [01-02]: getPathWithoutLocale helper prevents double-prefix URLs in language switcher
 - [01-02]: Fixed header with backdrop-blur for premium feel
 - [01-02]: Skip link added for accessibility compliance
+- [02-01]: Logo uses inline SVG with currentColor for theming flexibility
+- [02-01]: CTAButton renders as anchor element (all CTAs are navigation)
+- [02-01]: scroll-margin-top: 5rem accounts for fixed header in anchor navigation
 
 ### Pending Todos
 
@@ -63,8 +67,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-20T16:40:00Z
-Stopped at: Completed 01-02-PLAN.md (Phase 1 Foundation complete)
+Last session: 2026-01-20T17:35:00Z
+Stopped at: Completed 02-01-PLAN.md (Layout Components and Translations)
 Resume file: None
 
 ---
