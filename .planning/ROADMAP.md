@@ -30,11 +30,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Page loads with no layout shift from fonts (CLS = 0 on initial load)
   4. Design tokens (colors, spacing, typography) match brand guidelines and are applied consistently
   5. Page renders correctly on mobile viewport (375px width) without horizontal scroll
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Initialize Astro project with TypeScript, Tailwind CSS v4, and Inter font
+- [ ] 01-02-PLAN.md — Implement i18n routing with bilingual placeholder pages
 
 ### Phase 2: Core Layout and Hero
 **Goal**: Deliver the site shell and primary conversion point - the hero section where most visitors decide to engage or bounce
@@ -105,7 +105,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/2 | Planned | - |
 | 2. Core Layout and Hero | 0/TBD | Not started | - |
 | 3. Content Sections | 0/TBD | Not started | - |
 | 4. Integrations | 0/TBD | Not started | - |
