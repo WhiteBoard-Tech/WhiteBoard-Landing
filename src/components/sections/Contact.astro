@@ -24,11 +24,15 @@ const t = useTranslations(lang);
 
     <script>
       import { loadCalendly, openCalendlyPopup } from '@scripts/calendly';
+      import '@scripts/analytics';
 
       const button = document.getElementById('calendly-cta') as HTMLButtonElement;
       const locale = button.dataset.calendlyLocale || 'en';
 
       button.addEventListener('click', async () => {
+        // Track popup opened
+        window.plausible?.('popup_opened', { props: { locale } });
+
         button.disabled = true;
         try {
           await loadCalendly();
