@@ -6,6 +6,14 @@ declare global {
       initPopupWidget: (options: { url: string }) => void;
       closePopupWidget: () => void;
     };
+    plausible: (
+      eventName: string,
+      options?: {
+        props?: Record<string, string | number | boolean>;
+        callback?: () => void;
+        interactive?: boolean;
+      }
+    ) => void;
   }
 }
 
