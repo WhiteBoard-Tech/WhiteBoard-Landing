@@ -1,0 +1,76 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const steps = [
+  {
+    number: 1,
+    key: "discovery",
+  },
+  {
+    number: 2,
+    key: "build",
+  },
+  {
+    number: 3,
+    key: "scale",
+  },
+] as const;
+---
+
+<section id="process" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl sm:text-4xl font-bold text-black mb-12 text-center">
+      {t("process.title")}
+    </h2>
+
+    <!-- Desktop: Horizontal step indicators with connecting lines -->
+    <div class="hidden lg:flex items-center justify-between max-w-3xl mx-auto mb-12">
+      {steps.map((step, index) => (
+        <>
+          <div class="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-xl">
+            {step.number}
+          </div>
+          {index < steps.length - 1 && (
+            <div class="flex-1 h-0.5 bg-gray-300 mx-4" />
+          )}
+        </>
+      ))}
+    </div>
+
+    <!-- Step content grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+      {steps.map((step) => (
+        <div class="relative">
+          <!-- Mobile: Inline number indicator -->
+          <div class="flex items-start lg:block">
+            <div class="lg:hidden w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shrink-0 mr-4">
+              {step.number}
+            </div>
+            <div class="lg:text-center">
+              <h3 class="text-xl font-semibold text-black mb-3">
+                {t(`process.${step.key}.title` as const)}
+              </h3>
+              <ul class="text-gray-600 text-sm space-y-2">
+                <li class="flex items-start lg:justify-center">
+                  <span class="mr-2 text-gray-400">-</span>
+                  <span>{t(`process.${step.key}.bullet1` as const)}</span>
+                </li>
+                <li class="flex items-start lg:justify-center">
+                  <span class="mr-2 text-gray-400">-</span>
+                  <span>{t(`process.${step.key}.bullet2` as const)}</span>
+                </li>
+                <li class="flex items-start lg:justify-center">
+                  <span class="mr-2 text-gray-400">-</span>
+                  <span>{t(`process.${step.key}.bullet3` as const)}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
