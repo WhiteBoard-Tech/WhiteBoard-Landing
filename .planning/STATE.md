@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Convert qualified startup founders into scheduled calls
-**Current focus:** Phase 4 in progress - Integrations
+**Current focus:** Phase 4 complete - ready for Phase 5 Polish
 
 ## Current Position
 
 Phase: 4 of 5 (Integrations)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-01-20 - Completed 04-01-PLAN.md (Calendly Lazy-Load)
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-01-20 - Completed 04-02-PLAN.md (Plausible Analytics)
 
-Progress: [########..] 80%
+Progress: [#########.] 90%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: 6 min
-- Total execution time: 47 min
+- Total execution time: 50 min
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Progress: [########..] 80%
 | 01-foundation | 2 | 12 min | 6 min |
 | 02-core-layout-and-hero | 2 | 20 min | 10 min |
 | 03-content-sections | 3 | 11 min | 4 min |
-| 04-integrations | 1 | 4 min | 4 min |
+| 04-integrations | 2 | 7 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (12 min), 03-01 (4 min), 03-02 (2 min), 03-03 (3 min), 04-01 (4 min)
-- Trend: Integration plans executing quickly (4 min)
+- Last 5 plans: 03-01 (4 min), 03-02 (2 min), 03-03 (3 min), 04-01 (4 min), 04-02 (3 min)
+- Trend: Integration plans executing quickly (3-4 min)
 
 *Updated after each plan completion*
 
@@ -76,11 +76,16 @@ Recent decisions affecting current work:
 - [04-01]: Facade pattern for lazy-loading: single Promise prevents duplicate Calendly loads
 - [04-01]: Type declarations in env.d.ts for Window.Calendly global
 - [04-01]: @scripts path alias added to tsconfig.json for clean imports
+- [04-02]: IntersectionObserver unobserves after first view to prevent duplicate section events
+- [04-02]: Calendly postMessage origin validation for security
+- [04-02]: Analytics auto-initializes on import (just import the module)
+- [04-02]: Optional chaining for plausible calls handles ad blockers gracefully
 
 ### Pending Todos
 
 - Improve logo design (user requested this be done last)
 - Replace Calendly placeholder URL with actual scheduling link before launch
+- Configure Plausible dashboard: add whiteboard.co domain, create conversion goals
 
 ### Blockers/Concerns
 
@@ -88,8 +93,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-20T14:45:00Z
-Stopped at: Completed 04-01-PLAN.md (Calendly Lazy-Load)
+Last session: 2026-01-20T14:47:00Z
+Stopped at: Completed 04-02-PLAN.md (Plausible Analytics) - Phase 4 complete
 Resume file: None
 
 ---
