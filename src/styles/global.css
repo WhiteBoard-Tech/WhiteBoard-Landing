@@ -79,6 +79,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Scroll margin for anchor navigation - accounts for fixed header */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

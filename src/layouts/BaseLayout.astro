@@ -3,6 +3,8 @@ import "@fontsource-variable/inter";
 import "@/styles/global.css";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import LanguageSwitcher from "@components/LanguageSwitcher.astro";
+import Logo from "@components/Logo.astro";
+import Footer from "@components/Footer.astro";
 
 interface Props {
   title?: string;
@@ -45,9 +47,12 @@ const {
     <header class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-sm border-b border-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-          <!-- Logo placeholder -->
-          <a href={`/${lang}/`} class="text-xl font-bold tracking-tight text-black">
-            Whiteboard
+          <!-- Logo with W mark -->
+          <a href={`/${lang}/`} class="flex items-center gap-2 group" aria-label="Whiteboard - Home">
+            <Logo size="md" class="text-black" />
+            <span class="text-xl font-bold tracking-tight text-black">
+              Whiteboard
+            </span>
           </a>
 
           <!-- Language switcher -->
@@ -61,13 +66,7 @@ const {
       <slot />
     </main>
 
-    <!-- Footer placeholder -->
-    <footer class="border-t border-gray-100 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <p class="text-sm text-gray-500 text-center">
-          &copy; {new Date().getFullYear()} Whiteboard
-        </p>
-      </div>
-    </footer>
+    <!-- Footer component -->
+    <Footer />
   </body>
 </html>
