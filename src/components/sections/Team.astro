@@ -1,0 +1,38 @@
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import TeamMember from '../TeamMember.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const members = [
+  { key: 'member1' },
+  { key: 'member2' },
+  { key: 'member3' },
+];
+---
+
+<section id="team" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section title -->
+    <h2 class="text-3xl sm:text-4xl font-bold text-black text-center mb-4">
+      {t('team.title')}
+    </h2>
+
+    <!-- Subtitle -->
+    <p class="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-12">
+      {t('team.subtitle')}
+    </p>
+
+    <!-- Team grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+      {members.map((member) => (
+        <TeamMember
+          name={t(`team.${member.key}.name` as any)}
+          role={t(`team.${member.key}.role` as any)}
+          initials={t(`team.${member.key}.initials` as any)}
+        />
+      ))}
+    </div>
+  </div>
+</section>
