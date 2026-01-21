@@ -1,223 +1,269 @@
-# Domain Pitfalls: Landing Page for Whiteboard (LatAm Tech Studio)
+# Domain Pitfalls: Portfolio and Testimonials Sections
 
-**Domain:** B2B Landing Page for Venture Tech Partner / Tech Studio
-**Target:** Startup founders (LatAm focus, bilingual Spanish/English)
-**CTA:** Schedule a call via Calendly
+**Project:** Whiteboard Landing Page - Portfolio & Testimonials Milestone
+**Scope:** Adding portfolio/case studies and testimonials sections to existing B2B landing page
 **Researched:** 2026-01-20
+**Confidence:** HIGH (verified with official docs and multiple sources)
+
+## Context
+
+Existing site characteristics that constrain new feature implementation:
+- Zero-JS architecture (currently only Calendly widget loaded on-demand)
+- Lighthouse 90+ performance score to maintain
+- Bilingual (EN/ES) with structured i18n system in `src/i18n/ui.ts`
+- Static site built with Astro, deployed on Vercel
+- Current sections: Hero, Services, Team, Equity Model, Process, Contact
 
 ---
 
 ## Critical Pitfalls
 
-Mistakes that cause rewrites, kill conversions, or require major fixes.
+Mistakes that cause performance degradation, rewrites, or major conversion issues.
 
 ---
 
-### Pitfall 1: Lazy Loading the Hero Image (LCP Killer)
+### Pitfall 1: Unoptimized Portfolio Images Tank Performance
 
-**What goes wrong:** Hero image uses `loading="lazy"`, causing LCP to spike to 3-4+ seconds. Google's Core Web Vitals fail. Page feels sluggish.
+**What goes wrong:** Adding portfolio screenshots and case study images without proper optimization destroys the Lighthouse score. Common mistake is adding 5-10 high-resolution project screenshots that collectively add 2-5MB to page weight.
 
-**Why it happens:** Developers apply lazy loading globally to all images, not realizing the hero image is already in-viewport on page load. Lazy loading adds unnecessary delay to above-the-fold content.
+**Why it happens:** Developers add images directly without using Astro's Image component, skip WebP/AVIF conversion, forget width/height attributes, or don't implement lazy loading for below-fold images.
 
 **Consequences:**
-- LCP fails (target is under 2.5s)
-- 47% of websites fail Core Web Vitals - this is an easy fail point
-- SEO ranking penalty
-- Users bounce before seeing content
+- Lighthouse performance drops from 90+ to 50-60
+- Core Web Vitals fail (LCP > 2.5s, CLS > 0.1)
+- Google ranking penalty
+- Mobile users abandon slow-loading page
 
 **Warning signs:**
-- PageSpeed Insights shows "Don't lazy load LCP image"
-- LCP consistently above 2.5s
-- Hero image loads with visible delay after page paint
+- Images added as plain `<img>` tags instead of Astro `<Image />`
+- No width/height attributes specified
+- Images in PNG/JPG format rather than WebP
+- All images loading eagerly regardless of viewport position
+- Portfolio section placed above the fold
 
 **Prevention:**
-1. Never lazy load above-the-fold images
-2. Use `fetchpriority="high"` on hero image (only 1 image per page)
-3. Use `<link rel="preload">` for hero image
-4. Convert hero to WebP/AVIF (can reduce 1.2MB PNG to ~180KB WebP)
+1. Use Astro's built-in `<Image />` component for all portfolio images
+2. Always specify width and height attributes to prevent CLS
+3. Set `loading="lazy"` for images below the fold
+4. Use `fetchpriority="high"` only for hero image (already set)
+5. Convert to WebP format (averages 16% of original PNG size)
+6. Place portfolio section below the fold
 
-```html
-<!-- CORRECT: Hero image optimization -->
-<img
-  src="hero.webp"
-  fetchpriority="high"
-  decoding="async"
-  alt="Whiteboard Tech Studio"
-  width="1200"
-  height="600"
+```astro
+<!-- CORRECT: Astro Image component with proper attributes -->
+---
+import { Image } from 'astro:assets';
+import projectImage from '../assets/portfolio/project-1.png';
+---
+<Image
+  src={projectImage}
+  alt="Project name - brief description"
+  width={800}
+  height={600}
+  loading="lazy"
+  format="webp"
 />
-
-<!-- WRONG: Lazy loading hero -->
-<img src="hero.webp" loading="lazy" />
 ```
 
-**Phase to address:** Phase 1 (Foundation/Build) - Hero image setup must be correct from day one.
+**Detection:** Run Lighthouse before/after adding each image batch. Target: no more than 5-point drop.
+
+**Phase to address:** Portfolio Design phase - establish image handling patterns before content creation
 
 **Sources:**
-- [GTmetrix: Don't lazy load LCP image](https://gtmetrix.com/dont-lazy-load-lcp-image.html)
-- [MDN: Fix your website's LCP by optimizing image loading](https://developer.mozilla.org/en-US/blog/fix-image-lcp/)
+- [Astro Images Documentation](https://docs.astro.build/en/guides/images/)
+- [Smashing Magazine: How to Fix CLS Issues](https://www.smashingmagazine.com/2021/06/how-to-fix-cumulative-layout-shift-issues/)
 
 ---
 
-### Pitfall 2: Calendly iFrame Tracking Failure
+### Pitfall 2: Logo Wall JavaScript Carousel Destroys Zero-JS Architecture
 
-**What goes wrong:** Calendly embed looks integrated but tracking fails. GA4 shows no conversion data. Google Ads can't attribute conversions. You're flying blind on your primary CTA.
+**What goes wrong:** Implementing client logo wall as an auto-scrolling JavaScript carousel breaks the zero-JS architecture and introduces multiple performance problems.
 
-**Why it happens:** Calendly is an iframe - a "window to another website." Traditional tracking (button clicks, thank-you pages) fails because events inside the iframe don't propagate to your website's data layer. Calendly does not support direct GTM integration.
-
-**Consequences:**
-- Zero visibility into conversion funnel
-- Cannot optimize campaigns (no attribution data)
-- Cannot A/B test CTA effectiveness
-- Wasted ad spend with no feedback loop
-
-**Warning signs:**
-- GTM Preview Mode shows no Calendly events
-- GA4 Real-time shows no conversions when you test
-- Google Ads shows clicks but zero conversions
-
-**Prevention:**
-1. Implement custom JavaScript listener for Calendly events
-2. Use Calendly's event listener API to capture cross-iframe messages
-3. Push events manually to GTM data layer
-4. Track: `calendly.event_scheduled`, `calendly.date_and_time_selected`
-
-```javascript
-// GTM Custom HTML Tag - Calendly Event Listener
-window.addEventListener('message', function(e) {
-  if (e.origin === 'https://calendly.com' && e.data.event) {
-    if (e.data.event === 'calendly.event_scheduled') {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        'event': 'calendly_booking_complete',
-        'calendly_event_type': e.data.payload.event_type.name
-      });
-    }
-  }
-});
-```
-
-**Phase to address:** Phase 2 (Integration) - Before any paid campaigns launch. Must validate tracking works end-to-end.
-
-**Sources:**
-- [Analytics Mania: Track Calendly with GTM and GA4](https://www.analyticsmania.com/post/how-to-track-calendly-with-google-tag-manager-and-google-analytics-4/)
-- [Calendly Help: How to track embed activity in GA4](https://help.calendly.com/hc/en-us/articles/4412934840087-How-to-track-embed-activity-in-Google-Analytics)
-
----
-
-### Pitfall 3: Hardcoded Strings Breaking Bilingual Experience
-
-**What goes wrong:** Strings are embedded directly in components. Spanish translation requires find-and-replace surgery. Some strings get missed. User sees mixed English/Spanish. CTAs, error messages, or microcopy stay in English.
-
-**Why it happens:** "We'll add i18n later" - and later never comes cleanly. Initial build hardcodes text for speed. Retrofitting is painful and error-prone.
+**Why it happens:** Carousels are the "default" solution for logo walls, and many tutorials recommend libraries like Owl Carousel or Slick that require JavaScript.
 
 **Consequences:**
-- Inconsistent language experience (kills trust)
-- Pop-ups, error messages, form labels in wrong language
-- Doubled maintenance burden
-- Technical debt compounds with every new string
+- Introduces JS dependency for a non-essential feature
+- Owl Carousel specifically hides content on initial load, causing massive CLS
+- Carousel animations using position/left properties cause continuous layout shifts
+- Auto-play carousels can cause infinite CLS accumulation
+- Breaks progressive enhancement principle
 
 **Warning signs:**
-- Strings like `<h1>Build with Whiteboard</h1>` directly in JSX
-- No translation files or i18n setup
-- "We'll add Spanish later" in the planning
+- Any npm package added for "carousel" or "slider"
+- JavaScript that manipulates element position properties
+- Logo container that's empty/hidden on first render
+- Animating left/top/width instead of transform properties
 
 **Prevention:**
-1. Set up i18n from day 1 (next-intl, react-i18next, or similar)
-2. All user-facing strings in translation files immediately
-3. NO hardcoded text - not even "Submit" on buttons
-4. Include metadata, alt text, aria-labels in translation scope
-
-```typescript
-// WRONG: Hardcoded
-<h1>Build with Whiteboard</h1>
-
-// CORRECT: i18n from day 1
-<h1>{t('hero.headline')}</h1>
-```
-
-**Phase to address:** Phase 1 (Foundation) - i18n architecture must be in place before any content is added.
-
-**Sources:**
-- [Locize: What is i18n? (2026 Edition)](https://www.locize.com/blog/what-is-i18n/)
-- [TranslatePress: 10 Biggest Website Localization Problems](https://translatepress.com/website-localization-problems/)
-
----
-
-### Pitfall 4: Multiple Competing CTAs Destroying Conversion
-
-**What goes wrong:** Hero section has "Schedule a Call" AND "Learn More" AND "See Our Work" AND social links. User faces decision paralysis. Primary CTA (Calendly booking) gets diluted. Conversion drops up to 266%.
-
-**Why it happens:** Stakeholders want everything visible. "What if they want to see our portfolio?" Fear of missing engagement opportunities leads to CTA sprawl.
-
-**Consequences:**
-- Up to 266% decrease in conversion rates
-- Decision paralysis leads to bounces
-- Primary metric (call bookings) suffers
-- A/B tests become inconclusive (too many variables)
-
-**Warning signs:**
-- Hero has more than 2 buttons
-- Navigation bar is visible on landing page
-- Multiple "ask" elements compete for attention
-- Stakeholder requests like "can we also add X here?"
-
-**Prevention:**
-1. Single primary CTA above fold: "Schedule a Call"
-2. Remove navigation bar (or minimize drastically)
-3. Secondary action (if any) must be visually subordinate
-4. All other links go below fold
-5. Test relentlessly: one variable at a time
-
-**Phase to address:** Phase 1 (Design/Build) - Information architecture must enforce single-CTA discipline from wireframe stage.
-
-**Sources:**
-- [LandingPageFlow: Best CTA Placement Strategies for 2026](https://www.landingpageflow.com/post/best-cta-placement-strategies-for-landing-pages)
-- [Unbounce: CRO Best Practices](https://unbounce.com/conversion-rate-optimization/cro-best-practices/)
-
----
-
-### Pitfall 5: Font Loading Causing Layout Shift (CLS Failure)
-
-**What goes wrong:** Custom fonts load after page paint. Text reflows when web font replaces system font. Headlines jump. CLS exceeds 0.1 threshold. Page feels janky.
-
-**Why it happens:** Using `font-display: block` (or no font-display) hides text until font loads (FOIT). Or `font-display: swap` causes visible text reflow (FOUT). Neither is configured with fallback tuning.
-
-**Consequences:**
-- CLS fails (target is under 0.1)
-- Core Web Vitals penalty
-- Perceived jankiness hurts brand (Whiteboard = premium tech studio)
-- Can delay FCP and LCP
-
-**Warning signs:**
-- Text "jumps" on page load
-- CLS score above 0.1 in PageSpeed Insights
-- "Ensure text remains visible during webfont load" warning
-
-**Prevention:**
-1. Use `font-display: swap` or `font-display: optional`
-2. Define fallback fonts with similar metrics
-3. Use `size-adjust`, `ascent-override`, `descent-override` to match fallback to web font
-4. Preload critical fonts (headline font only)
-5. Self-host fonts (eliminate third-party latency)
-6. Subset fonts (load only needed characters)
+1. Use pure CSS logo grid - no carousel needed for 4-8 logos
+2. If animation desired, use CSS-only infinite scroll with `transform: translateX()` (not position)
+3. For many logos, use CSS Grid with `overflow-x: auto` for horizontal scroll
+4. Reserve space with explicit dimensions to prevent CLS
+5. Ensure logos visible on initial HTML render (no JS required)
 
 ```css
-@font-face {
-  font-family: 'Whiteboard Heading';
-  src: url('/fonts/heading.woff2') format('woff2');
-  font-display: swap;
-  /* Fallback tuning to minimize CLS */
-  size-adjust: 105%;
-  ascent-override: 95%;
+/* CSS-only logo scroll animation (if animation desired) */
+.logo-track {
+  display: flex;
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Or simpler: static CSS Grid */
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 2rem;
+  align-items: center;
 }
 ```
 
-**Phase to address:** Phase 1 (Foundation) - Font strategy must be defined before typography implementation.
+**Detection:** Check if page works with JavaScript disabled. Logo wall should be fully visible.
+
+**Phase to address:** Testimonials Design phase - define logo wall pattern early
 
 **Sources:**
-- [DebugBear: Fixing Layout Shifts Caused by Web Fonts](https://www.debugbear.com/blog/web-font-layout-shift)
-- [NitroPack: 8 Web Font Optimization Strategies](https://nitropack.io/blog/post/font-loading-optimization)
+- [OSC Professionals: Best Practices for Carousels](https://www.oscprofessionals.com/blog/best-practices-for-carousels-with-respect-to-core-web-vitals/)
+- [Smashing Magazine: CLS Issues](https://www.smashingmagazine.com/2021/06/how-to-fix-cumulative-layout-shift-issues/)
+
+---
+
+### Pitfall 3: Breaking Bilingual Parity
+
+**What goes wrong:** Adding portfolio and testimonials content only in English, or with inconsistent Spanish translations, creates a disjointed experience for Spanish-speaking users.
+
+**Why it happens:**
+- Portfolio case studies are often received in English from clients
+- Testimonial quotes are harder to translate (voice must be preserved)
+- Developers forget to update both language files
+- No automated check for translation completeness
+
+**Consequences:**
+- Spanish users see broken/missing content
+- SEO penalty for incomplete language versions
+- Brand trust erosion in LatAm target market
+- Inconsistent metadata hurts search visibility
+
+**Warning signs:**
+- New keys added to English `ui.ts` but not Spanish
+- Case study links pointing to English-only pages
+- Testimonial quotes without Spanish equivalents
+- Images containing English text used on Spanish version
+
+**Prevention:**
+1. Add all new translation keys to BOTH `en` and `es` objects in `src/i18n/ui.ts` simultaneously
+2. Create localized versions of case study content (at minimum: title, summary, results)
+3. For testimonials: use professional translation that preserves speaker's voice
+4. Audit: count keys in both language sections to ensure parity
+5. Never use text baked into images - use separate text overlays that can be translated
+
+```typescript
+// In src/i18n/ui.ts - add to BOTH sections simultaneously
+en: {
+  // ... existing keys
+  "portfolio.title": "Our Work",
+  "portfolio.project1.title": "FinTech MVP Launch",
+  "portfolio.project1.summary": "Built payment platform in 8 weeks",
+  "testimonials.quote1.text": "Whiteboard transformed our idea into reality.",
+  "testimonials.quote1.author": "Jane Doe, CEO at TechCorp",
+},
+es: {
+  // ... existing keys
+  "portfolio.title": "Nuestro Trabajo",
+  "portfolio.project1.title": "Lanzamiento MVP FinTech",
+  "portfolio.project1.summary": "Plataforma de pagos construida en 8 semanas",
+  "testimonials.quote1.text": "Whiteboard transformo nuestra idea en realidad.",
+  "testimonials.quote1.author": "Jane Doe, CEO en TechCorp",
+},
+```
+
+**Detection:** Create a simple script that compares key counts between language objects.
+
+**Phase to address:** Content Strategy phase - require bilingual content from the start
+
+**Sources:**
+- [MotionPoint: Multilingual Website Best Practices](https://www.motionpoint.com/blog/best-practices-for-multilingual-websites-with-examples/)
+- [BLEND: Common Multilingual Mistakes](https://www.getblend.com/blog/common-mistakes-to-avoid-when-building-a-multilingual-website/)
+
+---
+
+### Pitfall 4: Expandable Testimonials Without Accessibility
+
+**What goes wrong:** Implementing expandable/collapsible testimonial quotes without proper keyboard navigation and ARIA attributes excludes users with disabilities and potentially violates accessibility requirements.
+
+**Why it happens:**
+- Developers use `<div onclick>` instead of `<button>`
+- Missing aria-expanded state announcements
+- Collapsed content still reachable by screen readers
+- No keyboard support for Enter/Space to toggle
+
+**Consequences:**
+- Screen reader users can't understand collapsed/expanded state
+- Keyboard users can't interact with expand/collapse
+- Hidden content announced by screen readers (confusing)
+- Potential ADA compliance issues for B2B clients
+
+**Warning signs:**
+- Clickable elements that aren't `<button>` or `<a>`
+- No aria-expanded attribute on toggle element
+- Using CSS `display: none` without `hidden` attribute
+- No focus styles on interactive elements
+- Can't toggle testimonials with keyboard
+
+**Prevention:**
+1. Use native `<details>` and `<summary>` elements when possible (built-in accessibility)
+2. If custom: use `<button>` with aria-expanded, aria-controls
+3. Apply `hidden` attribute to collapsed content (not just CSS)
+4. Support keyboard: Enter/Space to toggle, Tab to navigate
+5. Visible focus indicators on all interactive elements
+6. Test with screen reader (NVDA or VoiceOver)
+
+```astro
+<!-- BEST: Native HTML - no JS required, accessible by default -->
+<details class="testimonial-expandable">
+  <summary class="testimonial-preview">
+    "Whiteboard transformed our idea into reality..."
+    <span class="read-more">Read full testimonial</span>
+  </summary>
+  <blockquote class="testimonial-full">
+    <p>"Whiteboard transformed our idea into reality. In just 8 weeks,
+    we went from napkin sketch to live product with paying customers.
+    Their equity model meant we kept our capital for growth."</p>
+    <cite>Jane Doe, CEO at TechCorp</cite>
+  </blockquote>
+</details>
+
+<!-- ALTERNATIVE: Custom with proper ARIA (if more control needed) -->
+<div class="testimonial">
+  <blockquote class="testimonial-preview">
+    "Whiteboard transformed our idea..."
+  </blockquote>
+  <button
+    type="button"
+    aria-expanded="false"
+    aria-controls="testimonial-1-full"
+    class="testimonial-toggle"
+  >
+    Read more
+  </button>
+  <div id="testimonial-1-full" hidden>
+    <!-- Full testimonial content -->
+  </div>
+</div>
+```
+
+**Detection:** Tab through page with keyboard only. Use browser's accessibility inspector.
+
+**Phase to address:** Testimonials Implementation phase - establish component pattern with accessibility built-in
+
+**Sources:**
+- [A11Y Collective: Accessible Accordion](https://www.a11y-collective.com/blog/accessible-accordion/)
+- [USWDS: Accordion Accessibility Tests](https://designsystem.digital.gov/components/accordion/accessibility-tests/)
+- [216 Digital: Accordion Accessibility Fixes](https://216digital.com/accordion-accessibility-common-issues-fixes/)
 
 ---
 
@@ -227,240 +273,281 @@ Mistakes that cause delays, technical debt, or suboptimal conversion.
 
 ---
 
-### Pitfall 6: IP-Based Language Redirection
+### Pitfall 5: Generic Testimonials That Don't Convert
 
-**What goes wrong:** Site auto-redirects users based on IP location. Argentine user on VPN sees English. US-based VC researching LatAm opportunities gets forced to Spanish. Googlebot can't crawl both versions.
+**What goes wrong:** Displaying vague testimonials like "Great team to work with!" that provide no specific value proposition or business outcome.
 
-**Why it happens:** Seems user-friendly ("detect their language!"). Easier than building a language switcher.
-
-**Consequences:**
-- Wrong language served to wrong users
-- Googlebot (US-based) can't crawl Spanish version properly
-- User frustration and immediate bounces
-- SEO issues with international targeting
-
-**Prevention:**
-1. Never auto-redirect based on IP
-2. Provide clear language switcher (visible, above fold)
-3. Use `hreflang` tags for SEO
-4. Default to one language, let user choose
-5. Remember preference in localStorage
-
-**Detection:** Test from VPN in different countries. Check Googlebot crawl reports in Search Console.
-
-**Phase to address:** Phase 2 (Bilingual Implementation) - Language selection UX must be explicit, not automatic.
-
-**Sources:**
-- [Google: Managing Multi-Regional Sites](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites)
-- [Digital.gov: Top 10 Best Practices for Multilingual Websites](https://digital.gov/resources/top-10-best-practices-for-multilingual-websites)
-
----
-
-### Pitfall 7: Incomplete Translation (Mixed Language Experience)
-
-**What goes wrong:** Main content is Spanish, but: form validation says "Required field", newsletter popup is English, footer says "Privacy Policy", 404 page is English, meta descriptions are English.
-
-**Why it happens:** Developers focus on visible content, forget system strings. CMS/framework has default English messages. Third-party embeds (Calendly!) have their own language settings.
+**Why it happens:**
+- Clients give short, generic feedback
+- No structured testimonial collection process
+- Fear of asking for specific metrics
+- Copying competitor's format without thought
 
 **Consequences:**
-- Broken user trust ("they don't really care about Spanish speakers")
-- Unprofessional appearance
-- Lost conversions from Spanish-primary users
-
-**Prevention:**
-1. Audit ALL text sources: framework, libraries, embeds
-2. Translate: form validation, error states, loading states, 404/500 pages
-3. Check Calendly language settings match page language
-4. Translate meta tags, og:description, alt text
-5. Use marker like "(en ingles)" for any intentionally English-only links
-
-**Detection:** Browse entire flow in Spanish. Fill forms incorrectly. Trigger errors. Check email notifications.
-
-**Phase to address:** Phase 2 (Bilingual) - Create exhaustive checklist of all text touchpoints.
-
-**Sources:**
-- [TranslatePress: Website Localization Problems](https://translatepress.com/website-localization-problems/)
-- [MotionPoint: Best Practices for Multilingual Websites](https://www.motionpoint.com/blog/best-practices-for-multilingual-websites-with-examples/)
-
----
-
-### Pitfall 8: GTM Container Never Published
-
-**What goes wrong:** Analytics setup looks complete in GTM interface. Preview mode works fine. But production shows zero data. Container was never published.
-
-**Why it happens:** Developer tests in Preview Mode (which works locally). Forgets the "Submit" and "Publish" step. Or publishes to wrong environment.
-
-**Consequences:**
-- Zero analytics data in production
-- Weeks of lost user behavior data
-- Can't measure anything
+- Testimonials fail to build trust (90% of B2B buyers trust peer reviews, but generic ones don't count)
+- Missed opportunity to reinforce value proposition
+- Lower conversion rate on CTA
 
 **Warning signs:**
-- GTM shows "Draft" or no recent versions
-- GA4 Real-time shows zero users (even with traffic)
-- Google Ads shows no conversions
+- Testimonials under 2 sentences
+- No specific outcomes or metrics mentioned
+- No company name or role of testimonial giver
+- All testimonials sound similar
+- No photos/real names (anonymous = less trust)
 
 **Prevention:**
-1. Always verify with GA4 Real-time after deploy
-2. Check GTM version history shows published container
-3. Add GTM publish to deployment checklist
-4. Use GTM's built-in "Publish" verification
+1. Collect testimonials with specific prompts: "What was your situation before? What specific outcome did you achieve?"
+2. Include: full name, role, company, photo (with permission)
+3. Highlight specific metrics when available ("40% faster launch", "$200K saved")
+4. Show the before/after transformation
+5. Vary testimonial content to address different objections
 
-**Phase to address:** Phase 3 (Launch) - Pre-launch checklist must include GTM verification.
-
-**Sources:**
-- [Analytics Mania: 21 Common GTM Mistakes](https://www.analyticsmania.com/post/common-google-tag-manager-mistakes/)
-- [Analytify: Common Google Tag Manager Mistakes](https://analytify.io/common-google-tag-manager-mistakes-with-solutions/)
-
----
-
-### Pitfall 9: Render-Blocking CSS/JS Delaying FCP
-
-**What goes wrong:** Large CSS bundle blocks rendering. Third-party scripts load synchronously. User sees white screen for 2-3 seconds before any content appears.
-
-**Why it happens:** All CSS loaded in `<head>` without splitting. Scripts without `async` or `defer`. Analytics, chat widgets, fonts all blocking initial render.
-
-**Consequences:**
-- FCP delayed (target is under 1.8s)
-- LCP delayed
-- User perceives slow, unresponsive page
-- High bounce rate
-
-**Prevention:**
-1. Inline critical CSS (above-fold styles only)
-2. Load remaining CSS asynchronously
-3. Use `defer` for all non-critical scripts
-4. Load third-party scripts after page load
-5. Defer analytics, chat widgets, etc.
-
-```html
-<!-- Critical CSS inline -->
-<style>/* above-fold styles only */</style>
-
-<!-- Non-critical CSS async -->
-<link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<!-- Scripts deferred -->
-<script src="app.js" defer></script>
+**Testimonial collection template:**
+```
+1. What challenge were you facing before working with us?
+2. What specific results did you achieve? (metrics if possible)
+3. What surprised you most about working with us?
+4. What would you tell someone considering working with us?
 ```
 
-**Phase to address:** Phase 1 (Build) - Build configuration must support code splitting and critical CSS extraction.
+**Detection:** Does each testimonial answer "Why should I trust this company?" with specifics?
+
+**Phase to address:** Content Strategy phase - create testimonial collection template
 
 **Sources:**
-- [web.dev: Core Web Vitals](https://web.dev/articles/vitals)
-- [Replo: Page Speed Optimization Guide 2026](https://www.replo.app/blog/page-speed-optimization)
+- [Testimonial Hero: B2B Testimonial Mistakes](https://www.testimonialhero.com/blog/5-mistakes-youre-making-when-asking-b2b-customers-for-a-testimonial)
+- [B2B Rocket: Customer Testimonial Impact](https://www.b2brocket.ai/blog-posts/analyzing-customer-testimonial-impact-on-b2b-conversions)
 
 ---
 
-### Pitfall 10: Spanish Text Expansion Breaking Layout
+### Pitfall 6: Portfolio Without Business Context
 
-**What goes wrong:** English "Submit" becomes Spanish "Enviar" (OK), but "Schedule a Call" becomes "Programar una Llamada" (30% longer). Buttons overflow. Headlines wrap awkwardly. Mobile layout breaks.
+**What goes wrong:** Showing portfolio as a gallery of pretty screenshots without explaining the business problem solved or results achieved.
 
-**Why it happens:** Designs created for English text only. Fixed-width containers. No testing with translated content.
+**Why it happens:**
+- Design-focused teams prioritize visuals over outcomes
+- Clients don't share business metrics
+- Treating portfolio like a design showcase, not a sales tool
 
 **Consequences:**
-- Broken layouts in Spanish
-- Text truncation (...)
-- Buttons that don't fit their text
-- Professional appearance suffers
+- Visitors see work but don't understand value
+- No differentiation from other agencies
+- B2B buyers (who care about ROI) don't convert
+- Decision-makers scanning for business impact scroll past
 
 **Warning signs:**
-- Design uses pixel-perfect button widths
-- No Spanish mockups in design phase
-- CTAs have long Spanish equivalents
+- Case studies that are just image galleries
+- No problem/solution/result structure
+- Missing client industry or use case context
+- No metrics or outcomes mentioned
+- All projects look the same (no variety)
 
 **Prevention:**
-1. Design for 30-40% text expansion (German/Finnish expand even more)
-2. Use flexible containers, not fixed widths
-3. Test with pseudo-localization (artificially expand strings)
-4. Review all CTAs in both languages during design
-5. Consider shorter Spanish alternatives where natural
+1. Structure each case study: Challenge -> Approach -> Results
+2. Include at least one quantified outcome per project
+3. Name the industry/vertical for each project
+4. Show 2-3 images max, with captions explaining what's shown
+5. Lead with the business outcome, not the visual
 
-**Phase to address:** Phase 1 (Design) - Design system must account for text expansion from the start.
+```markdown
+## Case Study Structure Template
+
+### [Project Name] - [Industry]
+**Challenge:** [1-2 sentences: What problem did the client face?]
+
+**Approach:** [1-2 sentences: What did we build/do?]
+
+**Results:**
+- [Specific metric 1]
+- [Specific metric 2]
+- [Timeline: "Launched in X weeks"]
+
+[1-2 project screenshots with descriptive captions]
+```
+
+**Detection:** Can someone understand the value delivered in 10 seconds?
+
+**Phase to address:** Portfolio Design phase - establish case study template before content creation
 
 **Sources:**
-- [BrowserStack: Internationalization Testing](https://www.browserstack.com/guide/internationalization-testing-of-websites-and-apps)
-- [Lingohub: Spanish Localization Challenges](https://lingohub.com/blog/spanish-localization-language-peculiarities-and-challenges)
+- [Hotjar: Landing Page Optimization Examples](https://www.hotjar.com/landing-page-optimization/examples/)
+- [Roast My Landing Page: Case Study Examples](https://blog.roastmylandingpage.com/case-study-landing-page-examples/)
+
+---
+
+### Pitfall 7: Client Logo Usage Without Permission
+
+**What goes wrong:** Displaying client logos on the logo wall without explicit written permission, leading to legal issues or damaged relationships.
+
+**Why it happens:**
+- Assumption that being a client implies permission
+- No formal permission process
+- Rushing to populate logo wall
+- Copying logos from client websites
+
+**Consequences:**
+- Trademark infringement liability
+- Client relationship damage (some clients don't want to be public references)
+- Having to quickly remove logos (embarrassing)
+- Disqualification from future work
+
+**Warning signs:**
+- No permission documentation on file
+- Logos downloaded from Google Images
+- Using full-color logos when only grayscale was approved
+- Including clients who specifically asked for confidentiality
+
+**Prevention:**
+1. Create a simple logo permission template (email is fine)
+2. Track permissions in a shared document
+3. Ask during project wrap-up: "May we feature your logo on our website?"
+4. Clarify if grayscale-only or full color is approved
+5. Some clients prefer testimonial over logo - offer choice
+
+**Simple permission request template:**
+```
+Subject: Permission to feature [Company] on our website
+
+Hi [Contact],
+
+We're updating our website and would love to include [Company]
+in our client showcase. This would include:
+
+[ ] Your company logo on our "Trusted By" section
+[ ] A brief testimonial quote (we can draft for your approval)
+[ ] Neither (we understand confidentiality needs)
+
+Please let us know which you're comfortable with.
+
+Thanks!
+```
+
+**Detection:** Can you produce written permission for every logo displayed?
+
+**Phase to address:** Content Strategy phase - establish permission process before collecting assets
+
+**Sources:**
+- [Idea Grove: B2B Client Logos Guide](https://www.ideagrove.com/blog/the-ultimate-guide-to-displaying-b2b-client-logos-on-your-website)
+- [Serenity CRM: Logo Legal Risks](https://www.serenitycrm.io/navigating-the-risks-and-legalities-of-using-client-logos-and-trademarks-in-marketing-materials)
+
+---
+
+### Pitfall 8: Social Proof Isolated in Single Section
+
+**What goes wrong:** Placing all testimonials and logos in one section that users may never scroll to, missing opportunities to reinforce trust at decision points.
+
+**Why it happens:**
+- Standard website templates have dedicated "Testimonials" section
+- Fear of cluttering other sections
+- Not thinking about user journey
+
+**Consequences:**
+- Users who don't scroll miss all social proof
+- No trust reinforcement near CTAs
+- Conversion rates lower than potential (Optimizely found 69% lift from better logo placement)
+
+**Warning signs:**
+- Single testimonials section at bottom of page
+- No logos or quotes near hero CTA
+- Contact section has no social proof nearby
+- User journey has "trust gaps"
+
+**Prevention:**
+1. Place logo wall in or near hero section (visible without scroll)
+2. Add 1-2 testimonial snippets near key CTAs
+3. Sprinkle social proof throughout the page, not just one section
+4. Consider testimonial pull-quotes between sections
+5. A/B test placement
+
+```
+Current page structure with social proof integration:
+
+- Hero (add: small "Trusted by" logo row)
+- Services
+- Team
+- Equity Model (add: mini testimonial about trust/partnership)
+- Process
+- [NEW] Portfolio/Case Studies
+- [NEW] Testimonials (detailed section)
+- Contact (add: 1 testimonial about results)
+```
+
+**Detection:** Map the page sections. Is there social proof visible at each decision point?
+
+**Phase to address:** Page Structure phase - plan social proof placement holistically
+
+**Sources:**
+- [Moosend: Landing Page Mistakes](https://moosend.com/blog/landing-page-mistakes/)
+- [Zoho: Landing Page Mistakes](https://www.zoho.com/landingpage/landing-page-mistakes.html)
 
 ---
 
 ## Minor Pitfalls
 
-Mistakes that cause annoyance or minor technical debt but are recoverable.
+Annoyances that are fixable but worth avoiding.
 
 ---
 
-### Pitfall 11: Missing Image Dimensions Causing CLS
+### Pitfall 9: Inconsistent Logo Sizing and Alignment
 
-**What goes wrong:** Images without explicit `width` and `height` cause layout shifts when they load. Browser can't reserve space.
-
-**Prevention:**
-- Always specify `width` and `height` on `<img>` tags
-- Use CSS `aspect-ratio` as backup
-- Test with slow network simulation
-
-**Phase to address:** Phase 1 (Build) - Lint rules can enforce this.
-
----
-
-### Pitfall 12: Third-Party Script Sprawl
-
-**What goes wrong:** Analytics, heatmaps, chat widget, A/B testing, session replay... each adds 50-200KB and 100-500ms. Cumulative impact: slow, bloated page.
+**What goes wrong:** Logo wall looks unprofessional because logos are different sizes, some are fuzzy, colors don't match the page aesthetic.
 
 **Prevention:**
-- Audit necessity of each tool
-- Load non-critical scripts after page load
-- Consider server-side tracking where possible
-- Set performance budget (e.g., max 3 third-party scripts)
+1. Set consistent height constraint for all logos (e.g., 40px height)
+2. Convert all logos to grayscale for visual consistency
+3. Use SVG format when available for crisp rendering at any size
+4. Add consistent padding/spacing between logos
+5. Consider responsive behavior (fewer logos visible on mobile, or smaller)
 
-**Phase to address:** Phase 2 (Integration) - Approve each integration against performance budget.
+```css
+.logo-wall img {
+  height: 40px;
+  width: auto;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
 
----
-
-### Pitfall 13: No Fallback for Calendly Failure
-
-**What goes wrong:** Calendly is down (rare but happens). User clicks CTA, nothing loads. No alternative. Lost lead.
-
-**Prevention:**
-- Add email fallback below Calendly embed
-- Monitor Calendly status
-- Consider backup meeting link
-
-**Phase to address:** Phase 2 (Integration) - Include fallback in Calendly section design.
-
----
-
-### Pitfall 14: Form Input Types Missing on Mobile
-
-**What goes wrong:** Email field doesn't show `@` on mobile keyboard. Phone field shows full keyboard instead of number pad. Friction increases, conversions drop.
-
-**Prevention:**
-```html
-<input type="email" inputmode="email" />
-<input type="tel" inputmode="tel" />
+.logo-wall img:hover {
+  opacity: 1;
+}
 ```
 
-**Phase to address:** Phase 1 (Build) - Part of form implementation standards.
+---
 
-**Sources:**
-- [Webstacks: Landing Page UX Top Tips](https://www.webstacks.com/blog/landing-page-ux)
+### Pitfall 10: Case Study Links to Separate Pages Break Flow
+
+**What goes wrong:** Each case study clicks through to a separate page, breaking the single-page flow and requiring navigation back.
+
+**Prevention:**
+1. For landing page, keep case studies as expandable cards (no separate pages)
+2. If separate pages needed, use modal overlay instead of navigation
+3. Ensure "back" experience is seamless
+4. Consider: does the detail really need a separate page, or can summary suffice?
 
 ---
 
-### Pitfall 15: No UTM Parameter Preservation
+### Pitfall 11: Testimonial Photos That Look Fake
 
-**What goes wrong:** User arrives with `?utm_source=linkedin&utm_campaign=founders`. Clicks around. Submits Calendly. Attribution lost because UTM params weren't stored or passed.
+**What goes wrong:** Using stock photos for testimonials instead of real client photos destroys trust.
 
 **Prevention:**
-1. Capture UTMs on landing
-2. Store in localStorage/cookie
-3. Pass to Calendly via URL parameters or hidden fields
-4. Verify attribution chain end-to-end
+1. Only use real photos with permission
+2. If no photo available, use company logo or initials (like current team section pattern)
+3. Never use obviously stock photos
+4. Consistent photo treatment (circular crop, consistent size, subtle border)
 
-**Phase to address:** Phase 2 (Analytics) - Part of conversion tracking setup.
+---
 
-**Sources:**
-- [021 Newsletter: Troubleshooting Marketing Tracking](https://www.021newsletter.com/p/troubleshooting-marketing-analytics-tracking-events)
+### Pitfall 12: Testimonials Without Attribution Context
+
+**What goes wrong:** Quote says great things but reader doesn't know who said it or why they should care.
+
+**Prevention:**
+1. Always include: full name, job title, company name
+2. Add company logo next to testimonial if available
+3. For high-value testimonials, include headshot
+4. Consider adding "Founder of [notable company]" or "[company raised $XM]" for credibility
 
 ---
 
@@ -468,58 +555,100 @@ Mistakes that cause annoyance or minor technical debt but are recoverable.
 
 | Phase | Likely Pitfall | Mitigation |
 |-------|---------------|------------|
-| Phase 1: Foundation | Hardcoded strings, no i18n setup | Enforce i18n architecture before ANY content |
-| Phase 1: Foundation | Hero image lazy loaded | Review image loading strategy explicitly |
-| Phase 1: Foundation | Font loading not optimized | Define font strategy document before implementation |
-| Phase 1: Design | CTA sprawl, multiple competing actions | Single-CTA wireframe approval gate |
-| Phase 1: Design | Fixed layouts breaking with Spanish | Design review with expanded text |
-| Phase 2: Bilingual | Incomplete translation | Exhaustive text audit checklist |
-| Phase 2: Bilingual | IP-based redirection | Explicit language switcher requirement |
-| Phase 2: Integration | Calendly tracking fails | Test tracking end-to-end before launch |
-| Phase 2: Integration | Third-party script bloat | Performance budget enforcement |
-| Phase 3: Launch | GTM not published | Pre-launch checklist with GA4 verification |
-| Phase 3: Launch | Render-blocking resources | Lighthouse audit gate (score > 90) |
+| Content Strategy | Pitfall 3 (bilingual), Pitfall 5 (generic testimonials), Pitfall 7 (permissions) | Create checklists and templates before collecting content |
+| Portfolio Design | Pitfall 1 (images), Pitfall 6 (no context) | Establish case study structure and image optimization pipeline first |
+| Testimonials Design | Pitfall 2 (carousel), Pitfall 4 (accessibility) | Decide on CSS-only logo wall, use native `<details>` for expandable quotes |
+| Page Structure | Pitfall 8 (isolated social proof) | Map social proof placement across full page before building |
+| Implementation | All performance pitfalls | Run Lighthouse after each section, maintain 90+ score |
+| Testing | Pitfall 3 (bilingual parity) | Test complete user journey in both EN and ES |
 
 ---
 
-## Confidence Assessment
+## Integration Warnings for Existing Architecture
 
-| Category | Confidence | Rationale |
-|----------|------------|-----------|
-| CRO Pitfalls | HIGH | Multiple authoritative sources, consistent patterns |
-| Performance Pitfalls | HIGH | Official Google documentation, Core Web Vitals specs |
-| i18n/Bilingual Pitfalls | MEDIUM | General best practices apply; LatAm-specific context is project-specific |
-| Analytics/Tracking Pitfalls | HIGH | Official GTM docs, Calendly docs verified |
-| Design Anti-patterns | HIGH | Extensive industry research, quantified conversion impact |
+### i18n Integration
+The existing `src/i18n/ui.ts` file has a clear pattern. New sections must:
+- Add all keys to BOTH `en` and `es` objects
+- Follow existing naming convention (e.g., `portfolio.title`, `testimonials.quote1.text`)
+- Keep translations in sync - consider a pre-commit hook
+
+### Performance Budget
+Current site has near-zero JavaScript. New sections should:
+- Use only Astro components (no client-side frameworks)
+- If any interactivity needed, use `<details>/<summary>` or CSS-only solutions
+- Any new JS must be loaded on-demand (like Calendly widget pattern in existing Contact section)
+
+### Image Handling
+Existing hero uses `loading="eager"` and `fetchpriority="high"`. New images should:
+- Use `loading="lazy"` for anything below fold
+- Always include width/height attributes
+- Use Astro's `<Image />` component for automatic optimization
+
+### Component Pattern
+Follow existing component structure in `src/components/sections/`:
+- Create `Portfolio.astro` and `Testimonials.astro`
+- Use same Tailwind utility patterns
+- Accept `lang` prop for i18n compatibility
+
+---
+
+## Quick Reference Checklist
+
+Before merging portfolio/testimonials sections:
+
+**Performance:**
+- [ ] All portfolio images optimized (WebP via Astro Image)
+- [ ] Width/height specified on all images
+- [ ] Lazy loading on below-fold images
+- [ ] Logo wall works without JavaScript
+- [ ] Lighthouse score still 90+ after additions
+- [ ] CLS score under 0.1
+
+**Content:**
+- [ ] All translation keys added to both EN and ES
+- [ ] Written permission documented for each client logo
+- [ ] Testimonials include name, role, company
+- [ ] Case studies have Challenge/Approach/Results structure
+
+**Accessibility:**
+- [ ] Expandable elements use `<details>` or proper ARIA
+- [ ] Keyboard navigation tested (Tab, Enter, Space)
+- [ ] Focus styles visible on interactive elements
+
+**Conversion:**
+- [ ] Social proof visible near CTAs (not just in one section)
+- [ ] Logo wall visible without scrolling (near hero)
+- [ ] At least one testimonial near contact CTA
 
 ---
 
 ## Sources
 
-### CRO and Conversion
-- [Unbounce: CRO Best Practices](https://unbounce.com/conversion-rate-optimization/cro-best-practices/)
-- [Moosend: 10 Landing Page Mistakes 2026](https://moosend.com/blog/landing-page-mistakes/)
-- [LandingPageFlow: CTA Placement Strategies 2026](https://www.landingpageflow.com/post/best-cta-placement-strategies-for-landing-pages)
-- [Mutiny: Conversion Landing Page Mistakes](https://www.mutinyhq.com/blog/high-conversion-landing-page-mistakes-to-avoid)
+### Performance and Images
+- [Astro Images Documentation](https://docs.astro.build/en/guides/images/)
+- [Smashing Magazine: How to Fix CLS Issues](https://www.smashingmagazine.com/2021/06/how-to-fix-cumulative-layout-shift-issues/)
+- [Perfmatters: CLS on WordPress](https://perfmatters.io/docs/cumulative-layout-shift/)
+- [OSC Professionals: Carousels and Core Web Vitals](https://www.oscprofessionals.com/blog/best-practices-for-carousels-with-respect-to-core-web-vitals/)
 
-### Performance and Core Web Vitals
-- [web.dev: Core Web Vitals](https://web.dev/articles/vitals)
-- [NitroPack: Most Important Core Web Vitals Metrics 2026](https://nitropack.io/blog/most-important-core-web-vitals-metrics/)
-- [GTmetrix: Don't Lazy Load LCP Image](https://gtmetrix.com/dont-lazy-load-lcp-image.html)
-- [DebugBear: Web Font Layout Shift](https://www.debugbear.com/blog/web-font-layout-shift)
+### Testimonials and Conversion
+- [Testimonial Hero: B2B Testimonial Mistakes](https://www.testimonialhero.com/blog/5-mistakes-youre-making-when-asking-b2b-customers-for-a-testimonial)
+- [B2B Rocket: Customer Testimonial Impact](https://www.b2brocket.ai/blog-posts/analyzing-customer-testimonial-impact-on-b2b-conversions)
+- [Hotjar: Landing Page Optimization Examples](https://www.hotjar.com/landing-page-optimization/examples/)
+- [Moosend: Landing Page Mistakes 2026](https://moosend.com/blog/landing-page-mistakes/)
 
-### i18n and Localization
-- [Google: Managing Multi-Regional Sites](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites)
-- [Digital.gov: Multilingual Website Best Practices](https://digital.gov/resources/top-10-best-practices-for-multilingual-websites)
-- [TranslatePress: Localization Problems](https://translatepress.com/website-localization-problems/)
-- [Locize: What is i18n 2026](https://www.locize.com/blog/what-is-i18n/)
+### Logo Wall and Legal
+- [Idea Grove: B2B Client Logos Guide](https://www.ideagrove.com/blog/the-ultimate-guide-to-displaying-b2b-client-logos-on-your-website)
+- [Serenity CRM: Logo Legal Risks](https://www.serenitycrm.io/navigating-the-risks-and-legalities-of-using-client-logos-and-trademarks-in-marketing-materials)
 
-### Analytics and Tracking
-- [Analytics Mania: Track Calendly with GTM](https://www.analyticsmania.com/post/how-to-track-calendly-with-google-tag-manager-and-google-analytics-4/)
-- [Analytics Mania: Common GTM Mistakes](https://www.analyticsmania.com/post/common-google-tag-manager-mistakes/)
-- [Calendly Help: Track Embed Activity](https://help.calendly.com/hc/en-us/articles/4412934840087-How-to-track-embed-activity-in-Google-Analytics)
+### Accessibility
+- [A11Y Collective: Accessible Accordion](https://www.a11y-collective.com/blog/accessible-accordion/)
+- [USWDS: Accordion Accessibility Tests](https://designsystem.digital.gov/components/accordion/accessibility-tests/)
+- [216 Digital: Accordion Accessibility Fixes](https://216digital.com/accordion-accessibility-common-issues-fixes/)
 
-### Design and UX
-- [Webstacks: Landing Page UX](https://www.webstacks.com/blog/landing-page-ux)
-- [Involve.me: Landing Page Design Trends 2026](https://www.involve.me/blog/landing-page-design-trends)
-- [Toptal: Landing Page Design Best Practices](https://www.toptal.com/designers/ux/landing-page-design-best-practices)
+### Multilingual/i18n
+- [MotionPoint: Multilingual Website Best Practices](https://www.motionpoint.com/blog/best-practices-for-multilingual-websites-with-examples/)
+- [BLEND: Common Multilingual Mistakes](https://www.getblend.com/blog/common-mistakes-to-avoid-when-building-a-multilingual-website/)
+
+### Landing Page Conversion
+- [Roast My Landing Page: Case Study Examples](https://blog.roastmylandingpage.com/case-study-landing-page-examples/)
+- [Zoho: Landing Page Mistakes](https://www.zoho.com/landingpage/landing-page-mistakes.html)

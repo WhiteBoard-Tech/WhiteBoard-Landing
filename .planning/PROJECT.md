@@ -28,11 +28,19 @@ Convert qualified startup founders into scheduled calls — the page must clearl
 
 ### Active
 
-(None — milestone complete. New requirements defined via `/gsd:new-milestone`)
+**Current Milestone: v1.1 Trust Building**
+
+**Goal:** Add social proof sections (portfolio, testimonials) and replace placeholder content to build credibility with startup founders.
+
+**Target features:**
+- Portfolio/case studies section with best-practice layout
+- Testimonials section with logo wall and expandable quotes
+- Replace placeholder team member names
+- Replace placeholder Calendly URL with real link
+- Replace placeholder hero graphic with final brand asset
 
 ### Out of Scope
 
-- Portfolio/case studies — no ventures to showcase yet
 - Blog/content section — not needed for v1
 - Pricing page — equity model is deal-specific
 - User accounts/login — purely lead generation
@@ -96,4 +104,4 @@ Convert qualified startup founders into scheduled calls — the page must clearl
 | Edge middleware for locale | Accept-Language detection before static serving | ✓ Good — proper 302 redirect flow |
 
 ---
-*Last updated: 2026-01-20 after v1.0 milestone*
+*Last updated: 2026-01-20 after v1.1 milestone started*

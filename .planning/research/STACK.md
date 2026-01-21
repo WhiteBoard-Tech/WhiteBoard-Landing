@@ -280,6 +280,126 @@ export default defineConfig({
 
 ---
 
+## v1.1 Stack Additions: Portfolio and Testimonials
+
+**Key Finding: No new dependencies required.**
+
+The existing stack (Astro 5.x, Tailwind CSS v4, TypeScript) provides all capabilities needed for portfolio and testimonials sections.
+
+### Portfolio Section Stack
+
+| Need | Solution | Library Required |
+|------|----------|------------------|
+| Project images | Astro `<Image />` component | None (built-in) |
+| Responsive images | Astro layout prop | None (built-in) |
+| Image optimization | Astro assets pipeline | None (built-in) |
+| Grid layout | Tailwind CSS grid utilities | None (existing) |
+| Hover effects | Tailwind CSS filter/transition | None (existing) |
+
+**Implementation:**
+```astro
+---
+import { Image } from 'astro:assets';
+import projectImage from '../assets/images/portfolio/project-1.png';
+---
+
+<Image
+  src={projectImage}
+  alt="Project description"
+  class="w-full h-auto"
+/>
+```
+
+### Logo Wall Stack
+
+| Need | Solution | Library Required |
+|------|----------|------------------|
+| Client logos | Astro `<Image />` component | None (built-in) |
+| Grayscale effect | Tailwind `grayscale` utility | None (existing) |
+| Color on hover | Tailwind `hover:grayscale-0` | None (existing) |
+| Smooth transition | Tailwind `transition duration-300` | None (existing) |
+
+**Implementation:**
+```astro
+<img
+  src={logo.src}
+  alt={logo.alt}
+  class="grayscale hover:grayscale-0 transition duration-300"
+/>
+```
+
+### Expandable Testimonials Stack
+
+| Need | Solution | Library Required |
+|------|----------|------------------|
+| Expand/collapse | HTML `<details>`/`<summary>` | None (native HTML) |
+| Exclusive accordion | `name` attribute on details | None (native HTML) |
+| Smooth animation | CSS Grid `grid-template-rows` | None (CSS-only) |
+| Accessible by default | Native details semantics | None (built-in a11y) |
+
+**Implementation:**
+```astro
+<details name="testimonials" class="group">
+  <summary class="cursor-pointer">
+    "{testimonial.shortQuote}..."
+  </summary>
+  <div class="overflow-hidden">
+    <p>{testimonial.fullQuote}</p>
+  </div>
+</details>
+```
+
+**Why native `<details>` over JavaScript accordion:**
+- Zero JavaScript shipped to client (Astro philosophy)
+- Built-in accessibility (keyboard navigation, ARIA)
+- Browser-native exclusive accordion via `name` attribute (2025+ browser support)
+- CSS-animatable with modern techniques
+- No hydration cost
+
+### What NOT to Add for v1.1
+
+#### Do NOT add: Carousel/slider library
+
+| Library | Why NOT |
+|---------|---------|
+| Swiper | Portfolio carousels have poor UX and conversion metrics |
+| Splide | Users prefer grid layouts where all items are visible |
+| Embla | Static grids outperform carousels for portfolios |
+
+**Research finding:** "A grid of thumbs is far more effective to show a portfolio than a carousel. Carousels remove content from view, which kills conversion."
+
+**Alternative:** Use a responsive CSS grid showing 2-4 portfolio items.
+
+#### Do NOT add: Animation library
+
+| Library | Why NOT |
+|---------|---------|
+| Framer Motion | Requires React, breaks Astro zero-JS model |
+| GSAP | Overkill for simple hover/transition effects |
+| AOS | Adds unnecessary JS for scroll animations |
+
+**Alternative:** Tailwind CSS v4 provides all needed utilities for transitions and hover effects.
+
+#### Do NOT add: Image optimization library
+
+| Library | Why NOT |
+|---------|---------|
+| Sharp (standalone) | Astro already uses Sharp internally |
+| @unpic/astro | Astro's built-in Image handles this |
+
+**Alternative:** Use Astro's built-in `<Image />` and `<Picture />` components.
+
+#### Do NOT add: Testimonial widget/embed
+
+| Service | Why NOT |
+|---------|---------|
+| Trustpilot widget | Adds external JS, privacy concerns |
+| Review.io embed | External dependency, styling mismatch |
+
+**Alternative:** Static testimonials in the i18n translation file.
+
+---
+
 ## Complete Dependency List
 
 ### Production Dependencies
@@ -354,20 +474,48 @@ npm install -D typescript @types/react @types/react-dom tailwindcss
 
 ---
 
+## File Structure for v1.1 Content
+
+```
+src/
+  assets/
+    images/
+      portfolio/           # NEW: Project screenshots
+        project-1.png
+        project-2.png
+      logos/               # NEW: Client/partner logos
+        client-1.svg       # Prefer SVG for logos
+        client-2.svg
+  components/
+    sections/
+      Portfolio.astro      # NEW: Portfolio grid section
+      Testimonials.astro   # NEW: Testimonials section
+    PortfolioCard.astro    # NEW: Individual portfolio item
+    TestimonialCard.astro  # NEW: Individual testimonial
+  i18n/
+    ui.ts                  # ADD: portfolio.*, testimonials.* keys
+```
+
+---
+
 ## Sources
 
 ### HIGH Confidence (Official Documentation)
+- [Astro Images Guide](https://docs.astro.build/en/guides/images/) - Built-in image optimization
+- [Astro Assets API](https://docs.astro.build/en/reference/modules/astro-assets/) - Image component reference
+- [Tailwind CSS Grayscale](https://tailwindcss.com/docs/filter-grayscale) - Filter utilities
+- [Tailwind CSS Transitions](https://tailwindcss.com/docs/transition-property) - Transition utilities
 - [Astro Documentation - i18n](https://docs.astro.build/en/guides/internationalization/)
 - [Astro Documentation - Vercel Deployment](https://docs.astro.build/en/guides/deploy/vercel/)
 - [Tailwind CSS v4 Blog Post](https://tailwindcss.com/blog/tailwindcss-v4)
 - [Calendly React Guide](https://help.calendly.com/hc/en-us/articles/31644195810199-How-to-embed-Calendly-in-a-React-app)
 
 ### MEDIUM Confidence (Verified Cross-Sources)
-- [Astro vs Next.js - Aalpha](https://www.aalpha.net/blog/astro-vs-nextjs-comparison/)
-- [Astro vs Next.js - Contentful](https://www.contentful.com/blog/astro-next-js-compared/)
-- [Vercel vs Netlify vs Cloudflare - Bejamas](https://bejamas.com/compare/cloudflare-pages-vs-netlify-vs-vercel)
-- [Privacy Analytics 2026 - Matomo](https://matomo.org/blog/2026/01/privacy-regulations-changes-2026-analytics/)
-- [Plausible vs Umami - Aaron Becker](https://aaronjbecker.com/posts/umami-vs-plausible-vs-matomo-self-hosted-analytics/)
+- [MDN - Exclusive Accordions](https://developer.mozilla.org/en-US/blog/html-details-exclusive-accordions/) - Native HTML accordion with `name` attribute
+- [Chrome for Developers - Exclusive Accordion](https://developer.chrome.com/docs/css-ui/exclusive-accordion) - Browser support
+- [CXL - Image Sliders](https://cxl.com/blog/dont-use-automatic-image-sliders-or-carousels/) - Why carousels hurt conversion
+- [VWO - Image Slider Alternatives](https://vwo.com/blog/image-slider-alternatives/) - Portfolio grid best practices
+- [UX Planet - Testimonial Best Practices](https://uxplanet.org/15-testimonial-examples-and-best-practices-for-your-website-9f5dd3efab5a) - Testimonial design patterns
 
 ### LOW Confidence (Single Source / Unverified)
 - Specific version numbers should be verified at install time via npm

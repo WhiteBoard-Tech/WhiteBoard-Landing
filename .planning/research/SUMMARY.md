@@ -1,170 +1,316 @@
-# Project Research Summary
+# Project Research Summary: v1.1 Milestone
 
-**Project:** Whiteboard Landing Page
-**Domain:** B2B Landing Page for Venture Tech Partner / Tech Studio (LatAm)
+**Project:** Whiteboard Landing Page - Portfolio, Testimonials & Strategic FAQ
+**Domain:** B2B Landing Page Enhancement (Social Proof + Objection Handling)
 **Researched:** 2026-01-20
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This is a high-conversion bilingual landing page for a LatAm tech studio targeting startup founders. The recommended approach is **Astro + Tailwind CSS** for maximum performance with minimal JavaScript. Astro's zero-JS-by-default architecture, built-in i18n routing, and island architecture make it ideal for this use case. The site will serve pre-rendered static HTML from a CDN with only the Calendly widget hydrating on demand.
+This v1.1 milestone adds three critical conversion elements to the existing landing page: **Portfolio (venture case studies)**, **Testimonials (founder quotes)**, and **Strategic FAQ (objection handling)**. Research confirms these are table-stakes for B2B landing pages, with testimonials boosting bottom-of-funnel conversions by 34% when placed near CTAs.
 
-The primary conversion goal is scheduling a call via Calendly. Research strongly indicates: single CTA discipline, sub-2.5s LCP, and proper bilingual implementation from day one. Without portfolio or case studies to show (new company), trust-building relies on team credentials, process transparency, and equity model explanation.
+The recommended approach leverages the existing Astro + Tailwind CSS architecture with **zero new dependencies**. All sections can be built using native HTML elements (`<details>/<summary>` for accordions), Astro's built-in `<Image />` component for optimization, and Tailwind CSS utilities for styling. The zero-JS philosophy must be preserved - no carousel libraries, no animation frameworks.
 
-Key risks are performance degradation from Calendly integration, i18n technical debt from hardcoded strings, and conversion loss from CTA sprawl. All are preventable with proper architecture from Phase 1.
+Key risks are: (1) unoptimized portfolio images tanking Lighthouse scores, (2) generic testimonials that fail to convert, and (3) FAQ content not addressing the specific objections of skeptical no-tech founders. Client framework requirements from the Framework PDF are specific about copy, CTA wording, and visual direction - these must be followed precisely.
+
+---
 
 ## Key Findings
 
-### Recommended Stack
+### Stack Additions
 
-Astro is the clear winner over Next.js for this project. Landing pages need content delivery, not hydration overhead. Astro ships ~40% faster with ~90% less JavaScript than comparable Next.js setups.
+**No new dependencies required for v1.1.**
 
-**Core technologies:**
-- **Astro 5.16+**: Static site framework with zero-JS default and native i18n routing
-- **Tailwind CSS 4.1+**: Utility-first styling with 100x faster incremental builds
-- **TypeScript 5.5**: Type safety across components and translations
-- **react-calendly 4.x**: Official React component for Calendly embed with event listeners
-- **Plausible Analytics**: GDPR-compliant, cookieless analytics (~1KB script)
-- **Vercel**: Zero-config deployment with global CDN and built-in analytics
+The existing stack handles all needs:
+- **Astro `<Image />`**: Built-in image optimization for portfolio/logos
+- **Tailwind CSS utilities**: Grayscale filters, hover transitions, grid layouts
+- **Native `<details>/<summary>`**: Accessible accordions for FAQ and expandable testimonials
+- **Existing i18n system**: Add keys to `ui.ts` for EN/ES translations
 
-**What NOT to use:**
-- Next.js (overkill for static content)
-- Google Analytics (requires cookie banner, GDPR concerns)
-- CSS-in-JS (breaks Astro's zero-JS architecture)
+**What NOT to add:**
+- Carousel libraries (Swiper, Splide, Owl) - grids outperform carousels
+- Animation libraries (Framer Motion, GSAP) - breaks zero-JS architecture
+- Testimonial widgets (Trustpilot embeds) - external dependencies
 
-### Expected Features
+### Features to Build
 
-**Must have (table stakes):**
-- Clear hero section with value proposition visible in 3-5 seconds
-- Primary CTA: "Schedule a Call" with specific duration (reduces friction)
-- Mobile-responsive design (80%+ traffic from mobile)
-- Fast page load (<2.5s LCP) — critical for SEO and bounce rates
-- Trust signals section (team credentials since no portfolio)
-- Bilingual support (Spanish/English) with clean URL structure
+**Must Have (v1.1 scope):**
+| Feature | Priority | Rationale |
+|---------|----------|-----------|
+| Portfolio Section (2 ventures) | P0 | Radarum + Alwon case studies prove capability |
+| Venture Logo Wall | P0 | Above-fold social proof per client framework |
+| Strategic FAQ | P0 | Addresses 4 key objections from Framework PDF |
+| Hero Copy Update | P0 | Align with client-approved messaging |
+| CTA Wording Update | P0 | "Aplicar para Evaluacion de Venture" + microcopy |
 
-**Should have (differentiators):**
-- Equity model visual explainer (unique positioning)
-- Story-driven hero with micro-animations
-- Process transparency section (Discovery, Build, Scale phases)
-- Sticky CTA that appears after scrolling past hero
-- Secondary CTA path for non-ready visitors ("Watch 2-Min Overview")
+**Should Have (v1.1 stretch):**
+| Feature | Priority | Rationale |
+|---------|----------|-----------|
+| Expandable Testimonials | P1 | 20% interaction rate vs <1% for carousels |
+| Visual assets (architecture diagrams) | P1 | Client directive: no stock photos |
+| Quote near Contact CTA | P1 | Distributed social proof increases conversion |
 
-**Defer (v2+):**
-- Interactive assessment tool ("Is Equity Partnership Right for You?")
-- Advanced personalization by visitor segment
-- Video introduction from founder
-- A/B testing framework
+**Defer (v1.2+):**
+| Feature | Reason |
+|---------|--------|
+| Video testimonials | Need video assets |
+| Case study modals | 2 ventures not enough to warrant |
+| Industry filtering | Need 5+ case studies first |
 
 ### Architecture Approach
 
-Static Site Generation (SSG) with URL-based i18n routing (`/en/`, `/es/`). All section components are server-rendered (no JavaScript shipped). Only three client components: LanguageToggle, CalendlyPopup (lazy-loaded on click), and Analytics (deferred).
+All new sections follow established patterns: section components in `src/components/sections/`, sub-components for repeated elements (cards), translation keys in `src/i18n/ui.ts`. The page flow changes to:
 
-**Major components:**
-1. **Layout System** — Root layout with locale provider, fonts, metadata
-2. **Section Components** — Hero, Services, Team/Credentials, Contact (all server-rendered)
-3. **Calendly Integration** — Lazy-loaded popup widget (not inline) to avoid LCP/CLS impact
-4. **i18n System** — URL-based routing with JSON translation files per locale
+```
+Hero (updated copy + venture logos)
+  |
+Services (unchanged)
+  |
+Portfolio (NEW - 2 venture cards)
+  |
+Team (unchanged)
+  |
+EquityModel (unchanged)
+  |
+StrategicFAQ (NEW - 4 objection-handling questions)
+  |
+Process (unchanged)
+  |
+Contact (add testimonial quote near CTA)
+```
 
-### Critical Pitfalls
+**New components:**
+1. `sections/Portfolio.astro` - Venture case study grid
+2. `PortfolioCard.astro` - Individual venture card
+3. `sections/StrategicFAQ.astro` - Accordion for objections
+4. `LogoWall.astro` - Grayscale venture logos (Hero placement)
 
-1. **Hero image lazy loaded** — Never lazy load above-fold images. Use `fetchpriority="high"` and preload. Failing this causes LCP > 2.5s and SEO penalty.
+### Critical Pitfalls to Avoid
 
-2. **Calendly tracking failure** — iFrame events don't propagate to your analytics. Implement custom postMessage listener to capture `calendly.event_scheduled` and push to data layer.
+1. **Unoptimized Images Tank Performance**
+   - Use Astro `<Image />` with width/height attributes
+   - WebP format, `loading="lazy"` for below-fold
+   - Target: maintain Lighthouse 90+ score
 
-3. **Hardcoded strings** — Set up i18n architecture BEFORE any content. No text directly in JSX — not even "Submit" on buttons. Retrofitting is painful.
+2. **Logo Wall JavaScript Carousel**
+   - Use CSS-only grid or `transform: translateX()` animation
+   - No carousel libraries - they break zero-JS architecture
+   - Logos must be visible without JavaScript
 
-4. **Multiple competing CTAs** — Single primary CTA above fold. Research shows up to 266% decrease in conversions with competing actions. Remove navigation bar or minimize drastically.
+3. **Breaking Bilingual Parity**
+   - Add ALL new keys to both EN and ES in `ui.ts`
+   - Translate venture descriptions (not just copy English)
+   - Test complete journey in both languages
 
-5. **Font loading causing CLS** — Use `font-display: swap` with fallback metrics matching (`size-adjust`, `ascent-override`). Self-host fonts and preload critical headline font only.
+4. **FAQ Without Accessibility**
+   - Use native `<details>/<summary>` elements
+   - Built-in keyboard navigation and ARIA
+   - Exclusive accordion via `name` attribute
+
+5. **Generic Testimonials**
+   - Require specific outcomes in quotes
+   - Full attribution: name, role, company
+   - Framework PDF provides the ICP voice to match
+
+---
+
+## Client Framework Integration
+
+### ICP Profile (Critical Context)
+The target founder is:
+- No-Tech/Semi-Tech with validated idea
+- Frustrated with freelancers/agencies
+- Skeptical - needs trust signals
+- Seeking a partner, not a provider
+
+**Implication:** All copy must address skepticism directly. FAQ must handle objections that arise from past bad experiences.
+
+### Required Copy Changes
+
+**Hero Section:**
+```
+Headline: "Construimos tu Tecnologia a cambio de Equity."
+Subheadline: "Tu Venture Tech Partner."
+Body: "Whiteboard actua como tu equipo fundador tecnico (CTO + Squad)..."
+```
+
+**CTA Wording (exact):**
+```
+Primary: "Aplicar para Evaluacion de Venture"
+Microcopy: "Solo 3-5 ventures seleccionados por ano"
+```
+
+**Services Messaging (4 pillars):**
+1. Platform 60% ready
+2. Skin in the Game
+3. Governance
+4. AI-Native
+
+### Portfolio Ventures (exact content)
+
+| Venture | Vertical | Tagline |
+|---------|----------|---------|
+| Radarum | Fintech/Edtech | "Infraestructura de inversion y datos en tiempo real" |
+| Alwon | Retail Tech | "Sistema operativo para micromarkets con IA" |
+
+### Strategic FAQ Questions (exact 4)
+
+| # | Objection | Topic |
+|---|-----------|-------|
+| 1 | "How does equity work?" | Vesting/SAFE, flexible pure/hybrid models |
+| 2 | "Who owns the IP?" | Venture owns product, WB licenses platform |
+| 3 | "Can we scale/handover?" | Designed for transition |
+| 4 | "How long to MVP?" | 6-10 weeks timeline |
+
+### Visual Direction
+
+**DO:**
+- Architecture diagrams
+- Admin OS screenshots
+- Real product visuals
+
+**DO NOT:**
+- Stock photos
+- Generic tech imagery
+- Placeholder visuals
+
+---
 
 ## Implications for Roadmap
 
-Based on research, suggested phase structure:
+### Phase 1: Hero & Logo Wall Update
+**Rationale:** Above-fold changes have highest visibility impact. Logo wall provides immediate social proof.
+**Delivers:**
+- Updated hero copy per framework
+- CTA wording change ("Aplicar para Evaluacion de Venture")
+- Venture logo wall (Radarum, Alwon) in hero section
+**Addresses:** Immediate social proof, copy alignment
+**Avoids:** Logo carousel pitfall (use CSS-only)
 
-### Phase 1: Foundation
-**Rationale:** i18n architecture and performance foundations must be correct before any content. Dependencies flow from here.
-**Delivers:** Working dev server, Astro + Tailwind + TypeScript configured, i18n routing functional, font loading optimized
-**Addresses:** Mobile responsiveness, fast page load, professional design system
-**Avoids:** Hardcoded strings pitfall, font CLS, render-blocking resources
+### Phase 2: Portfolio Section
+**Rationale:** Case studies prove capability; must come after logos establish awareness.
+**Delivers:**
+- Portfolio.astro section component
+- PortfolioCard.astro sub-component
+- 2 venture cards (Radarum, Alwon)
+- Bilingual content in ui.ts
+**Uses:** Astro Image for venture screenshots
+**Avoids:** Image performance pitfall, missing ES translations
 
-### Phase 2: Core Layout and Hero
-**Rationale:** Site shell and primary conversion point. Hero is the most critical section for bounce/engagement.
-**Delivers:** Header, Footer, LanguageToggle, Hero section with CTA
-**Uses:** Astro components, Tailwind styling, translation files
-**Implements:** Server component architecture, single-CTA discipline
-**Avoids:** CTA sprawl, Spanish text expansion breaking layout
+### Phase 3: Strategic FAQ Section
+**Rationale:** FAQ addresses objections that arise after seeing portfolio/services.
+**Delivers:**
+- StrategicFAQ.astro section component
+- 4 accordion items with objection-handling content
+- Native `<details>/<summary>` implementation
+**Addresses:** Equity model, IP ownership, scaling, timeline objections
+**Avoids:** Accessibility pitfall (use native HTML)
 
-### Phase 3: Content Sections
-**Rationale:** Can be built in parallel once layout exists. All sections are independent server components.
-**Delivers:** Services/What We Do, Team/Credentials, Process/How It Works sections
-**Addresses:** Trust signals, service offering clarity, equity model explainer
+### Phase 4: Testimonials & Distributed Proof
+**Rationale:** Testimonials reinforce trust after objections are addressed.
+**Delivers:**
+- TestimonialQuote component
+- Quote placement near Contact CTA
+- Optional: expandable testimonials if content available
+**Addresses:** Social proof at decision point
+**Avoids:** Generic testimonials, isolated social proof section
 
-### Phase 4: Integrations
-**Rationale:** Calendly and analytics depend on content sections existing. Contact section contains Calendly trigger.
-**Delivers:** Calendly popup integration, Plausible analytics, conversion tracking
-**Uses:** react-calendly, postMessage event listener for tracking
-**Avoids:** Calendly tracking failure, GTM not published, third-party script bloat
-
-### Phase 5: Polish and Launch
-**Rationale:** Optimization requires measuring against complete implementation. Cannot optimize what doesn't exist.
-**Delivers:** Image optimization, Lighthouse audit passing (>90), static export, Vercel deployment
-**Addresses:** LCP < 2.5s, CLS < 0.1, INP < 200ms
-**Avoids:** Performance regressions, missing Core Web Vitals targets
+### Phase 5: Visual Assets & Polish
+**Rationale:** Real screenshots/diagrams per client directive replace any placeholders.
+**Delivers:**
+- Architecture diagrams
+- Admin OS screenshots for ventures
+- Lighthouse audit (maintain 90+)
+**Avoids:** Stock photo usage, performance regression
 
 ### Phase Ordering Rationale
 
-- **i18n before content** — Routing structure determines file organization; prevents technical debt
-- **Hero before other sections** — Primary conversion point, must validate CTA works
-- **Content before integrations** — Contact section must exist to hold Calendly trigger
-- **Everything before optimization** — Need complete page to measure realistic performance
+1. **Hero first** - Highest visibility, sets the stage
+2. **Portfolio before FAQ** - Show work, then address objections about how you work
+3. **FAQ before testimonials** - Answer questions, then provide social proof
+4. **Visuals last** - Need real assets from client; polish after content is stable
 
 ### Research Flags
 
-Phases likely needing deeper research during planning:
-- **Phase 4 (Integrations):** Calendly + Plausible tracking integration is finicky; verify postMessage handling works with current Calendly version
+**Standard patterns (no additional research needed):**
+- Phase 1 (Hero/Logos): CSS grid, existing component patterns
+- Phase 2 (Portfolio): Follows Services.astro pattern exactly
+- Phase 3 (FAQ): Native `<details>` well-documented
+- Phase 4 (Testimonials): Static quotes, no complexity
 
-Phases with standard patterns (skip research-phase):
-- **Phase 1 (Foundation):** Astro + Tailwind + i18n is well-documented
-- **Phase 2 (Layout):** Standard component patterns
-- **Phase 3 (Content):** Static content sections, no complexity
-- **Phase 5 (Polish):** Standard optimization checklist
+**Needs attention during implementation:**
+- Visual assets: Client must provide architecture diagrams and OS screenshots
+- Testimonial content: Need actual founder quotes (may not exist yet)
+- ES translations: Venture descriptions need professional translation
+
+---
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Official Astro/Tailwind docs, multiple comparison articles verified |
-| Features | MEDIUM-HIGH | Strong sources but LatAm-specific context is inferred |
-| Architecture | HIGH | Official next-intl/Astro docs, verified patterns |
-| Pitfalls | HIGH | Official Google Core Web Vitals specs, verified GTM/Calendly docs |
+| Stack | HIGH | No changes; existing architecture handles all needs |
+| Features | HIGH | Client framework provides exact requirements |
+| Architecture | HIGH | Patterns established in v1.0 codebase |
+| Pitfalls | HIGH | Verified with official docs, 12 pitfalls documented |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Exact Astro version:** Verify latest stable at project start (5.16+ or 6.0 if released)
-- **Calendly language sync:** Calendly has its own language settings; must match page locale
-- **Vercel commercial use:** Free tier prohibits commercial use; evaluate if Cloudflare Pages needed
-- **Spanish content expansion:** Test all CTAs with actual Spanish translations during design phase
+| Gap | Resolution |
+|-----|------------|
+| Visual assets not provided | Request architecture diagrams + OS screenshots from client |
+| Testimonial quotes may not exist | Can ship without testimonials; add in v1.2 when available |
+| Radarum/Alwon screenshots | Need actual product screenshots, not mockups |
+| Spanish venture descriptions | Require professional translation, not machine translation |
+
+---
+
+## Build Priority Checklist
+
+### P0 - Must ship in v1.1
+- [ ] Hero copy update (headline, subheadline, body)
+- [ ] CTA wording update ("Aplicar para Evaluacion de Venture")
+- [ ] Venture logo wall in hero
+- [ ] Portfolio section with Radarum + Alwon cards
+- [ ] Strategic FAQ with 4 objection-handling questions
+- [ ] Bilingual content (EN + ES) for all new sections
+
+### P1 - Should ship if time permits
+- [ ] Testimonial quote near Contact CTA
+- [ ] Architecture diagrams (depends on client assets)
+- [ ] Admin OS screenshots (depends on client assets)
+
+### P2 - Defer to v1.2
+- [ ] Expandable testimonial quotes
+- [ ] Video testimonials
+- [ ] Case study modals
+
+---
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- [Astro Documentation - i18n](https://docs.astro.build/en/guides/internationalization/)
-- [Astro Documentation - Vercel Deployment](https://docs.astro.build/en/guides/deploy/vercel/)
-- [Tailwind CSS v4 Blog](https://tailwindcss.com/blog/tailwindcss-v4)
-- [web.dev: Core Web Vitals](https://web.dev/articles/vitals)
-- [Google: Managing Multi-Regional Sites](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites)
+- [Astro Images Guide](https://docs.astro.build/en/guides/images/) - Image optimization
+- [MDN - HTML details/summary](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) - Accessible accordions
+- [Tailwind CSS Transitions](https://tailwindcss.com/docs/transition-property) - Hover effects
+
+### Client Framework (HIGH confidence)
+- Framework (1).pdf - ICP profile, CTA wording, venture details, FAQ topics, visual direction
 
 ### Secondary (MEDIUM confidence)
-- [Astro vs Next.js - Aalpha](https://www.aalpha.net/blog/astro-vs-nextjs-comparison/)
-- [Analytics Mania: Track Calendly with GTM](https://www.analyticsmania.com/post/how-to-track-calendly-with-google-tag-manager-and-google-analytics-4/)
-- [LandingPageFlow: CTA Placement Strategies 2026](https://www.landingpageflow.com/post/best-cta-placement-strategies-for-landing-pages)
-- [GTmetrix: Don't Lazy Load LCP Image](https://gtmetrix.com/dont-lazy-load-lcp-image.html)
+- [CXL - Carousel Research](https://cxl.com/blog/dont-use-automatic-image-sliders-or-carousels/) - Why grids beat carousels
+- [Testimonial Hero](https://www.testimonialhero.com/blog/b2b-customer-testimonials) - B2B testimonial best practices
 
-### Tertiary (LOW confidence)
-- Specific npm version numbers — verify at install time
+### Existing Research
+- .planning/research/STACK.md - No new dependencies confirmed
+- .planning/research/v1.1/FEATURES.md - Portfolio + testimonials patterns
+- .planning/research/ARCHITECTURE.md - Component structure
+- .planning/research/PITFALLS.md - 12 pitfalls documented
 
 ---
-*Research completed: 2026-01-20*
+
+*Research synthesized: 2026-01-20*
 *Ready for roadmap: yes*
+*Client framework integrated: yes*

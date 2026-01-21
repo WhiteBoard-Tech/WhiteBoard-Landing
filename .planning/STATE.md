@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Convert qualified startup founders into scheduled calls
-**Current focus:** v1.0 MVP shipped — planning next milestone
+**Current focus:** v1.1 Trust Building — portfolio, testimonials, placeholder replacement
 
 ## Current Position
 
-Phase: v1.0 complete (5 phases shipped)
-Plan: All 11 plans executed
-Status: MILESTONE COMPLETE
-Last activity: 2026-01-20 — v1.0 milestone archived
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements for v1.1
+Last activity: 2026-01-20 — Milestone v1.1 started
 
-Progress: [##########] 100% (v1.0)
+Progress: [░░░░░░░░░░] 0% (v1.1)
 
 **Production URL:** https://wb-landing-liard.vercel.app
 
@@ -68,4 +68,4 @@ Start next milestone with `/gsd:new-milestone`:
 
 ---
 *State initialized: 2026-01-20*
-*Last updated: 2026-01-20 — v1.0 milestone complete*
+*Last updated: 2026-01-20 — v1.1 milestone started*

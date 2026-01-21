@@ -29,10 +29,12 @@ export const ui = {
     "common.loading": "Loading...",
 
     // Hero section
-    "hero.headline": "Your Tech Co-Founder",
-    "hero.subheadline": "We build your product for equity. No hourly rates. No endless invoices. Just aligned incentives and real outcomes.",
-    "hero.cta.primary": "Book a 30-min Call",
+    "hero.headline": "We Build Your Technology for Equity. Your Venture Tech Partner.",
+    "hero.subheadline": "CTO + dedicated squad. 60% of platform ready on day one. Full technical leadership — our success is tied to yours.",
+    "hero.cta.primary": "Apply for Venture Evaluation",
     "hero.cta.secondary": "Watch How It Works",
+    "hero.microcopy": "Only 3-5 ventures selected per year",
+    "hero.logos.label": "Trusted by",
 
     // Footer
     "footer.copyright": "All rights reserved.",
@@ -111,10 +113,12 @@ export const ui = {
     "common.loading": "Cargando...",
 
     // Hero section
-    "hero.headline": "Tu Socio Tecnologico",
-    "hero.subheadline": "Construimos tu producto a cambio de equity. Sin tarifas por hora. Sin facturas interminables. Solo incentivos alineados y resultados reales.",
-    "hero.cta.primary": "Agenda una Llamada de 30 min",
+    "hero.headline": "Construimos tu Tecnología a cambio de Equity. Tu Venture Tech Partner.",
+    "hero.subheadline": "CTO + squad dedicado. 60% de plataforma lista desde el día uno. Liderazgo técnico completo — nuestro éxito está atado al tuyo.",
+    "hero.cta.primary": "Aplicar para Evaluación de Venture",
     "hero.cta.secondary": "Mira Como Funciona",
+    "hero.microcopy": "Solo 3-5 ventures seleccionados por año",
+    "hero.logos.label": "Respaldado por",
 
     // Footer
     "footer.copyright": "Todos los derechos reservados.",

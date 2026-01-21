@@ -1,840 +1,569 @@
-# Architecture Patterns
+# Architecture Patterns: Portfolio & Testimonials Integration
 
-**Domain:** High-performance bilingual landing page
-**Project:** Whiteboard Venture Tech Partner Landing
+**Domain:** Adding social proof sections to existing Astro landing page
+**Project:** Whiteboard Landing Page v1.1
 **Researched:** 2026-01-20
-**Overall Confidence:** HIGH (verified with official docs + multiple sources)
+**Overall Confidence:** HIGH (based on existing codebase patterns)
 
 ---
 
 ## Executive Summary
 
-A bilingual landing page for a tech venture studio requires: static site generation for performance, URL-based i18n routing for SEO, component-based architecture for maintainability, and lazy-loaded Calendly integration for conversion. The architecture prioritizes Core Web Vitals (LCP < 2.5s, CLS < 0.1, INP < 200ms) while maintaining clean component boundaries.
+The existing Astro architecture provides clear patterns for adding Portfolio and Testimonials sections. Both sections should follow the established component structure: section components in `src/components/sections/`, sub-components for repeated elements, translation keys in `src/i18n/ui.ts`, and placement in both `en/index.astro` and `es/index.astro` page files. The architecture requires zero JavaScript for static content display.
 
 ---
 
-## Recommended Architecture
+## Existing Architecture Analysis
+
+### Current Page Flow
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         BUILD TIME (SSG)                            │
-│  ┌───────────────┐    ┌───────────────┐    ┌───────────────┐       │
-│  │ /es/page.tsx  │    │ /en/page.tsx  │    │  Static HTML  │       │
-│  │ (Spanish)     │───▶│ (English)     │───▶│  /out folder  │       │
-│  └───────────────┘    └───────────────┘    └───────────────┘       │
-└─────────────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                         RUNTIME (CDN)                               │
-│  ┌───────────────────────────────────────────────────────────────┐ │
-│  │                     Edge / CDN Layer                          │ │
-│  │  • Locale detection (Accept-Language header)                  │ │
-│  │  • Static asset serving                                       │ │
-│  │  • Cache headers (max-age: 31536000 for assets)              │ │
-│  └───────────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    CLIENT (Hydration Minimal)                       │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐     │
-│  │ Language Toggle │  │ Calendly Popup  │  │ Analytics       │     │
-│  │ (client)        │  │ (lazy, on-demand)│  │ (defer)         │     │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘     │
-└─────────────────────────────────────────────────────────────────────┘
+Hero         - Value proposition, primary CTA
+Services     - What Whiteboard does (4 cards)
+Team         - Co-founders (3 members)
+EquityModel  - How partnership works (3 value props)
+Process      - How it works (3 steps)
+Contact      - Final CTA with Calendly popup
 ```
 
----
+### Established Patterns
 
-## Component Architecture
+| Pattern | Implementation | Example |
+|---------|---------------|---------|
+| Section component | `src/components/sections/{Name}.astro` | `Services.astro`, `Team.astro` |
+| Sub-component | `src/components/{ItemName}.astro` | `ServiceCard.astro`, `TeamMember.astro` |
+| Data array | Array of objects with `key` field | `const services = [{ key: 'ventureLaunch', icon: 'rocket' }]` |
+| i18n usage | `t(`section.${item.key}.field`)` | `t('services.ventureLaunch.title')` |
+| Section structure | Container + title + grid/content | `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` |
+| Background alternation | White and gray-50 alternate | Services=white, Team=gray-50, Equity=white |
 
-### Component Hierarchy
+### Current Component Hierarchy
 
 ```
-app/
-├── [locale]/                    # Dynamic segment for i18n
-│   ├── layout.tsx              # Root layout with providers
-│   ├── page.tsx                # Landing page
-│   └── not-found.tsx           # 404 page (localized)
+src/
 ├── components/
-│   ├── layout/
-│   │   ├── Header.tsx          # Logo + LanguageToggle + Nav
-│   │   ├── Footer.tsx          # Links + Legal + Socials
-│   │   └── LanguageToggle.tsx  # ES/EN switcher (client)
-│   ├── sections/
-│   │   ├── Hero.tsx            # Main value prop + CTA
-│   │   ├── Services.tsx        # What Whiteboard does
-│   │   ├── Portfolio.tsx       # Past work / logos
-│   │   ├── Team.tsx            # Key people (optional)
-│   │   └── Contact.tsx         # CTA + Calendly trigger
-│   ├── ui/
-│   │   ├── Button.tsx          # Geometric, minimal style
-│   │   ├── Card.tsx            # Service/portfolio cards
-│   │   └── Container.tsx       # Max-width wrapper
-│   └── integrations/
-│       ├── CalendlyPopup.tsx   # Lazy-loaded Calendly (client)
-│       └── Analytics.tsx       # GA4 / privacy-first (client)
-├── i18n/
-│   ├── routing.ts              # next-intl routing config
-│   ├── navigation.ts           # Locale-aware Link, useRouter
-│   └── request.ts              # Server-side locale handling
-├── messages/
-│   ├── en.json                 # English translations
-│   └── es.json                 # Spanish translations
-└── public/
-    ├── fonts/                  # Self-hosted WOFF2 fonts
-    └── images/                 # Optimized static images
+│   ├── Hero.astro           # Top-level hero (not in sections/)
+│   ├── CTAButton.astro      # Reusable CTA button
+│   ├── ServiceCard.astro    # Card for services grid
+│   ├── TeamMember.astro     # Card for team grid
+│   ├── LanguageSwitcher.astro
+│   ├── Logo.astro
+│   ├── Footer.astro
+│   └── sections/
+│       ├── Services.astro   # What We Do
+│       ├── Team.astro       # Who We Are
+│       ├── EquityModel.astro # How We Partner
+│       ├── Process.astro    # How It Works
+│       └── Contact.astro    # Final CTA
+├── pages/
+│   ├── index.astro          # Root redirect
+│   ├── en/index.astro       # English page
+│   └── es/index.astro       # Spanish page
+├── layouts/
+│   └── BaseLayout.astro     # HTML wrapper with header/footer
+└── i18n/
+    ├── ui.ts                # Translation strings
+    └── utils.ts             # getLangFromUrl, useTranslations
 ```
+
+---
+
+## Recommended Architecture for New Sections
+
+### New Components Needed
+
+| Component | Type | Purpose |
+|-----------|------|---------|
+| `sections/Portfolio.astro` | Section | Container for portfolio/case studies grid |
+| `PortfolioCard.astro` | Sub-component | Individual case study card |
+| `sections/Testimonials.astro` | Section | Container for logo wall + quotes |
+| `TestimonialQuote.astro` | Sub-component | Individual testimonial with expand |
+| `LogoWall.astro` | Sub-component | Grid of client logos |
 
 ### Component Boundaries
 
-| Component | Type | Responsibility | Dependencies |
-|-----------|------|----------------|--------------|
-| `[locale]/layout.tsx` | Server | Locale provider, metadata, fonts | i18n/routing |
-| `[locale]/page.tsx` | Server | Page composition, static params | All sections |
-| `Header` | Server | Logo, navigation links | LanguageToggle |
-| `LanguageToggle` | Client | Language switching UI | i18n/navigation |
-| `Hero` | Server | Value proposition, primary CTA | Button |
-| `Services` | Server | Service offerings grid | Card |
-| `Portfolio` | Server | Client logos, case studies | next/image |
-| `Contact` | Server | Secondary CTA container | CalendlyPopup |
-| `CalendlyPopup` | Client | Calendly widget (lazy) | Calendly SDK |
-| `Footer` | Server | Links, legal, socials | LanguageToggle |
-| `Analytics` | Client | Event tracking | GA4 / Plausible |
+```
+src/components/
+├── sections/
+│   ├── Portfolio.astro      # NEW: Case studies section
+│   └── Testimonials.astro   # NEW: Social proof section
+├── PortfolioCard.astro      # NEW: Case study card
+├── TestimonialQuote.astro   # NEW: Quote with optional expand
+└── LogoWall.astro           # NEW: Client logo grid
+```
 
-### Server vs Client Component Strategy
+### Integration Points
 
-**Server Components (Default):**
-- All section components (Hero, Services, Portfolio, Contact)
-- Layout components (Header, Footer)
-- Static content rendering
-- No JavaScript shipped to client
+**1. Page Files (en/index.astro, es/index.astro)**
 
-**Client Components (Explicit `'use client'`):**
-- `LanguageToggle` - Needs `useRouter` for navigation
-- `CalendlyPopup` - Loads Calendly SDK on interaction
-- `Analytics` - Event handlers for tracking
+```astro
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Services from "@components/sections/Services.astro";
+import Portfolio from "@components/sections/Portfolio.astro";      // NEW
+import Team from "@components/sections/Team.astro";
+import Testimonials from "@components/sections/Testimonials.astro"; // NEW
+import EquityModel from "@components/sections/EquityModel.astro";
+import Process from "@components/sections/Process.astro";
+import Contact from "@components/sections/Contact.astro";
+---
 
-**Rationale:** Minimize client-side JavaScript. Only components requiring interactivity are client components. This maximizes SSG benefits and Core Web Vitals scores.
+<BaseLayout>
+  <Hero />
+  <Services />
+  <Portfolio />      <!-- NEW: After Services -->
+  <Team />
+  <Testimonials />   <!-- NEW: After Team -->
+  <EquityModel />
+  <Process />
+  <Contact />
+</BaseLayout>
+```
+
+**2. Translation File (i18n/ui.ts)**
+
+New keys needed in both `en` and `es` objects:
+
+```typescript
+// Portfolio section
+"portfolio.title": "Our Work",
+"portfolio.subtitle": "Companies we've helped build",
+"portfolio.project1.name": "Company Name",
+"portfolio.project1.category": "FinTech",
+"portfolio.project1.description": "Brief description of what we built",
+"portfolio.project1.result": "2x revenue in 6 months",
+"portfolio.viewCase": "View Case Study",
+
+// Testimonials section
+"testimonials.title": "What Founders Say",
+"testimonials.quote1.text": "Full testimonial quote...",
+"testimonials.quote1.author": "Founder Name",
+"testimonials.quote1.role": "CEO, Company",
+"testimonials.readMore": "Read more",
+"testimonials.readLess": "Read less",
+```
+
+---
+
+## Recommended Page Flow
+
+### Option A: Trust-Building Progression (Recommended)
+
+```
+Hero           - Hook + CTA
+Services       - What we do
+Portfolio      - PROOF we can do it (social proof #1)
+Team           - WHO does it
+Testimonials   - Others VOUCH for us (social proof #2)
+EquityModel    - HOW we partner
+Process        - HOW to start
+Contact        - Final CTA
+```
+
+**Rationale:**
+- Portfolio after Services: "Here's what we do, and here's proof"
+- Testimonials after Team: "Meet us, and hear from others who worked with us"
+- Builds credibility progressively before asking for commitment
+
+### Option B: Grouped Social Proof
+
+```
+Hero → Services → Team → EquityModel → Process → Portfolio → Testimonials → Contact
+```
+
+**Rationale:** All social proof together at end, before final CTA
+
+**Recommendation:** Option A. Progressive trust-building matches the conversion psychology of B2B landing pages.
+
+---
+
+## Component Architecture Details
+
+### Portfolio.astro
+
+**Structure (following Services.astro pattern):**
+
+```astro
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import PortfolioCard from '../PortfolioCard.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const projects = [
+  { key: 'project1', logo: '/images/portfolio/logo1.svg' },
+  { key: 'project2', logo: '/images/portfolio/logo2.svg' },
+  { key: 'project3', logo: '/images/portfolio/logo3.svg' },
+];
+---
+
+<section id="portfolio" class="py-16 sm:py-20 lg:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl sm:text-4xl font-bold text-black text-center mb-4">
+      {t('portfolio.title')}
+    </h2>
+    <p class="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-12">
+      {t('portfolio.subtitle')}
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projects.map((project) => (
+        <PortfolioCard
+          name={t(`portfolio.${project.key}.name` as any)}
+          category={t(`portfolio.${project.key}.category` as any)}
+          description={t(`portfolio.${project.key}.description` as any)}
+          result={t(`portfolio.${project.key}.result` as any)}
+          logo={project.logo}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+**Background:** `bg-gray-50` (following alternation pattern: Services=white, Portfolio=gray-50)
+
+### PortfolioCard.astro
+
+**Structure (following ServiceCard.astro pattern):**
+
+```astro
+---
+export interface Props {
+  name: string;
+  category: string;
+  description: string;
+  result: string;
+  logo: string;
+}
+
+const { name, category, description, result, logo } = Astro.props;
+---
+
+<div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+  <!-- Company logo -->
+  <img
+    src={logo}
+    alt={name}
+    class="h-8 w-auto mb-4"
+    loading="lazy"
+  />
+
+  <!-- Category badge -->
+  <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+    {category}
+  </span>
+
+  <!-- Company name -->
+  <h3 class="text-lg font-semibold text-black mt-2 mb-2">
+    {name}
+  </h3>
+
+  <!-- Description -->
+  <p class="text-gray-600 text-sm leading-relaxed mb-4">
+    {description}
+  </p>
+
+  <!-- Result highlight -->
+  <div class="pt-4 border-t border-gray-100">
+    <p class="text-sm font-medium text-black">
+      {result}
+    </p>
+  </div>
+</div>
+```
+
+### Testimonials.astro
+
+**Structure (logo wall + expandable quotes):**
+
+```astro
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import LogoWall from '../LogoWall.astro';
+import TestimonialQuote from '../TestimonialQuote.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const quotes = [
+  { key: 'quote1' },
+  { key: 'quote2' },
+  { key: 'quote3' },
+];
+
+const logos = [
+  { name: 'Company 1', src: '/images/logos/logo1.svg' },
+  { name: 'Company 2', src: '/images/logos/logo2.svg' },
+  // ...
+];
+---
+
+<section id="testimonials" class="py-16 sm:py-20 lg:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl sm:text-4xl font-bold text-black text-center mb-12">
+      {t('testimonials.title')}
+    </h2>
+
+    <!-- Logo wall -->
+    <LogoWall logos={logos} />
+
+    <!-- Testimonial quotes -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {quotes.map((quote) => (
+        <TestimonialQuote
+          text={t(`testimonials.${quote.key}.text` as any)}
+          author={t(`testimonials.${quote.key}.author` as any)}
+          role={t(`testimonials.${quote.key}.role` as any)}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+**Background:** `bg-white` (Team=gray-50, so Testimonials=white)
+
+### TestimonialQuote.astro
+
+**Two options for expandable quotes:**
+
+**Option A: CSS-only (no JS, recommended for simplicity)**
+
+```astro
+---
+export interface Props {
+  text: string;
+  author: string;
+  role: string;
+}
+
+const { text, author, role } = Astro.props;
+const isLong = text.length > 200;
+---
+
+<div class="bg-gray-50 rounded-lg p-6">
+  <!-- Quote text -->
+  <blockquote class="text-gray-700 leading-relaxed mb-4">
+    <span class="text-2xl text-gray-300 font-serif">"</span>
+    {isLong ? (
+      <details>
+        <summary class="cursor-pointer">
+          {text.slice(0, 150)}...
+        </summary>
+        <p class="mt-2">{text}</p>
+      </details>
+    ) : (
+      <p>{text}</p>
+    )}
+  </blockquote>
+
+  <!-- Attribution -->
+  <div class="flex items-center">
+    <div>
+      <p class="font-semibold text-black">{author}</p>
+      <p class="text-sm text-gray-500">{role}</p>
+    </div>
+  </div>
+</div>
+```
+
+**Option B: With minimal JS for smooth animation**
+
+If smooth expand/collapse animation is required, use `<details>` with CSS transitions or a small inline script. Given the project's zero-JS-by-default philosophy, Option A is recommended.
+
+### LogoWall.astro
+
+```astro
+---
+export interface Props {
+  logos: Array<{ name: string; src: string }>;
+}
+
+const { logos } = Astro.props;
+---
+
+<div class="flex flex-wrap justify-center items-center gap-8 lg:gap-12">
+  {logos.map((logo) => (
+    <img
+      src={logo.src}
+      alt={logo.name}
+      class="h-8 w-auto grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+      loading="lazy"
+    />
+  ))}
+</div>
+```
+
+**Design notes:**
+- Grayscale + opacity for subtle, non-distracting appearance
+- Hover reveals full color
+- Matches black/white/gray brand aesthetic
 
 ---
 
 ## Data Flow
 
-### Translation Flow
+### Translation Flow (unchanged)
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      BUILD TIME                                     │
-│                                                                     │
-│  messages/en.json ─┐                                                │
-│                    ├─▶ next-intl ─▶ Static HTML with translations   │
-│  messages/es.json ─┘      │                                        │
-│                           │                                        │
-│              ┌────────────┴────────────┐                          │
-│              │                         │                          │
-│              ▼                         ▼                          │
-│       /en/index.html            /es/index.html                    │
-│       (English content)          (Spanish content)                 │
-└─────────────────────────────────────────────────────────────────────┘
+ui.ts translations → useTranslations(lang) → t('key') → Static HTML at build
 ```
 
-### Language Switching Flow
+### Image Flow
 
 ```
-User clicks "ES" toggle
-        │
-        ▼
-LanguageToggle (client component)
-        │
-        ├─▶ useRouter().replace() with new locale
-        │
-        ▼
-Browser navigation to /es/* (pre-built static page)
-        │
-        ▼
-CDN serves pre-rendered Spanish HTML (no server processing)
+/public/images/portfolio/*.svg   → PortfolioCard logo prop
+/public/images/logos/*.svg       → LogoWall logos prop
 ```
 
-### Calendly Integration Flow
-
-```
-Page loads (no Calendly script)
-        │
-        ▼
-User clicks "Schedule a Call" button
-        │
-        ▼
-CalendlyPopup component:
-  1. Dynamically imports Calendly SDK
-  2. Calls Calendly.initPopupWidget()
-  3. Opens popup overlay
-        │
-        ▼
-User completes booking in Calendly iframe
-        │
-        ▼
-Calendly fires postMessage event
-        │
-        ▼
-CalendlyPopup listens, fires analytics event
-```
-
-### Analytics Flow
-
-```
-Page loads
-        │
-        ▼
-Analytics component (deferred script)
-        │
-        ├─▶ Checks for consent (if GDPR required)
-        │
-        ▼
-pageview event fires
-        │
-        ▼
-User interactions:
-  - CTA clicks → trackEvent('cta_click', {location: 'hero'})
-  - Language switch → trackEvent('language_change', {to: 'es'})
-  - Calendly open → trackEvent('calendly_open')
-  - Calendly complete → trackEvent('calendly_scheduled')
-```
+**Image recommendations:**
+- SVG for logos (scalable, small file size)
+- PNG/WebP fallback if SVG not available
+- Use `loading="lazy"` for below-fold images
+- Explicit width/height or CSS constraints to prevent CLS
 
 ---
 
-## i18n Architecture
+## Build Order
 
-### Recommended Pattern: URL-Based Routing with next-intl
-
-**Confidence: HIGH** (verified with [next-intl official docs](https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing))
+### Recommended Implementation Sequence
 
 ```
-URL Structure:
-  /en          → English homepage
-  /es          → Spanish homepage
-  /en/about    → English about (if needed)
-  /es/about    → Spanish about (if needed)
+1. Portfolio Section (no dependencies beyond existing patterns)
+   ├── Create PortfolioCard.astro
+   ├── Create sections/Portfolio.astro
+   ├── Add translation keys to ui.ts
+   ├── Add placeholder images to /public/images/portfolio/
+   └── Update en/index.astro and es/index.astro
+
+2. Testimonials Section (no dependencies beyond existing patterns)
+   ├── Create LogoWall.astro
+   ├── Create TestimonialQuote.astro
+   ├── Create sections/Testimonials.astro
+   ├── Add translation keys to ui.ts
+   ├── Add placeholder logos to /public/images/logos/
+   └── Update en/index.astro and es/index.astro
+
+3. Content Population (parallel with above or after)
+   ├── Replace placeholder portfolio data
+   ├── Replace placeholder testimonial data
+   └── Replace placeholder logos with real client logos
 ```
-
-**Why URL-based over cookie/detection:**
-1. **SEO:** Search engines index both language versions separately
-2. **Shareability:** URLs can be shared in correct language
-3. **SSG Compatible:** Each locale generates its own static HTML
-4. **No JavaScript Required:** Works without client hydration
-
-### Configuration
-
-**i18n/routing.ts:**
-```typescript
-import { defineRouting } from 'next-intl/routing';
-
-export const routing = defineRouting({
-  locales: ['en', 'es'],
-  defaultLocale: 'es',  // LatAm audience primary
-  localePrefix: 'always'  // /es and /en always in URL
-});
-```
-
-**middleware.ts (or proxy.ts in Next.js 16+):**
-```typescript
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
-
-export default createMiddleware(routing);
-
-export const config = {
-  matcher: ['/', '/(en|es)/:path*']
-};
-```
-
-### Static Generation with i18n
-
-**[locale]/page.tsx:**
-```typescript
-import { setRequestLocale } from 'next-intl/server';
-
-export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'es' }];
-}
-
-export default async function HomePage({
-  params: { locale }
-}: {
-  params: { locale: string }
-}) {
-  setRequestLocale(locale);  // Required for static rendering
-
-  return (
-    <>
-      <Hero />
-      <Services />
-      <Portfolio />
-      <Contact />
-    </>
-  );
-}
-```
-
-### Translation File Structure
-
-**messages/en.json:**
-```json
-{
-  "Hero": {
-    "headline": "Build What Matters",
-    "subheadline": "We partner with founders to build category-defining tech companies in Latin America",
-    "cta": "Schedule a Call"
-  },
-  "Services": {
-    "title": "What We Do",
-    "items": [...]
-  }
-}
-```
-
-**messages/es.json:**
-```json
-{
-  "Hero": {
-    "headline": "Construye Lo Que Importa",
-    "subheadline": "Nos asociamos con fundadores para construir empresas tecnologicas que definen categorias en America Latina",
-    "cta": "Agenda una Llamada"
-  }
-}
-```
-
----
-
-## Rendering Strategy
-
-### Static Site Generation (SSG)
-
-**Confidence: HIGH** (verified with [Next.js official docs](https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation))
-
-**Recommendation:** Full SSG with static export
-
-**Rationale:**
-- No dynamic content (no user accounts, no real-time data)
-- Maximum performance (HTML served from CDN edge)
-- Simplest deployment (any static host)
-- Best Core Web Vitals scores
-
-**next.config.js:**
-```javascript
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',  // Full static export
-  images: {
-    unoptimized: true  // Required for static export
-    // OR use a third-party image CDN
-  }
-};
-```
-
-### Alternative: Vercel Deployment
-
-If deploying to Vercel, can keep dynamic image optimization:
-
-```javascript
-const nextConfig = {
-  // No 'output: export' - Vercel handles this
-  images: {
-    formats: ['image/avif', 'image/webp'],
-  }
-};
-```
-
----
-
-## Image Optimization Strategy
-
-### Approach Overview
-
-| Scenario | Strategy |
-|----------|----------|
-| Static export to any host | Pre-optimize images at build, use `unoptimized: true` |
-| Vercel deployment | Use Next.js Image with automatic optimization |
-| Either | Self-host optimized WebP/AVIF with explicit dimensions |
-
-### Component Pattern
-
-```typescript
-// For hero image (LCP candidate)
-<Image
-  src="/images/hero.webp"
-  alt="Whiteboard team collaborating"
-  width={1200}
-  height={630}
-  priority  // Preload, no lazy loading
-  sizes="100vw"
-  className="..."
-/>
-
-// For below-fold images
-<Image
-  src="/images/portfolio-1.webp"
-  alt="Portfolio project screenshot"
-  width={600}
-  height={400}
-  // Default: lazy loading
-  placeholder="blur"
-  blurDataURL="data:image/jpeg;base64,..."  // Tiny base64
-/>
-```
-
-### Pre-Optimization Workflow (Static Export)
-
-```bash
-# At build time, optimize images to multiple sizes
-# Use sharp or squoosh CLI
-
-# Generate:
-# - hero.webp (1200w, 800w, 400w)
-# - portfolio-1.webp (600w, 300w)
-# - team-member.webp (200w, 100w)
-```
-
-### Responsive Image Pattern
-
-```typescript
-// Manual srcSet for static export
-<picture>
-  <source
-    srcSet="/images/hero-400.webp 400w, /images/hero-800.webp 800w, /images/hero-1200.webp 1200w"
-    sizes="100vw"
-    type="image/webp"
-  />
-  <img
-    src="/images/hero-800.jpg"
-    alt="Hero image"
-    width={1200}
-    height={630}
-  />
-</picture>
-```
-
----
-
-## Font Loading Strategy
-
-### Recommended Approach
-
-**Confidence: HIGH** (verified with multiple authoritative sources)
-
-**Strategy:** Self-hosted WOFF2 + `font-display: swap` + preload critical fonts
-
-### Implementation
-
-**app/[locale]/layout.tsx:**
-```typescript
-import { Geist, Geist_Mono } from 'next/font/google';
-// OR self-hosted:
-import localFont from 'next/font/local';
-
-const geist = localFont({
-  src: [
-    { path: '../public/fonts/Geist-Regular.woff2', weight: '400' },
-    { path: '../public/fonts/Geist-Medium.woff2', weight: '500' },
-    { path: '../public/fonts/Geist-Bold.woff2', weight: '700' },
-  ],
-  display: 'swap',  // Prevents FOIT
-  preload: true,
-  variable: '--font-geist',
-});
-```
-
-### Fallback Matching
-
-**global.css:**
-```css
-:root {
-  --font-geist: 'Geist', ui-sans-serif, system-ui, sans-serif;
-}
-
-/* Minimize CLS with size-adjust */
-@font-face {
-  font-family: 'Geist Fallback';
-  src: local('Arial');
-  size-adjust: 100.5%;
-  ascent-override: 95%;
-  descent-override: 22%;
-  line-gap-override: 0%;
-}
-```
-
-### Font Subset (If Using Non-Latin Characters)
-
-For Spanish, standard Latin subset is sufficient. No additional subsetting needed.
-
----
-
-## Calendly Integration Architecture
-
-### Recommended Pattern: Lazy-Loaded Popup Widget
-
-**Confidence: HIGH** (verified with [Calendly community](https://community.calendly.com/how-do-i-40/how-to-embed-calendly-on-my-website-without-slowing-down-page-load-times-3039) and [optimization guides](https://www.corewebvitals.io/pagespeed/speed-up-calendly-integration))
-
-**Why Popup over Inline:**
-- **Performance:** No Calendly scripts load on initial page load
-- **CLS:** No layout shifts from iframe resizing
-- **Focus:** Clear call-to-action, not buried in page content
-- **Mobile:** Better UX than scrolling inline embed
-
-### Component Implementation
-
-**components/integrations/CalendlyPopup.tsx:**
-```typescript
-'use client';
-
-import { useCallback, useEffect } from 'react';
-
-interface CalendlyPopupProps {
-  url: string;
-  prefill?: {
-    name?: string;
-    email?: string;
-  };
-  onScheduled?: () => void;
-}
-
-export function CalendlyPopup({ url, prefill, onScheduled }: CalendlyPopupProps) {
-  const openCalendly = useCallback(async () => {
-    // Dynamic import - only loads when user clicks
-    const { initPopupWidget, closePopupWidget } = await import('calendly-widget');
-
-    initPopupWidget({
-      url: url,
-      prefill: prefill,
-      pageSettings: {
-        backgroundColor: 'ffffff',
-        hideEventTypeDetails: false,
-        hideLandingPageDetails: false,
-        primaryColor: '000000',  // Match black/white theme
-        textColor: '000000'
-      }
-    });
-  }, [url, prefill]);
-
-  // Listen for scheduling completion
-  useEffect(() => {
-    const handleMessage = (e: MessageEvent) => {
-      if (e.data.event === 'calendly.event_scheduled') {
-        onScheduled?.();
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, [onScheduled]);
-
-  return { openCalendly };
-}
-```
-
-### Usage in Contact Section
-
-```typescript
-// components/sections/Contact.tsx
-import { CalendlyPopup } from '../integrations/CalendlyPopup';
-
-export function Contact() {
-  const t = useTranslations('Contact');
-  const calendly = CalendlyPopup({
-    url: 'https://calendly.com/whiteboard/30min',
-    onScheduled: () => {
-      // Fire analytics event
-      trackEvent('calendly_scheduled');
-    }
-  });
-
-  return (
-    <section id="contact">
-      <h2>{t('title')}</h2>
-      <Button onClick={calendly.openCalendly}>
-        {t('cta')}
-      </Button>
-    </section>
-  );
-}
-```
-
-### Alternative: Simple Link
-
-If Calendly popup complexity isn't worth it:
-
-```typescript
-<Button asChild>
-  <a href="https://calendly.com/whiteboard/30min" target="_blank" rel="noopener">
-    {t('cta')}
-  </a>
-</Button>
-```
-
-Trade-off: User leaves site, but zero performance impact.
-
----
-
-## Analytics Integration Points
-
-### Recommended Stack
-
-| Tool | Purpose | Privacy | Cost |
-|------|---------|---------|------|
-| **Plausible** (recommended) | Page views, events | GDPR-compliant, cookieless | ~$9/mo |
-| **GA4** (alternative) | Full analytics suite | Requires consent banner | Free |
-| **Vercel Analytics** (if on Vercel) | Core Web Vitals | Privacy-focused | Free tier |
-
-### Integration Pattern
-
-**components/integrations/Analytics.tsx:**
-```typescript
-'use client';
-
-import Script from 'next/script';
-
-export function Analytics() {
-  return (
-    <>
-      {/* Plausible - cookieless, no consent needed */}
-      <Script
-        defer
-        data-domain="whiteboard.vc"
-        src="https://plausible.io/js/script.js"
-        strategy="afterInteractive"
-      />
-    </>
-  );
-}
-```
-
-### Event Tracking Points
-
-| Event | Trigger | Data |
-|-------|---------|------|
-| `pageview` | Page load | `{ locale, page }` |
-| `cta_click` | Any CTA button | `{ location: 'hero' | 'nav' | 'footer' }` |
-| `language_switch` | Toggle click | `{ from, to }` |
-| `calendly_open` | Popup opened | `{}` |
-| `calendly_scheduled` | Booking complete | `{}` |
-| `external_link` | Outbound click | `{ url }` |
-
-### Custom Event Helper
-
-```typescript
-// lib/analytics.ts
-export function trackEvent(name: string, props?: Record<string, string>) {
-  if (typeof window !== 'undefined' && window.plausible) {
-    window.plausible(name, { props });
-  }
-}
-```
-
----
-
-## Core Web Vitals Optimization
-
-### Target Metrics
-
-| Metric | Target | Strategy |
-|--------|--------|----------|
-| **LCP** | < 2.5s | Preload hero image, inline critical CSS, SSG |
-| **CLS** | < 0.1 | Explicit image dimensions, font-display: swap, no layout shifts |
-| **INP** | < 200ms | Minimal JS, defer non-critical, lazy load Calendly |
-
-### LCP Optimization Checklist
-
-- [ ] Hero image has `priority` prop (or preload link)
-- [ ] Critical CSS inlined (Next.js does this automatically)
-- [ ] Fonts preloaded
-- [ ] No render-blocking JavaScript
-- [ ] TTFB < 800ms (CDN deployment)
-
-### CLS Prevention Checklist
-
-- [ ] All images have explicit width/height
-- [ ] Font fallback metrics matched
-- [ ] No dynamically injected content above fold
-- [ ] Calendly in popup (not inline embed)
-- [ ] Language toggle doesn't shift layout
-
-### INP Optimization Checklist
-
-- [ ] Calendly SDK loaded only on interaction
-- [ ] Analytics script deferred
-- [ ] No long JavaScript tasks on main thread
-- [ ] Minimal client components
-
----
-
-## Build Order Dependencies
-
-### Phase Dependency Graph
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│ Phase 1: Foundation                                                 │
-│ ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│ │ Next.js     │───▶│ next-intl   │───▶│ Tailwind    │              │
-│ │ project init│    │ setup       │    │ config      │              │
-│ └─────────────┘    └─────────────┘    └─────────────┘              │
-│                                                                     │
-│ Outputs: Working dev server, routing, basic styling                 │
-└─────────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ Phase 2: Core Layout                                                │
-│ ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│ │ Root Layout │───▶│ Header      │───▶│ Footer      │              │
-│ │ + fonts     │    │ + nav       │    │ + links     │              │
-│ └─────────────┘    └─────────────┘    └─────────────┘              │
-│                           │                                         │
-│                           ▼                                         │
-│                    ┌─────────────┐                                  │
-│                    │ Language    │                                  │
-│                    │ Toggle      │                                  │
-│                    └─────────────┘                                  │
-│                                                                     │
-│ Outputs: Site shell, navigation working in both languages           │
-└─────────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ Phase 3: Content Sections                                           │
-│ ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│ │ Hero        │───▶│ Services    │───▶│ Portfolio   │              │
-│ │ section     │    │ section     │    │ section     │              │
-│ └─────────────┘    └─────────────┘    └─────────────┘              │
-│                                                                     │
-│ Outputs: Main page content, translations, responsive design         │
-└─────────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ Phase 4: Integrations                                               │
-│ ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│ │ Contact     │───▶│ Calendly    │───▶│ Analytics   │              │
-│ │ section     │    │ popup       │    │ integration │              │
-│ └─────────────┘    └─────────────┘    └─────────────┘              │
-│                                                                     │
-│ Outputs: Booking flow working, events tracked                       │
-└─────────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ Phase 5: Performance & Polish                                       │
-│ ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│ │ Image       │───▶│ Lighthouse  │───▶│ Static      │              │
-│ │ optimization│    │ audit       │    │ export      │              │
-│ └─────────────┘    └─────────────┘    └─────────────┘              │
-│                                                                     │
-│ Outputs: < 3s load, passing Core Web Vitals, deployable build       │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-### Critical Path
-
-1. **i18n before content** - Routing structure determines file organization
-2. **Layout before sections** - Header/Footer needed for all pages
-3. **Sections before integrations** - Contact section contains Calendly trigger
-4. **Content before performance** - Can't optimize what doesn't exist
 
 ### Parallel Work Opportunities
 
-- **Phase 2:** Header and Footer can be built in parallel
-- **Phase 3:** All sections can be built in parallel (no dependencies between them)
-- **Phase 4:** Calendly and Analytics can be built in parallel
+- PortfolioCard and TestimonialQuote can be built in parallel
+- Both sections can be developed independently
+- Translation keys for both can be added in one batch
+
+---
+
+## Integration Checklist
+
+### Files to Create
+
+- [ ] `src/components/PortfolioCard.astro`
+- [ ] `src/components/sections/Portfolio.astro`
+- [ ] `src/components/LogoWall.astro`
+- [ ] `src/components/TestimonialQuote.astro`
+- [ ] `src/components/sections/Testimonials.astro`
+
+### Files to Modify
+
+- [ ] `src/i18n/ui.ts` - Add portfolio.* and testimonials.* keys (en + es)
+- [ ] `src/pages/en/index.astro` - Import and add Portfolio, Testimonials
+- [ ] `src/pages/es/index.astro` - Import and add Portfolio, Testimonials
+
+### Assets to Add
+
+- [ ] `/public/images/portfolio/` - Case study logos (SVG preferred)
+- [ ] `/public/images/logos/` - Client logo wall images (SVG preferred)
 
 ---
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Inline Calendly Embed
+### Anti-Pattern 1: Client-Side Data Fetching
 
-**What:** Embedding Calendly directly in page HTML with iframe
-**Why bad:**
-- Adds 370ms+ render-blocking time
-- Causes CLS from iframe resizing
-- Loads external scripts on every page view
-**Instead:** Use popup widget, loaded only on user interaction
+**What:** Using fetch or API to load portfolio/testimonials data
+**Why bad:** Adds latency, defeats SSG, unnecessary complexity
+**Instead:** Static data in component or ui.ts translations
 
-### Anti-Pattern 2: Client-Side Translation Loading
+### Anti-Pattern 2: Complex Expand/Collapse JS
 
-**What:** Loading translations via API call on page load
-**Why bad:**
-- Adds network round-trip
-- Shows loading state or wrong language briefly
-- Defeats SSG benefits
-**Instead:** Build separate static pages for each locale
+**What:** Custom React-like state management for testimonial expansion
+**Why bad:** Adds JS bundle size, contrary to zero-JS philosophy
+**Instead:** Use native `<details>/<summary>` with CSS styling
 
-### Anti-Pattern 3: Cookie-Based Language Detection
+### Anti-Pattern 3: External Logo Hosting
 
-**What:** Using cookies to remember language preference
-**Why bad:**
-- SEO: Search engines see one language
-- Shareability: Links don't preserve language
-- Complexity: Need middleware for every request
-**Instead:** URL-based routing with `/en/` and `/es/` prefixes
+**What:** Loading client logos from external CDN or API
+**Why bad:** Third-party dependency, potential slow loading, privacy
+**Instead:** Self-host logos in `/public/images/logos/`
 
-### Anti-Pattern 4: Large Hero Image Without Priority
+### Anti-Pattern 4: Breaking Background Alternation
 
-**What:** Hero image loads lazily like other images
-**Why bad:**
-- LCP element loads too late
-- Poor Core Web Vitals scores
-**Instead:** Add `priority` prop to hero image, preload in `<head>`
-
-### Anti-Pattern 5: Google Fonts CDN Without Preconnect
-
-**What:** Loading fonts from fonts.googleapis.com without optimization
-**Why bad:**
-- DNS lookup + connection adds latency
-- Render-blocking if not properly handled
-**Instead:** Self-host fonts OR add preconnect + dns-prefetch hints
-
-### Anti-Pattern 6: All Client Components
-
-**What:** Marking every component with `'use client'`
-**Why bad:**
-- Ships unnecessary JavaScript
-- Loses SSG benefits
-- Slower initial load, worse INP
-**Instead:** Default to Server Components, client only when needed
+**What:** Using same background color for adjacent sections
+**Why bad:** Visual monotony, harder to distinguish sections
+**Instead:** Maintain white/gray-50 alternation pattern
 
 ---
 
-## Scalability Considerations
+## Performance Considerations
 
-| Concern | Current (MVP) | 10K monthly visitors | 100K+ visitors |
-|---------|---------------|----------------------|----------------|
-| **Hosting** | Any static host | CDN with multiple PoPs | Global CDN (Vercel, Cloudflare) |
-| **Images** | Pre-optimized WebP | Image CDN (Cloudinary, imgix) | Same |
-| **Analytics** | Plausible | Same | Consider self-hosted |
-| **i18n** | 2 locales | Same architecture | Add more locales to array |
-| **Content** | Hardcoded JSON | Consider CMS | Headless CMS (Contentful, Sanity) |
+### Image Optimization
 
-For a landing page at this scale, the architecture supports growth without changes. CMS integration is the main upgrade path if content updates become frequent.
+| Image Type | Format | Size | Loading |
+|------------|--------|------|---------|
+| Client logos | SVG | < 5KB each | lazy |
+| Portfolio logos | SVG | < 10KB each | lazy |
+| Case study screenshots (if any) | WebP | < 100KB | lazy |
+
+### Section Impact
+
+Both sections are below-fold, so:
+- All images can use `loading="lazy"`
+- No impact on LCP (hero image remains LCP element)
+- Minimal impact on total page weight if logos are SVG
+
+### Zero JavaScript Maintained
+
+Neither section requires JavaScript if:
+- Testimonial expansion uses `<details>` element
+- No interactive filtering/carousel for portfolio
+- Logo hover effects are CSS-only
 
 ---
 
 ## Sources
 
-### Official Documentation (HIGH confidence)
-- [Next.js Image Optimization](https://nextjs.org/docs/app/building-your-application/optimizing/images)
-- [Next.js Static Site Generation](https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation)
-- [next-intl App Router Setup](https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing)
-- [next-intl Routing Configuration](https://next-intl.dev/docs/routing/configuration)
+### Primary Source (HIGH confidence)
+- **Existing codebase analysis:** All patterns derived from `src/components/sections/*.astro` and `src/i18n/ui.ts`
 
-### Verified Community Sources (MEDIUM confidence)
-- [Calendly Embed Optimization](https://community.calendly.com/how-do-i-40/how-to-embed-calendly-on-my-website-without-slowing-down-page-load-times-3039)
-- [Calendly Embed Options](https://help.calendly.com/hc/en-us/articles/223147027-Embed-options-overview)
-- [Core Web Vitals 2026 Guide](https://senorit.de/en/blog/core-web-vitals-2026)
-- [Font Loading Strategies](https://www.zachleat.com/web/comprehensive-webfonts)
-- [Next.js Image Optimization Guide](https://www.debugbear.com/blog/nextjs-image-optimization)
+### Astro Patterns (HIGH confidence)
+- Astro component composition follows existing project conventions
+- No external documentation needed; patterns are established in codebase
 
-### Industry Best Practices (MEDIUM confidence)
-- [SaaS Landing Page Trends 2026](https://www.saasframe.io/blog/10-saas-landing-page-trends-for-2026-with-real-examples)
-- [Static Site Generators Comparison](https://kinsta.com/blog/static-site-generator/)
-- [React i18n Patterns](https://www.creolestudios.com/react-i18next-simplifying-internationalization-in-react/)
-- [GA4 Privacy Features](https://madhawks.com/blog/mastering-the-new-era-of-web-analytics-a-guide-to-ga4/)
+---
+
+## Summary for Roadmap Creation
+
+**New components:** 5 (PortfolioCard, Portfolio, LogoWall, TestimonialQuote, Testimonials)
+
+**Modified files:** 3 (ui.ts, en/index.astro, es/index.astro)
+
+**Build order:**
+1. Portfolio section (standalone)
+2. Testimonials section (standalone)
+3. Both can be built in parallel
+
+**Page placement:**
+- Portfolio: After Services, before Team
+- Testimonials: After Team, before EquityModel
+
+**JavaScript requirement:** None (zero-JS sections)
+
+**Performance impact:** Minimal (SVG logos, lazy loading, below-fold content)
