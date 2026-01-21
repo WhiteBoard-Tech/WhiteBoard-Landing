@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 
 ## Current Position
 
-Phase: 6 of 10 (Hero & Above-the-Fold)
+Phase: 7 of 10 (Services Section)
 Plan: 1 of 1 complete
 Status: Phase complete
-Last activity: 2026-01-21 — Completed 06-01-PLAN.md (Hero update)
+Last activity: 2026-01-21 — Completed 07-01-PLAN.md (Services value propositions)
 
-Progress: [████████████░░░░░░░░] 55% (12/22 plans estimated)
+Progress: [█████████████░░░░░░░] 59% (13/22 plans estimated)
 
 **Production URL:** https://wb-landing-liard.vercel.app
 
@@ -50,6 +50,8 @@ v1.1 decisions:
 - Portfolio uses grid layout (no carousel) — research shows 89% see only first slide
 - FAQ uses native details/summary — zero JS, maintains architecture
 - Venture logos use grayscale + opacity-60 treatment — subtle social proof without competing with CTA
+- Services section: benefit-first messaging (outcomes before features)
+- Services icons: bg-black + text-white for stronger visual impact
 
 ### Pending Todos
 
@@ -65,9 +67,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Completed Phase 6 (Hero & Above-the-Fold)
-Resume: `/gsd:plan-phase 7` or next phase
+Stopped at: Completed Phase 7 (Services Section)
+Resume: `/gsd:plan-phase 8` or next phase
 
 ---
 *State initialized: 2026-01-20*
-*Last updated: 2026-01-21 — Completed 06-01-PLAN.md*
+*Last updated: 2026-01-21 — Completed 07-01-PLAN.md*

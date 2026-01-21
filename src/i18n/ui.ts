@@ -90,6 +90,15 @@ export const ui = {
     "process.scale.bullet2": "Technical guidance as you grow",
     "process.scale.bullet3": "Long-term partnership support",
 
+    // Portfolio section
+    "portfolio.title": "Ventures We've Built",
+    "portfolio.radarum.name": "Radarum",
+    "portfolio.radarum.description": "Real-time investment infrastructure and data platform for financial education. Built from MVP to production-ready system.",
+    "portfolio.radarum.metric": "Live in production",
+    "portfolio.alwon.name": "Alwon",
+    "portfolio.alwon.description": "AI-powered operating system for micromarkets. Intelligent inventory, analytics, and operations management.",
+    "portfolio.alwon.metric": "Serving retail operations",
+
     // Contact section
     "contact.title": "Ready to Build Together?",
     "contact.subtitle": "Book a 30-minute call to explore if we're a fit.",
@@ -173,6 +182,15 @@ export const ui = {
     "process.scale.bullet1": "Iteramos basados en feedback de usuarios",
     "process.scale.bullet2": "Guia tecnica mientras creces",
     "process.scale.bullet3": "Soporte de asociacion a largo plazo",
+
+    // Portfolio section
+    "portfolio.title": "Ventures que Hemos Construido",
+    "portfolio.radarum.name": "Radarum",
+    "portfolio.radarum.description": "Infraestructura de inversion y datos en tiempo real para educacion financiera. De MVP a sistema en produccion.",
+    "portfolio.radarum.metric": "En produccion",
+    "portfolio.alwon.name": "Alwon",
+    "portfolio.alwon.description": "Sistema operativo con IA para micromarkets. Inventario inteligente, analitica y gestion de operaciones.",
+    "portfolio.alwon.metric": "Operando en retail",
 
     // Contact section
     "contact.title": "Listo para Construir Juntos?",
