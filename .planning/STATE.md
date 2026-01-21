@@ -5,20 +5,26 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Convert qualified startup founders into scheduled calls
-**Current focus:** MILESTONE COMPLETE - Site deployed to production
+**Current focus:** v1.0 MVP shipped — planning next milestone
 
 ## Current Position
 
-Phase: 5 of 5 (Polish and Launch)
-Plan: 2 of 2 in current phase
-Status: COMPLETE
-Last activity: 2026-01-20 - Completed 05-02-PLAN.md (Vercel Deployment)
+Phase: v1.0 complete (5 phases shipped)
+Plan: All 11 plans executed
+Status: MILESTONE COMPLETE
+Last activity: 2026-01-20 — v1.0 milestone archived
 
-Progress: [##########] 100%
+Progress: [##########] 100% (v1.0)
 
 **Production URL:** https://wb-landing-liard.vercel.app
 
-## Performance Metrics
+## Milestone History
+
+- v1.0 MVP — Shipped 2026-01-20 (5 phases, 11 plans)
+  - See: .planning/MILESTONES.md
+  - Archive: .planning/milestones/v1.0-ROADMAP.md
+
+## Performance Metrics (v1.0)
 
 **Velocity:**
 - Total plans completed: 11
@@ -35,76 +41,31 @@ Progress: [##########] 100%
 | 04-integrations | 2 | 7 min | 4 min |
 | 05-polish-and-launch | 2 | 11 min | 6 min |
 
-**Recent Trend:**
-- Last 5 plans: 03-03 (3 min), 04-01 (4 min), 04-02 (3 min), 05-01 (3 min), 05-02 (8 min)
-- Trend: Final deployment plan included human verification checkpoint
-
-*Updated after each plan completion*
-
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
-- [Research]: Astro + Tailwind CSS selected over Next.js for zero-JS-by-default architecture
-- [Research]: Plausible Analytics selected over Google Analytics (GDPR compliance, no cookie banner needed)
-- [Research]: URL-based i18n routing (`/en/`, `/es/`) selected over cookie/header-based detection
-- [01-01]: Used @tailwindcss/vite plugin (not deprecated @astrojs/tailwind integration)
-- [01-01]: Tailwind v4 CSS-first config with @theme directive (no tailwind.config.js)
-- [01-01]: Color palette reset to black/white/gray only for premium minimal aesthetic
-- [01-02]: Translation strings in TypeScript for type safety (ui.ts pattern)
-- [01-02]: getPathWithoutLocale helper prevents double-prefix URLs in language switcher
-- [01-02]: Fixed header with backdrop-blur for premium feel
-- [01-02]: Skip link added for accessibility compliance
-- [02-01]: Logo uses inline SVG with currentColor for theming flexibility
-- [02-01]: CTAButton renders as anchor element (all CTAs are navigation)
-- [02-01]: scroll-margin-top: 5rem accounts for fixed header in anchor navigation
-- [02-02]: Native <img> tag for hero (fetchpriority="high" requires native element)
-- [02-02]: Secondary CTA is text link with play icon (visual hierarchy)
-- [02-02]: Hero placeholder SVG in place (user note: "improve logo last")
-- [03-01]: Translation keys added upfront for all Phase 03 sections (parallel development)
-- [03-01]: sections/ subdirectory for page-level section components
-- [03-01]: Inline SVG icons in ServiceCard (Lucide-style, no external deps)
-- [03-01]: Alternating section backgrounds (white/gray-50) for visual rhythm
-- [03-02]: Inline SVG icons rather than icon library (no additional dependencies)
-- [03-02]: Overlapping circles for handshake icon (cleaner than complex hand paths)
-- [03-02]: Desktop process shows connected numbered circles above content grid
-- [03-02]: Mobile process uses inline numbers with vertical stack
-- [03-03]: Calendly widget async loading for non-blocking performance
-- [03-03]: Contact section black background for final CTA visual impact
-- [03-03]: Button element (not anchor) for Calendly trigger since it's JS action
-- [03-03]: Placeholder Calendly URL to be replaced before launch
-- [04-01]: Facade pattern for lazy-loading: single Promise prevents duplicate Calendly loads
-- [04-01]: Type declarations in env.d.ts for Window.Calendly global
-- [04-01]: @scripts path alias added to tsconfig.json for clean imports
-- [04-02]: IntersectionObserver unobserves after first view to prevent duplicate section events
-- [04-02]: Calendly postMessage origin validation for security
-- [04-02]: Analytics auto-initializes on import (just import the module)
-- [04-02]: Optional chaining for plausible calls handles ad blockers gracefully
-- [05-01]: Keep rollup-plugin-visualizer as dev dependency (enable on-demand for audits)
-- [05-01]: Use PUBLIC_CALENDLY_URL env var with fallback for production flexibility
-- [05-02]: Edge middleware for Accept-Language redirect (302 to /en/ or /es/)
-- [05-02]: Static assets cached with max-age=31536000, immutable
-- [05-02]: Spanish detection checks for "es" anywhere in Accept-Language header
+Key decisions logged in PROJECT.md.
+All v1.0 decisions marked with outcomes (see Key Decisions table).
 
 ### Pending Todos
 
 - Improve logo design (user requested this be done last)
-- Replace Calendly placeholder URL with actual scheduling link before launch
+- Replace Calendly placeholder URL with actual scheduling link
 - Configure Plausible dashboard: add whiteboard.co domain, create conversion goals
+- Replace placeholder team member names with real names
 
 ### Blockers/Concerns
 
-None yet.
+None.
 
-## Session Continuity
+## Next Steps
 
-Last session: 2026-01-20T21:02:04Z
-Stopped at: MILESTONE COMPLETE - All phases executed
-Resume file: None
+Start next milestone with `/gsd:new-milestone`:
+- Define new requirements
+- Create new roadmap
+- Continue phase numbering from 6+
 
 ---
 *State initialized: 2026-01-20*
-*Last updated: 2026-01-20*
+*Last updated: 2026-01-20 — v1.0 milestone complete*
