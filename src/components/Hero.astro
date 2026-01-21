@@ -37,6 +37,30 @@ const t = useTranslations(lang);
             </svg>
           </a>
         </div>
+
+        <!-- Exclusivity microcopy -->
+        <p class="mt-4 text-sm text-gray-500 italic">
+          {t('hero.microcopy')}
+        </p>
+
+        <!-- Venture logos section -->
+        <div class="mt-8 flex items-center gap-6">
+          <span class="text-xs text-gray-400 uppercase tracking-wider">{t('hero.logos.label')}</span>
+          <div class="flex items-center gap-4">
+            <img
+              src="/images/logos/radarum.svg"
+              alt="Radarum"
+              class="h-6 w-auto opacity-60 grayscale"
+              loading="eager"
+            />
+            <img
+              src="/images/logos/alwon.svg"
+              alt="Alwon"
+              class="h-6 w-auto opacity-60 grayscale"
+              loading="eager"
+            />
+          </div>
+        </div>
       </div>
 
       <!-- Hero graphic - right side on desktop -->
