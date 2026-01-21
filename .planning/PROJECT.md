@@ -28,16 +28,31 @@ Convert qualified startup founders into scheduled calls — the page must clearl
 
 ### Active
 
-**Current Milestone: v1.1 Trust Building**
+**Current Milestone: v1.1 Full Alignment**
 
-**Goal:** Add social proof sections (portfolio, testimonials) and replace placeholder content to build credibility with startup founders.
+**Goal:** Align landing page with client framework (Framework.pdf) — update copy, add social proof sections, and implement strategic messaging for qualified founder conversion.
 
 **Target features:**
-- Portfolio/case studies section with best-practice layout
-- Testimonials section with logo wall and expandable quotes
-- Replace placeholder team member names
-- Replace placeholder Calendly URL with real link
-- Replace placeholder hero graphic with final brand asset
+
+*New Sections:*
+- Portfolio section with Radarum (Fintech/Edtech) and Alwon (Retail Tech) case studies
+- Strategic FAQ section for objection handling (Equity model, IP ownership, scaling, MVP timeline)
+- Venture logos in Above the Fold area (immediate social proof)
+
+*Copy Alignment:*
+- Hero: New headline/subheadline from framework ("Construimos tu Tecnología a cambio de Equity")
+- CTA: "Aplicar para Evaluación de Venture" with exclusivity microcopy ("Solo 3-5 ventures seleccionados por año")
+- Services: Align with "How we do it" (Platform 60% ready, Skin in the Game, Governance, AI-Native)
+- Process: Align with Foundation → Scale → Optimization phases
+
+*Visual Updates:*
+- Replace placeholder hero with architecture diagrams or Admin OS screenshots (no stock photos)
+- Add venture logos to hero area
+
+*Placeholder Replacement:*
+- Team member names (when provided)
+- Calendly URL (when provided)
+- Configure Plausible dashboard
 
 ### Out of Scope
 
@@ -61,18 +76,27 @@ Convert qualified startup founders into scheduled calls — the page must clearl
 - Aesthetic: Bold, minimal, premium tech feel
 - Personality: Confident, direct, builder-focused
 
-**Target Audience:**
-- Startup founders in LatAm
-- Have business vision, market knowledge, commercial execution
-- Lack technical co-founder or A-team tech capability
-- Looking for a tech partner, not an agency
-- Understand equity and willing to share upside
+**Target Audience (ICP from Framework.pdf):**
+- Founder "No-Tech" or "Semi-Tech" with industry experience (domain expert)
+- Has validated idea or failed MVP that needs to scale
+- Frustrated with freelancers, hourly agencies, or can't attract senior CTO
+- Skeptical mindset — looking for a partner, not a provider
+- Wants speed but fears technical debt
+- In evaluation phase: comparing in-house (slow/expensive) vs agency (quality risk) vs Whiteboard (strategic partner)
 
-**Key Messages:**
-- "No vendemos horas; construimos activos" (We don't sell hours; we build assets)
-- Tech partner, not service provider
-- Platform-first approach (reusable tech = faster delivery)
-- Enterprise quality at startup speed
+**Key Messages (from Framework.pdf):**
+- "Tu equipo de ingeniería fundador a cambio de Equity. Tecnología Enterprise, velocidad de Startup."
+- "No somos proveedores. Somos socios. Si tú no creces, nuestro equity vale cero."
+- Platform advantage: "Arranca con el 60% listo" (Auth, Multi-tenant, Logs, Admin Panel)
+- Clear governance: KPIs, QBRs, DRIs — zero black boxes
+- AI & Data native from MVP
+- IP clarity: "El Venture es dueño del Producto; Whiteboard licencia la Plataforma base"
+
+**Objection Handling (FAQ topics):**
+- Equity model: Flexible (pure equity or hybrid cash/equity) via Vesting and SAFE
+- IP ownership: Venture owns product, Whiteboard licenses reusable platform base
+- Scaling/handover: Designed for transition, help hire and train in-house team
+- MVP timeline: 6-10 weeks for functional MVP in production
 
 **Tech Debt (non-blocking):**
 - Placeholder hero graphic needs final brand assets

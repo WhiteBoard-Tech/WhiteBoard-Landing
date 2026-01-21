@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-20)
 
 **Core value:** Convert qualified startup founders into scheduled calls
-**Current focus:** v1.1 Trust Building — portfolio, testimonials, placeholder replacement
+**Current focus:** v1.1 Full Alignment — framework copy, portfolio, FAQ, social proof
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements for v1.1
-Last activity: 2026-01-20 — Milestone v1.1 started
+Phase: 6 of 10 (Hero & Above-the-Fold)
+Plan: 1 of 1 complete
+Status: Phase complete
+Last activity: 2026-01-21 — Completed 06-01-PLAN.md (Hero update)
 
-Progress: [░░░░░░░░░░] 0% (v1.1)
+Progress: [████████████░░░░░░░░] 55% (12/22 plans estimated)
 
 **Production URL:** https://wb-landing-liard.vercel.app
 
@@ -46,7 +46,10 @@ Progress: [░░░░░░░░░░] 0% (v1.1)
 ### Decisions
 
 Key decisions logged in PROJECT.md.
-All v1.0 decisions marked with outcomes (see Key Decisions table).
+v1.1 decisions:
+- Portfolio uses grid layout (no carousel) — research shows 89% see only first slide
+- FAQ uses native details/summary — zero JS, maintains architecture
+- Venture logos use grayscale + opacity-60 treatment — subtle social proof without competing with CTA
 
 ### Pending Todos
 
@@ -59,13 +62,12 @@ All v1.0 decisions marked with outcomes (see Key Decisions table).
 
 None.
 
-## Next Steps
+## Session Continuity
 
-Start next milestone with `/gsd:new-milestone`:
-- Define new requirements
-- Create new roadmap
-- Continue phase numbering from 6+
+Last session: 2026-01-21
+Stopped at: Completed Phase 6 (Hero & Above-the-Fold)
+Resume: `/gsd:plan-phase 7` or next phase
 
 ---
 *State initialized: 2026-01-20*
-*Last updated: 2026-01-20 — v1.1 milestone started*
+*Last updated: 2026-01-21 — Completed 06-01-PLAN.md*

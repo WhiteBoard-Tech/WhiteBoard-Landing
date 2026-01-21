@@ -42,15 +42,15 @@ export const ui = {
     "footer.terms": "Terms of Service",
 
     // Services section
-    "services.title": "What We Do",
-    "services.ventureLaunch.title": "Venture Launch",
-    "services.ventureLaunch.tagline": "From idea to MVP in weeks, not months",
-    "services.ventureScale.title": "Venture Scale",
-    "services.ventureScale.tagline": "Grow your product with a technical co-founder",
-    "services.aiEnablement.title": "AI Enablement",
-    "services.aiEnablement.tagline": "Integrate AI to multiply your team's output",
-    "services.integrations.title": "Integrations",
-    "services.integrations.tagline": "Connect your tools for seamless workflows",
+    "services.title": "Why Whiteboard",
+    "services.platformReady.title": "Launch 60% Faster",
+    "services.platformReady.tagline": "Auth, multi-tenant, and admin panel ready on day one",
+    "services.skinInGame.title": "Aligned Incentives",
+    "services.skinInGame.tagline": "We succeed only when you succeed — equity, not invoices",
+    "services.governance.title": "Transparent Accountability",
+    "services.governance.tagline": "Clear milestones, visible progress, no black boxes",
+    "services.aiNative.title": "AI & Data Native",
+    "services.aiNative.tagline": "Modern architecture from day one, not retrofitted",
 
     // Team section
     "team.title": "Who We Are",
@@ -126,15 +126,15 @@ export const ui = {
     "footer.terms": "Terminos de Servicio",
 
     // Services section
-    "services.title": "Lo Que Hacemos",
-    "services.ventureLaunch.title": "Lanzamiento de Ventures",
-    "services.ventureLaunch.tagline": "De idea a MVP en semanas, no meses",
-    "services.ventureScale.title": "Escalamiento de Ventures",
-    "services.ventureScale.tagline": "Crece tu producto con un co-fundador tecnico",
-    "services.aiEnablement.title": "Habilitacion de IA",
-    "services.aiEnablement.tagline": "Integra IA para multiplicar la capacidad de tu equipo",
-    "services.integrations.title": "Integraciones",
-    "services.integrations.tagline": "Conecta tus herramientas para flujos de trabajo fluidos",
+    "services.title": "Por Que Whiteboard",
+    "services.platformReady.title": "Lanza 60% Mas Rapido",
+    "services.platformReady.tagline": "Auth, multi-tenant y panel de admin listos desde el dia uno",
+    "services.skinInGame.title": "Incentivos Alineados",
+    "services.skinInGame.tagline": "Solo ganamos cuando ganas tu — equity, no facturas",
+    "services.governance.title": "Transparencia Total",
+    "services.governance.tagline": "Hitos claros, progreso visible, sin cajas negras",
+    "services.aiNative.title": "IA y Datos Nativos",
+    "services.aiNative.tagline": "Arquitectura moderna desde el dia uno, no adaptada despues",
 
     // Team section
     "team.title": "Quienes Somos",
