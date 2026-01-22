@@ -103,6 +103,17 @@ export const ui = {
     "contact.title": "Ready to Build Together?",
     "contact.subtitle": "Book a 30-minute call to explore if we're a fit.",
     "contact.cta": "Schedule a Call",
+
+    // FAQ section
+    "faq.title": "Frequently Asked Questions",
+    "faq.equity.question": "How does the equity model work?",
+    "faq.equity.answer": "We offer flexible structures including Vesting schedules and SAFE agreements. Depending on your situation, we can work with pure equity arrangements or hybrid models that combine equity with milestone-based compensation.",
+    "faq.ip.question": "Who owns the intellectual property?",
+    "faq.ip.answer": "Your venture owns the product we build together. Whiteboard licenses the underlying platform components — authentication, admin panels, infrastructure — that we've developed over years of building startups.",
+    "faq.scaling.question": "What happens when we need to scale or transition?",
+    "faq.scaling.answer": "Everything we build is designed for transition from day one. When you're ready to grow your own team, we provide hire-and-train support to ensure a smooth handover. You're never locked in.",
+    "faq.timeline.question": "How long does it take to build an MVP?",
+    "faq.timeline.answer": "Most functional MVPs are ready in 6-10 weeks. Because 60% of our platform is already built, we focus our time on what makes your venture unique rather than rebuilding common infrastructure.",
   },
   es: {
     // Site metadata
@@ -196,6 +207,17 @@ export const ui = {
     "contact.title": "Listo para Construir Juntos?",
     "contact.subtitle": "Agenda una llamada de 30 minutos para explorar si somos compatibles.",
     "contact.cta": "Agenda una Llamada",
+
+    // FAQ section
+    "faq.title": "Preguntas Frecuentes",
+    "faq.equity.question": "Como funciona el modelo de equity?",
+    "faq.equity.answer": "Ofrecemos estructuras flexibles que incluyen Vesting y acuerdos SAFE. Dependiendo de tu situacion, podemos trabajar con equity puro o modelos hibridos que combinan equity con compensacion basada en hitos.",
+    "faq.ip.question": "Quien es dueno de la propiedad intelectual?",
+    "faq.ip.answer": "Tu venture es dueno del producto que construimos juntos. Whiteboard licencia los componentes de la plataforma — autenticacion, paneles de admin, infraestructura — que hemos desarrollado durante anos construyendo startups.",
+    "faq.scaling.question": "Que pasa cuando necesitamos escalar o hacer transicion?",
+    "faq.scaling.answer": "Todo lo que construimos esta disenado para transicion desde el dia uno. Cuando estes listo para crecer tu propio equipo, ofrecemos soporte de contratacion y capacitacion para asegurar un traspaso fluido. Nunca estas atrapado.",
+    "faq.timeline.question": "Cuanto tiempo toma construir un MVP?",
+    "faq.timeline.answer": "La mayoria de los MVPs funcionales estan listos en 6-10 semanas. Porque el 60% de nuestra plataforma ya esta construida, enfocamos nuestro tiempo en lo que hace unico a tu venture en lugar de reconstruir infraestructura comun.",
   },
 } as const;
 

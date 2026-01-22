@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 
 ## Current Position
 
-Phase: 7 of 10 (Services Section)
+Phase: 8 of 10 (Portfolio Section)
 Plan: 1 of 1 complete
 Status: Phase complete
-Last activity: 2026-01-21 — Completed 07-01-PLAN.md (Services value propositions)
+Last activity: 2026-01-21 — Completed 08-01-PLAN.md (Portfolio section with venture cards)
 
-Progress: [█████████████░░░░░░░] 59% (13/22 plans estimated)
+Progress: [██████████████░░░░░░] 64% (14/22 plans estimated)
 
 **Production URL:** https://wb-landing-liard.vercel.app
 
@@ -52,6 +52,7 @@ v1.1 decisions:
 - Venture logos use grayscale + opacity-60 treatment — subtle social proof without competing with CTA
 - Services section: benefit-first messaging (outcomes before features)
 - Services icons: bg-black + text-white for stronger visual impact
+- Portfolio cards: dark bg-gray-900 on light bg-gray-50 section for visual contrast
 
 ### Pending Todos
 
@@ -67,9 +68,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Completed Phase 7 (Services Section)
-Resume: `/gsd:plan-phase 8` or next phase
+Stopped at: Completed Phase 8 (Portfolio Section)
+Resume: `/gsd:plan-phase 9` or next phase
 
 ---
 *State initialized: 2026-01-20*
-*Last updated: 2026-01-21 — Completed 07-01-PLAN.md*
+*Last updated: 2026-01-21 — Completed 08-01-PLAN.md*
