@@ -100,9 +100,14 @@ export const ui = {
     "portfolio.alwon.metric": "Serving retail operations",
 
     // Contact section
-    "contact.title": "Ready to Build Together?",
-    "contact.subtitle": "Book a 30-minute call to explore if we're a fit.",
-    "contact.cta": "Schedule a Call",
+    "contact.title": "Does Your Venture Qualify for Whiteboard?",
+    "contact.subtitle": "We partner with founders who have clear vision and large markets.",
+    "contact.cta": "Schedule Fit Call with the CEO",
+
+    // Testimonial (placeholder content - marked for replacement)
+    "testimonial.quote": "Whiteboard transformed how we approach technology. They're not vendors — they're true partners invested in our success.",
+    "testimonial.name": "Placeholder Founder",
+    "testimonial.role": "CEO, Radarum",
 
     // FAQ section
     "faq.title": "Frequently Asked Questions",
@@ -204,9 +209,14 @@ export const ui = {
     "portfolio.alwon.metric": "Operando en retail",
 
     // Contact section
-    "contact.title": "Listo para Construir Juntos?",
-    "contact.subtitle": "Agenda una llamada de 30 minutos para explorar si somos compatibles.",
-    "contact.cta": "Agenda una Llamada",
+    "contact.title": "Tu venture califica para Whiteboard?",
+    "contact.subtitle": "Buscamos founders con vision clara y mercados grandes.",
+    "contact.cta": "Agendar Fit Call con el CEO",
+
+    // Testimonial (placeholder content - marked for replacement)
+    "testimonial.quote": "Whiteboard transformo nuestra forma de abordar la tecnologia. No son proveedores — son verdaderos socios invertidos en nuestro exito.",
+    "testimonial.name": "Fundador Placeholder",
+    "testimonial.role": "CEO, Radarum",
 
     // FAQ section
     "faq.title": "Preguntas Frecuentes",

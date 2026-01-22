@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-20)
 
 ## Current Position
 
-Phase: 8 of 10 (Portfolio Section)
+Phase: 9 of 10 (Strategic FAQ)
 Plan: 1 of 1 complete
 Status: Phase complete
-Last activity: 2026-01-21 — Completed 08-01-PLAN.md (Portfolio section with venture cards)
+Last activity: 2026-01-21 — Completed 09-01-PLAN.md (FAQ section with native accordion)
 
-Progress: [██████████████░░░░░░] 64% (14/22 plans estimated)
+Progress: [███████████████░░░░░] 68% (15/22 plans estimated)
 
 **Production URL:** https://wb-landing-liard.vercel.app
 
@@ -49,6 +49,8 @@ Key decisions logged in PROJECT.md.
 v1.1 decisions:
 - Portfolio uses grid layout (no carousel) — research shows 89% see only first slide
 - FAQ uses native details/summary — zero JS, maintains architecture
+- FAQ allows multiple items open — simpler UX, no JS needed
+- FAQ items closed by default — user initiates interaction
 - Venture logos use grayscale + opacity-60 treatment — subtle social proof without competing with CTA
 - Services section: benefit-first messaging (outcomes before features)
 - Services icons: bg-black + text-white for stronger visual impact
@@ -68,9 +70,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-21
-Stopped at: Completed Phase 8 (Portfolio Section)
-Resume: `/gsd:plan-phase 9` or next phase
+Stopped at: Completed Phase 9 (Strategic FAQ)
+Resume: `/gsd:plan-phase 10` or next phase
 
 ---
 *State initialized: 2026-01-20*
-*Last updated: 2026-01-21 — Completed 08-01-PLAN.md*
+*Last updated: 2026-01-21 — Completed 09-01-PLAN.md*
