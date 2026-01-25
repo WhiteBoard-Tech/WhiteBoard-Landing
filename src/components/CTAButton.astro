@@ -7,12 +7,12 @@ interface Props {
 
 const { href, variant = 'primary', class: className = '' } = Astro.props;
 
-const baseStyles = 'inline-flex items-center justify-center font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black';
+const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pulse focus:ring-offset-obsidian';
 
 const variants = {
-  primary: 'px-8 py-4 text-base text-white bg-black rounded hover:bg-gray-800',
-  secondary: 'px-8 py-4 text-base text-black bg-transparent border-2 border-black rounded hover:bg-gray-100',
-  ghost: 'px-4 py-2 text-sm text-gray-600 hover:text-black',
+  primary: 'px-8 py-4 text-base text-obsidian bg-pulse rounded hover:bg-white',
+  secondary: 'px-8 py-4 text-base text-pulse bg-transparent border-2 border-pulse rounded hover:bg-pulse hover:text-obsidian',
+  ghost: 'px-4 py-2 text-sm text-mist hover:text-white',
 };
 ---
 

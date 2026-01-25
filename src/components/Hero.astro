@@ -11,11 +11,11 @@ const t = useTranslations(lang);
     <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       <!-- Text content - flexible container for text expansion -->
       <div class="max-w-xl lg:max-w-none">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-black leading-tight">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
           {t('hero.headline')}
         </h1>
 
-        <p class="mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
+        <p class="mt-6 text-lg sm:text-xl text-mist leading-relaxed">
           {t('hero.subheadline')}
         </p>
 
@@ -28,7 +28,7 @@ const t = useTranslations(lang);
           <!-- Secondary CTA - visually subordinate text link with icon -->
           <a
             href="#video"
-            class="text-gray-600 hover:text-black transition-colors duration-200 text-sm font-medium inline-flex items-center gap-2"
+            class="text-mist hover:text-white transition-colors duration-200 text-sm font-medium inline-flex items-center gap-2"
           >
             <span>{t('hero.cta.secondary')}</span>
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -50,13 +50,13 @@ const t = useTranslations(lang);
             <img
               src="/images/logos/radarum.svg"
               alt="Radarum"
-              class="h-6 w-auto opacity-60 grayscale"
+              class="h-6 w-auto opacity-50 grayscale invert brightness-200"
               loading="eager"
             />
             <img
               src="/images/logos/alwon.svg"
               alt="Alwon"
-              class="h-6 w-auto opacity-60 grayscale"
+              class="h-6 w-auto opacity-50 grayscale invert brightness-200"
               loading="eager"
             />
           </div>

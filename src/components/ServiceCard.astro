@@ -19,11 +19,11 @@ const iconPaths: Record<Props['icon'], string> = {
 };
 ---
 
-<div class="flex flex-col items-center text-center p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow duration-300">
+<div class="flex flex-col items-center text-center p-6 border border-slate rounded-lg hover:border-pulse transition-all duration-300 bg-obsidian/50 shadow-sm group">
   <!-- Icon container -->
-  <div class="w-14 h-14 rounded-full bg-black flex items-center justify-center mb-5">
+  <div class="w-14 h-14 rounded-full bg-pulse flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(255,107,91,0.2)]">
     <svg
-      class="w-7 h-7 text-white"
+      class="w-7 h-7 text-obsidian"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -37,12 +37,12 @@ const iconPaths: Record<Props['icon'], string> = {
   </div>
 
   <!-- Title -->
-  <h3 class="text-lg font-semibold text-black mb-2">
+  <h3 class="text-lg font-semibold text-white mb-2">
     {title}
   </h3>
 
   <!-- Tagline -->
-  <p class="text-gray-600 text-sm leading-relaxed">
+  <p class="text-mist text-sm leading-relaxed">
     {tagline}
   </p>
 </div>
