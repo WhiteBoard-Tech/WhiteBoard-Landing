@@ -1,0 +1,56 @@
+---
+// Página legal provisional: existe para que el enlace del pie no dé 404.
+// El texto definitivo lo entrega el titular; mientras tanto la página no se indexa.
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+interface Props {
+  lang: "es" | "en";
+  doc: "privacy" | "terms";
+}
+
+const { lang, doc } = Astro.props;
+
+const textos = {
+  es: {
+    privacy: {
+      titulo: "Política de Privacidad",
+      intro: "Estamos terminando de redactar nuestra Política de Tratamiento de Datos Personales. La publicaremos en esta página.",
+    },
+    terms: {
+      titulo: "Términos de Servicio",
+      intro: "Estamos terminando de redactar nuestros Términos de Servicio. Los publicaremos en esta página.",
+    },
+    contacto: "Mientras tanto, si quieres consultar, actualizar o eliminar tus datos, o tienes cualquier pregunta, escríbenos a",
+    volver: "Volver al inicio",
+  },
+  en: {
+    privacy: {
+      titulo: "Privacy Policy",
+      intro: "We are finalizing our Personal Data Processing Policy. It will be published on this page.",
+    },
+    terms: {
+      titulo: "Terms of Service",
+      intro: "We are finalizing our Terms of Service. They will be published on this page.",
+    },
+    contacto: "In the meantime, to access, update or delete your data, or for any question, write to us at",
+    volver: "Back to home",
+  },
+}[lang];
+
+const doc_ = textos[doc];
+---
+
+<BaseLayout title={`${doc_.titulo} · Whiteboard`} description={doc_.intro} noindex>
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-black">{doc_.titulo}</h1>
+    <p class="mt-6 text-lg text-gray-700">{doc_.intro}</p>
+    <p class="mt-4 text-lg text-gray-700">
+      {textos.contacto}
+      <a href="mailto:whiteboard@whibotech.com" class="underline underline-offset-4 hover:text-black">whiteboard@whibotech.com</a>.
+    </p>
+    <p class="mt-6 text-sm text-gray-500">
+      WHITEBOARD SAS · NIT 902.078.099-6 · Calle 12 A 71 B 40, Torre 5 Apartamento 203, Bogotá D.C., Colombia
+    </p>
+    <a href={`/${lang}/`} class="inline-block mt-10 text-sm font-medium text-black underline underline-offset-4">{textos.volver}</a>
+  </section>
+</BaseLayout>

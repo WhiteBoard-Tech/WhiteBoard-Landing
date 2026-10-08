@@ -14,7 +14,13 @@ const currentYear = new Date().getFullYear();
         <p>NIT 902.078.099-6 &middot; Calle 12 A 71 B 40, Torre 5 Apartamento 203, Bogotá D.C., Colombia</p>
       </div>
 
-      <nav class="flex gap-6" aria-label="Footer navigation">
+      <nav class="flex flex-wrap justify-center gap-6" aria-label="Footer navigation">
+        <a
+          href="mailto:whiteboard@whibotech.com"
+          class="text-sm text-gray-500 hover:text-black transition-colors"
+        >
+          whiteboard@whibotech.com
+        </a>
         <a
           href={`/${lang}/privacy`}
           class="text-sm text-gray-500 hover:text-black transition-colors"

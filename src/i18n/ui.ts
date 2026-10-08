@@ -147,8 +147,8 @@ export const ui = {
 
     // Footer
     "footer.copyright": "Todos los derechos reservados.",
-    "footer.privacy": "Politica de Privacidad",
-    "footer.terms": "Terminos de Servicio",
+    "footer.privacy": "Política de Privacidad",
+    "footer.terms": "Términos de Servicio",
 
     // Services section
     "services.title": "Por Que Whiteboard",
