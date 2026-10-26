@@ -1,21 +1,28 @@
 ---
 interface Props {
   href: string;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'inverse' | 'secondary' | 'secondary-dark';
+  arrow?: boolean;
   class?: string;
 }
 
-const { href, variant = 'primary', class: className = '' } = Astro.props;
+const { href, variant = 'primary', arrow = false, class: className = '' } = Astro.props;
 
-const baseStyles = 'inline-flex items-center justify-center font-semibold transition-colors duration-200';
+const baseStyles = 'inline-flex items-center justify-center gap-2.5 min-h-12 px-5.5 text-[15px] font-semibold rounded-md border transition-colors duration-200';
 
 const variants = {
-  primary: 'px-8 py-4 text-base text-canvas-050 bg-ink-900 rounded-md hover:bg-graphite-800',
-  secondary: 'px-8 py-4 text-base text-ink-900 bg-transparent border border-graphite-450 rounded-md hover:bg-canvas-100',
-  ghost: 'px-4 py-2 text-sm text-graphite-600 hover:text-ink-900',
+  primary: 'bg-ink-900 text-canvas-050 border-transparent hover:bg-graphite-800',
+  inverse: 'bg-canvas-050 text-ink-900 border-transparent hover:bg-canvas-200 focus-visible:outline-marker-500',
+  secondary: 'text-ink-900 border-graphite-450 hover:bg-canvas-100',
+  'secondary-dark': 'text-canvas-050 border-graphite-650 hover:bg-ink-900 focus-visible:outline-marker-500',
 };
 ---
 
 <a href={href} class:list={[baseStyles, variants[variant], className]}>
   <slot />
+  {arrow && (
+    <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M3 8h10M9 4l4 4-4 4" />
+    </svg>
+  )}
 </a>

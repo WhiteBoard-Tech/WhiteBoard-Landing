@@ -5,84 +5,26 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const valueProps = [
-  {
-    key: "noUpfront",
-    icon: "dollar-off",
-  },
-  {
-    key: "aligned",
-    icon: "handshake",
-  },
-  {
-    key: "partnership",
-    icon: "users",
-  },
+  { key: "noUpfront", mark: "$0" },
+  { key: "aligned", mark: "1:1" },
+  { key: "partnership", mark: "∞" },
 ] as const;
 ---
 
-<section id="equity-model" class="py-16 sm:py-20 lg:py-24 bg-canvas-050">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl sm:text-4xl font-bold text-ink-900 mb-4 text-center">
+<section id="equity-model" class="py-20 lg:py-32 bg-ink-900 text-canvas-050">
+  <div class="max-w-[1240px] mx-auto px-5 lg:px-8">
+    <p class="font-mono text-xs text-graphite-400 mb-4">{t("equity.kicker")}</p>
+    <h2 class="text-[44px] lg:text-[72px] leading-[0.96] font-bold tracking-[-1.5px] lg:tracking-[-2.8px] max-w-[13em]">
       {t("equity.title")}
     </h2>
-    <p class="text-lg text-graphite-600 text-center max-w-2xl mx-auto mb-12">
-      {t("equity.subtitle")}
-    </p>
+    <p class="mt-5 text-[22px] text-graphite-400">{t("equity.subtitle")}</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+    <div class="grid md:grid-cols-3 gap-10 md:gap-0 mt-20">
       {valueProps.map((prop) => (
-        <div class="text-center">
-          <div class="w-16 h-16 mx-auto mb-6 bg-ink-900 rounded-full flex items-center justify-center">
-            {prop.icon === "dollar-off" && (
-              <svg
-                class="w-8 h-8 text-canvas-050"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12 2v20" />
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                <path d="M2 2l20 20" />
-              </svg>
-            )}
-            {prop.icon === "handshake" && (
-              <svg
-                class="w-8 h-8 text-canvas-050"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <circle cx="9" cy="12" r="5" />
-                <circle cx="15" cy="12" r="5" />
-              </svg>
-            )}
-            {prop.icon === "users" && (
-              <svg
-                class="w-8 h-8 text-canvas-050"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
-            )}
-          </div>
-          <h3 class="text-xl font-bold text-ink-900 mb-2">
-            {t(`equity.${prop.key}.title` as const)}
-          </h3>
-          <p class="text-graphite-600 leading-relaxed">
-            {t(`equity.${prop.key}.description` as const)}
-          </p>
+        <div class="border-t border-graphite-700 pt-7 md:pr-8">
+          <div class="font-mono text-5xl font-semibold tracking-[-1.5px] leading-none" aria-hidden="true">{prop.mark}</div>
+          <h3 class="mt-6 mb-2 text-[22px] font-semibold">{t(`equity.${prop.key}.title` as const)}</h3>
+          <p class="text-base leading-relaxed text-canvas-300">{t(`equity.${prop.key}.description` as const)}</p>
         </div>
       ))}
     </div>

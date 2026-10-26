@@ -1,33 +1,38 @@
 ---
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import Logo from "./Logo.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-graphite-800 bg-ink-900">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-      <div class="text-sm text-graphite-400 text-center sm:text-left space-y-1">
-        <p>&copy; {currentYear} WHITEBOARD SAS. {t('footer.copyright')}</p>
-        <p>NIT 902.078.099-6 &middot; Calle 12 A 71 B 40, Torre 5 Apartamento 203, Bogotá D.C., Colombia</p>
+<footer class="border-t border-graphite-800 bg-ink-900 text-graphite-400">
+  <div class="max-w-[1240px] mx-auto px-5 lg:px-8 pt-12 pb-14 flex flex-wrap justify-between items-end gap-8">
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2.5 text-canvas-050">
+        <Logo size="sm" />
+        <span class="text-lg font-bold tracking-[-0.4px]">Whiteboard</span>
       </div>
-
-      <nav class="flex gap-6" aria-label="Footer navigation">
-        <a
-          href={`/${lang}/privacy`}
-          class="text-sm text-graphite-400 hover:text-canvas-050 focus-visible:outline-marker-500 transition-colors"
-        >
-          {t('footer.privacy')}
-        </a>
-        <a
-          href={`/${lang}/terms`}
-          class="text-sm text-graphite-400 hover:text-canvas-050 focus-visible:outline-marker-500 transition-colors"
-        >
-          {t('footer.terms')}
-        </a>
-      </nav>
+      <div class="text-[13px] leading-relaxed space-y-0.5">
+        <p>&copy; {currentYear} WHITEBOARD SAS. {t('footer.copyright')}</p>
+        <p class="font-mono text-xs">NIT 902.078.099-6 &middot; Calle 12 A 71 B 40, Torre 5 Apartamento 203, Bogotá D.C., Colombia</p>
+      </div>
     </div>
+
+    <nav class="flex gap-6" aria-label="Footer navigation">
+      <a
+        href={`/${lang}/privacy`}
+        class="text-[13px] text-canvas-300 hover:text-canvas-050 focus-visible:outline-marker-500 transition-colors"
+      >
+        {t('footer.privacy')}
+      </a>
+      <a
+        href={`/${lang}/terms`}
+        class="text-[13px] text-canvas-300 hover:text-canvas-050 focus-visible:outline-marker-500 transition-colors"
+      >
+        {t('footer.terms')}
+      </a>
+    </nav>
   </div>
 </footer>

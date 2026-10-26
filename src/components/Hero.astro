@@ -7,78 +7,109 @@ const t = useTranslations(lang);
 
 // One Fluoro highlight per screen: the word the headline turns on
 const [headlineStart, headlineEnd] = t('hero.headline').split(t('hero.highlight'));
+
+const modules = ['hero.card.auth', 'hero.card.tenant', 'hero.card.admin', 'hero.card.ai'] as const;
+
+const stats = [
+  { value: '0', key: 'stats.cost' },
+  { value: '6–10', key: 'stats.mvp' },
+  { value: '3–5', key: 'stats.ventures' },
+] as const;
 ---
 
-<section id="hero" class="min-h-[calc(100vh-4rem)] flex items-center px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
-  <div class="max-w-7xl mx-auto w-full">
-    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-      <!-- Text content - flexible container for text expansion -->
-      <div class="max-w-xl lg:max-w-none">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink-900 leading-tight">
-          {headlineStart}<mark>{t('hero.highlight')}</mark>{headlineEnd}
+<section id="hero" class="relative overflow-hidden bg-ink-950 text-canvas-050 pt-20 lg:pt-28">
+  <!-- Background loop: the poster stays when motion is reduced or the video is loading -->
+  <img src="/videos/hero-bg.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" />
+  <video
+    class="absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    poster="/videos/hero-bg.jpg"
+    aria-hidden="true"
+  >
+    <source src="/videos/hero-bg.mp4" type="video/mp4" />
+  </video>
+  <!-- Flat scrim keeps the copy at full contrast over the video -->
+  <div class="absolute inset-0 bg-ink-950/60" aria-hidden="true"></div>
+
+  <div class="relative max-w-[1240px] mx-auto px-5 lg:px-8">
+    <div class="grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-14 lg:gap-16 items-center">
+      <div>
+        <span class="inline-block font-mono text-xs text-canvas-300 bg-ink-950 border border-graphite-700 px-3 py-1.5 rounded-full mb-8">
+          {t('hero.tag')}
+        </span>
+
+        <h1 class="text-[52px] lg:text-[88px] leading-[0.94] font-bold tracking-[-1.8px] lg:tracking-[-3.4px]">
+          {headlineStart}<mark class="px-2.5">{t('hero.highlight')}</mark>{headlineEnd}
         </h1>
 
-        <p class="mt-6 text-lg sm:text-xl text-graphite-600 leading-relaxed">
+        <p class="mt-8 text-lg lg:text-xl leading-relaxed text-canvas-300 max-w-[34em]">
           {t('hero.subheadline')}
         </p>
 
-        <div class="mt-10 flex flex-col sm:flex-row gap-4 sm:items-center">
-          <!-- Primary CTA - most prominent -->
-          <CTAButton href="#contact" variant="primary">
+        <div class="mt-10 flex flex-wrap gap-3">
+          <CTAButton href="#contact" variant="inverse" arrow>
             {t('hero.cta.primary')}
           </CTAButton>
-
-          <!-- Secondary CTA - visually subordinate text link with icon -->
-          <a
-            href="#video"
-            class="text-graphite-600 hover:text-ink-900 transition-colors duration-200 text-sm font-medium inline-flex items-center gap-2"
-          >
-            <span>{t('hero.cta.secondary')}</span>
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </a>
+          <CTAButton href="#process" variant="secondary-dark">
+            {t('hero.cta.secondary')}
+          </CTAButton>
         </div>
 
-        <!-- Exclusivity microcopy -->
-        <p class="mt-4 font-mono text-sm text-graphite-500">
-          {t('hero.microcopy')}
-        </p>
-
-        <!-- Venture logos section -->
-        <div class="mt-8 flex items-center gap-6">
-          <span class="font-mono text-xs text-graphite-500 uppercase tracking-wider">{t('hero.logos.label')}</span>
-          <div class="flex items-center gap-4">
-            <img
-              src="/images/logos/radarum.svg"
-              alt="Radarum"
-              class="h-6 w-auto opacity-60 grayscale"
-              loading="eager"
-            />
-            <img
-              src="/images/logos/alwon.svg"
-              alt="Alwon"
-              class="h-6 w-auto opacity-60 grayscale"
-              loading="eager"
-            />
-          </div>
+        <div class="mt-10 flex flex-wrap items-center gap-5">
+          <span class="font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-400">{t('hero.logos.label')}</span>
+          <span class="text-[17px] font-semibold text-canvas-200">Radarum</span>
+          <span class="w-1 h-1 bg-graphite-650" aria-hidden="true"></span>
+          <span class="text-[17px] font-semibold text-canvas-200">Alwon</span>
         </div>
       </div>
 
-      <!-- Hero graphic - right side on desktop -->
-      <div class="lg:order-last">
-        <img
-          src="/images/hero-placeholder.svg"
-          alt="Tech partnership illustration"
-          class="w-full h-auto"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          width="400"
-          height="300"
-        />
+      <!-- Platform card: what is already built on day one -->
+      <div class="bg-ink-900 border border-graphite-800 rounded-lg p-8 shadow-lg">
+        <div class="flex justify-between items-center font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-400">
+          <span>{t('hero.card.label')}</span>
+          <span>v1</span>
+        </div>
+        <div class="mt-6 font-mono text-8xl font-semibold tracking-[-4px] leading-none">60%</div>
+        <p class="mt-2 text-[15px] text-canvas-300">{t('hero.card.caption')}</p>
+        <div role="img" aria-label={t('hero.card.progress')} class="h-2 bg-graphite-800 rounded-sm my-6 overflow-hidden">
+          <div class="w-3/5 h-full bg-canvas-050"></div>
+        </div>
+        <ul>
+          {modules.map((key) => (
+            <li class="flex items-center justify-between py-3 border-t border-graphite-800">
+              <span class="text-[15px]">{t(key)}</span>
+              <span class="flex items-center gap-1.5 font-mono text-xs text-success-dark">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="8" cy="8" r="6.5" /><path d="M5 8.2l2.1 2.1L11 6.4" />
+                </svg>
+                {t('hero.card.ready')}
+              </span>
+            </li>
+          ))}
+          <li class="flex items-center justify-between py-3 border-t border-graphite-800">
+            <span class="text-[15px] font-semibold">{t('hero.card.product')}</span>
+            <span class="flex items-center gap-1.5 font-mono text-xs text-graphite-400">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2" aria-hidden="true">
+                <circle cx="8" cy="8" r="6.5" />
+              </svg>
+              {t('hero.card.together')}
+            </span>
+          </li>
+        </ul>
       </div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-8 mt-24 lg:mt-28 pt-10 pb-20 lg:pb-24 border-t border-graphite-800">
+      {stats.map((stat) => (
+        <div>
+          <div class="font-mono text-[40px] lg:text-[56px] font-semibold tracking-[-2px] leading-none">{stat.value}</div>
+          <div class="mt-2 text-sm text-graphite-400 max-w-[28ch]">{t(stat.key)}</div>
+        </div>
+      ))}
     </div>
   </div>
 </section>

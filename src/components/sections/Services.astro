@@ -13,17 +13,22 @@ const services = [
 ];
 ---
 
-<section id="services" class="py-16 sm:py-20 lg:py-24 bg-canvas-050">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Section title -->
-    <h2 class="text-3xl sm:text-4xl font-bold text-ink-900 text-center mb-12 lg:mb-16">
-      {t('services.title')}
-    </h2>
+<section id="services" class="py-20 lg:py-28 bg-canvas-000 border-b border-canvas-200">
+  <div class="max-w-[1240px] mx-auto px-5 lg:px-8">
+    <div class="flex flex-wrap justify-between items-end gap-8 mb-14">
+      <div>
+        <p class="font-mono text-xs text-graphite-500 mb-4">{t('services.kicker')}</p>
+        <h2 class="text-[38px] lg:text-[56px] leading-none font-bold tracking-[-1.2px] lg:tracking-[-2px] max-w-[14em]">
+          {t('services.title')}
+        </h2>
+      </div>
+      <p class="text-[17px] text-graphite-600 max-w-[30em]">{t('services.subtitle')}</p>
+    </div>
 
-    <!-- Services grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-      {services.map((service) => (
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {services.map((service, i) => (
         <ServiceCard
+          index={i + 1}
           title={t(`services.${service.key}.title` as any)}
           tagline={t(`services.${service.key}.tagline` as any)}
           icon={service.icon}

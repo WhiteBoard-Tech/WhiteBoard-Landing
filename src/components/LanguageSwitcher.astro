@@ -7,12 +7,12 @@ const currentPath = Astro.url.pathname;
 const basePath = getPathWithoutLocale(currentPath);
 ---
 
-<nav class="flex items-center gap-1" aria-label="Language selector">
+<nav class="flex font-mono text-xs border border-canvas-200 rounded-md overflow-hidden" aria-label="Language selector">
   {Object.entries(languages).map(([code]) => (
     <a
       href={`/${code}${basePath === "/" ? "/" : basePath}`}
       class:list={[
-        "px-3 py-1.5 font-mono text-sm font-medium rounded-sm transition-colors duration-200",
+        "px-2.5 py-2 transition-colors duration-200",
         currentLang === code
           ? "bg-ink-900 text-canvas-050"
           : "text-graphite-600 hover:text-ink-900 hover:bg-canvas-100",

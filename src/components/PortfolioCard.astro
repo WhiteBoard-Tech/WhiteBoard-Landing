@@ -9,24 +9,19 @@ export interface Props {
 const { name, category, description, metric } = Astro.props;
 ---
 
-<div class="bg-ink-900 rounded-lg p-6 lg:p-8 flex flex-col h-full hover:bg-graphite-800 transition-colors duration-300">
-  <!-- Category badge -->
-  <span class="inline-block self-start px-3 py-1 font-mono text-xs font-medium bg-canvas-050/10 text-canvas-050 rounded-full mb-4">
-    {category}
-  </span>
-
-  <!-- Venture name -->
-  <h3 class="text-xl font-bold text-canvas-050 mb-3">
-    {name}
-  </h3>
-
-  <!-- Description -->
-  <p class="text-canvas-300 text-sm leading-relaxed mb-4 flex-grow">
-    {description}
-  </p>
-
-  <!-- Outcome metric -->
-  <p class="font-mono text-sm text-graphite-400 border-t border-graphite-700 pt-4">
-    {metric}
-  </p>
-</div>
+<article class="flex flex-col gap-5 min-h-[340px] p-8 lg:p-10 bg-canvas-050 border border-canvas-200 rounded-lg">
+  <div class="flex flex-wrap justify-between items-center gap-3">
+    <span class="font-mono text-xs text-graphite-600 border border-canvas-300 px-3 py-1.5 rounded-full">
+      {category}
+    </span>
+    <!-- Status: icon and label, never colour alone -->
+    <span class="flex items-center gap-2 text-[13px] font-semibold text-success bg-success-bg px-2.5 py-1.5 rounded-sm">
+      <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="8" cy="8" r="6.5" /><path d="M5 8.2l2.1 2.1L11 6.4" />
+      </svg>
+      {metric}
+    </span>
+  </div>
+  <h3 class="mt-auto text-[44px] font-bold tracking-[-1.6px]">{name}</h3>
+  <p class="text-[17px] leading-relaxed text-graphite-600 max-w-[32em]">{description}</p>
+</article>

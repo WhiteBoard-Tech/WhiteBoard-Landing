@@ -15,6 +15,7 @@
   --color-graphite-450: #7C8593; /* field and secondary button borders, 3.53:1 */
   --color-graphite-500: #636C79; /* muted text */
   --color-graphite-600: #515A66; /* secondary text */
+  --color-graphite-650: #5B6470; /* strong border on dark */
   --color-graphite-700: #3A414A;
   --color-graphite-800: #252A31;
   --color-ink-900: #16181C; /* Marker, never #000 */
@@ -26,6 +27,11 @@
   --color-marker-500: #CDF03F;
   --color-marker-600: #A8C823;
   --color-marker-700: #5C6D10; /* Olive, the only family value allowed as text on light */
+
+  /* States: always paired with an icon and a label */
+  --color-success: #00705F;
+  --color-success-bg: #E2F4EF;
+  --color-success-dark: #3FBF9E;
 
   /* Typography */
   --font-sans: "Archivo Variable", "Helvetica Neue", Arial, sans-serif;

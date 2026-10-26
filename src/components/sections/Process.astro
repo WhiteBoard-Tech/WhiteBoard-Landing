@@ -4,73 +4,37 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const steps = [
-  {
-    number: 1,
-    key: "discovery",
-  },
-  {
-    number: 2,
-    key: "build",
-  },
-  {
-    number: 3,
-    key: "scale",
-  },
-] as const;
+const steps = ["discovery", "build", "scale"] as const;
+const bullets = ["bullet1", "bullet2", "bullet3"] as const;
 ---
 
-<section id="process" class="py-16 sm:py-20 lg:py-24 bg-canvas-000 border-t border-canvas-200">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl sm:text-4xl font-bold text-ink-900 mb-12 text-center">
+<section id="process" class="py-20 lg:py-32">
+  <div class="max-w-[1240px] mx-auto px-5 lg:px-8">
+    <p class="font-mono text-xs text-graphite-500 mb-4">{t("process.kicker")}</p>
+    <h2 class="text-[38px] lg:text-[56px] leading-none font-bold tracking-[-1.2px] lg:tracking-[-2px] max-w-[14em]">
       {t("process.title")}
     </h2>
 
-    <!-- Desktop: Horizontal step indicators with connecting lines -->
-    <div class="hidden lg:flex items-center justify-between max-w-3xl mx-auto mb-12">
-      {steps.map((step, index) => (
-        <>
-          <div class="w-12 h-12 rounded-full bg-ink-900 text-canvas-050 flex items-center justify-center font-mono font-semibold text-xl">
-            {step.number}
+    <ol class="grid lg:grid-cols-3 gap-6 mt-16">
+      {steps.map((step, i) => (
+        <li class="bg-canvas-000 border border-canvas-200 rounded-lg p-8">
+          <div class="flex items-center gap-4">
+            <span class="w-12 h-12 rounded-md bg-ink-900 text-canvas-050 flex items-center justify-center font-mono text-lg font-semibold">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span class="font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-500">{t(`process.${step}.when` as const)}</span>
           </div>
-          {index < steps.length - 1 && (
-            <div class="flex-1 h-0.5 bg-canvas-300 mx-4" />
-          )}
-        </>
+          <h3 class="mt-7 mb-4 text-[26px] font-bold tracking-[-0.6px]">{t(`process.${step}.title` as const)}</h3>
+          <ul class="flex flex-col gap-3 text-[15px] text-graphite-600">
+            {bullets.map((bullet) => (
+              <li class="flex gap-3">
+                <span class="font-mono text-graphite-450" aria-hidden="true">—</span>
+                <span>{t(`process.${step}.${bullet}` as const)}</span>
+              </li>
+            ))}
+          </ul>
+        </li>
       ))}
-    </div>
-
-    <!-- Step content grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-      {steps.map((step) => (
-        <div class="relative">
-          <!-- Mobile: Inline number indicator -->
-          <div class="flex items-start lg:block">
-            <div class="lg:hidden w-10 h-10 rounded-full bg-ink-900 text-canvas-050 flex items-center justify-center font-mono font-semibold text-lg shrink-0 mr-4">
-              {step.number}
-            </div>
-            <div class="lg:text-center">
-              <h3 class="text-xl font-semibold text-ink-900 mb-3">
-                {t(`process.${step.key}.title` as const)}
-              </h3>
-              <ul class="text-graphite-600 text-sm space-y-2">
-                <li class="flex items-start lg:justify-center">
-                  <span class="mr-2 text-graphite-500">-</span>
-                  <span>{t(`process.${step.key}.bullet1` as const)}</span>
-                </li>
-                <li class="flex items-start lg:justify-center">
-                  <span class="mr-2 text-graphite-500">-</span>
-                  <span>{t(`process.${step.key}.bullet2` as const)}</span>
-                </li>
-                <li class="flex items-start lg:justify-center">
-                  <span class="mr-2 text-graphite-500">-</span>
-                  <span>{t(`process.${step.key}.bullet3` as const)}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+    </ol>
   </div>
 </section>

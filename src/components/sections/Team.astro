@@ -12,20 +12,17 @@ const members = [
 ];
 ---
 
-<section id="team" class="py-16 sm:py-20 lg:py-24 bg-canvas-000 border-y border-canvas-200">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Section title -->
-    <h2 class="text-3xl sm:text-4xl font-bold text-ink-900 text-center mb-4">
-      {t('team.title')}
-    </h2>
+<section id="team" class="py-20 lg:py-32">
+  <div class="max-w-[1240px] mx-auto px-5 lg:px-8 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-16 items-start">
+    <div>
+      <p class="font-mono text-xs text-graphite-500 mb-4">{t('team.kicker')}</p>
+      <h2 class="text-[38px] lg:text-[56px] leading-none font-bold tracking-[-1.2px] lg:tracking-[-2px]">
+        {t('team.title')}
+      </h2>
+      <p class="mt-6 text-[17px] text-graphite-600 max-w-[26em]">{t('team.subtitle')}</p>
+    </div>
 
-    <!-- Subtitle -->
-    <p class="text-lg text-graphite-600 text-center max-w-2xl mx-auto mb-12">
-      {t('team.subtitle')}
-    </p>
-
-    <!-- Team grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+    <div class="grid sm:grid-cols-3 gap-4">
       {members.map((member) => (
         <TeamMember
           name={t(`team.${member.key}.name` as any)}

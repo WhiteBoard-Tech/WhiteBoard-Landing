@@ -19,6 +19,14 @@ const {
   title = t("site.title"),
   description = t("site.description"),
 } = Astro.props;
+
+const navLinks = [
+  { href: "#services", key: "nav.why" },
+  { href: "#equity-model", key: "nav.model" },
+  { href: "#process", key: "nav.process" },
+  { href: "#portfolio", key: "nav.ventures" },
+  { href: "#faq", key: "nav.faq" },
+] as const;
 ---
 
 <!DOCTYPE html>
@@ -48,19 +56,34 @@ const {
     </a>
 
     <!-- Header with language switcher -->
-    <header class="fixed top-0 left-0 right-0 z-40 bg-canvas-050/90 backdrop-blur-sm border-b border-canvas-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
+    <header class="fixed top-0 left-0 right-0 z-40 bg-canvas-050/95 backdrop-blur-md border-b border-canvas-200">
+      <div class="max-w-[1240px] mx-auto px-5 lg:px-8">
+        <div class="flex items-center justify-between gap-6 h-16">
           <!-- Logo with W mark -->
-          <a href={`/${lang}/`} class="flex items-center gap-2 group" aria-label="Whiteboard - Home">
-            <Logo size="md" class="text-ink-900" />
-            <span class="text-xl font-bold tracking-tight text-ink-900">
+          <a href={`/${lang}/`} class="flex items-center gap-2.5" aria-label="Whiteboard - Home">
+            <Logo size="sm" class="text-ink-900" />
+            <span class="text-[19px] font-bold tracking-[-0.5px] text-ink-900">
               Whiteboard
             </span>
           </a>
 
-          <!-- Language switcher -->
-          <LanguageSwitcher />
+          <nav class="hidden lg:flex gap-7" aria-label="Sections">
+            {navLinks.map((link) => (
+              <a href={link.href} class="text-sm font-medium text-graphite-600 hover:text-ink-900 transition-colors">
+                {t(link.key)}
+              </a>
+            ))}
+          </nav>
+
+          <div class="flex items-center gap-3">
+            <LanguageSwitcher />
+            <a
+              href="#contact"
+              class="hidden sm:inline-flex items-center min-h-10 px-4 text-sm font-semibold rounded-md bg-ink-900 text-canvas-050 hover:bg-graphite-800 transition-colors"
+            >
+              {t("nav.apply")}
+            </a>
+          </div>
         </div>
       </div>
     </header>
