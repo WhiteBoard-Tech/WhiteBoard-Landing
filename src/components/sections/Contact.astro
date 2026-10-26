@@ -5,22 +5,22 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="contact" class="py-16 sm:py-20 lg:py-24 bg-black text-white">
+<section id="contact" class="py-16 sm:py-20 lg:py-24 bg-ink-900 text-canvas-050">
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl sm:text-4xl font-bold mb-4">
       {t("contact.title")}
     </h2>
-    <p class="text-lg text-gray-300 mb-8">
+    <p class="text-lg text-canvas-300 mb-8">
       {t("contact.subtitle")}
     </p>
 
     <!-- Testimonial - placeholder content for replacement -->
     <figure class="mb-10 max-w-2xl mx-auto">
-      <blockquote class="text-lg sm:text-xl text-gray-300 italic">
+      <blockquote class="text-lg sm:text-xl text-canvas-300 italic">
         <p>"{t("testimonial.quote")}"</p>
       </blockquote>
-      <figcaption class="mt-4 text-sm text-gray-400">
-        <span class="font-semibold text-white">{t("testimonial.name")}</span>
+      <figcaption class="mt-4 text-sm text-graphite-400">
+        <span class="font-semibold text-canvas-050">{t("testimonial.name")}</span>
         <span class="mx-2">-</span>
         <span>{t("testimonial.role")}</span>
       </figcaption>
@@ -30,7 +30,7 @@ const t = useTranslations(lang);
       type="button"
       id="calendly-cta"
       data-calendly-locale={lang}
-      class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-black bg-white rounded hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white disabled:opacity-50 disabled:cursor-wait"
+      class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-ink-900 bg-marker-500 border border-ink-900 rounded-md hover:bg-marker-400 active:bg-marker-600 transition-colors duration-200 focus-visible:outline-marker-500 disabled:opacity-50 disabled:cursor-wait"
     >
       {t("contact.cta")}
     </button>

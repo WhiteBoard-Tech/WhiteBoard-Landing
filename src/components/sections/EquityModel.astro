@@ -20,22 +20,22 @@ const valueProps = [
 ] as const;
 ---
 
-<section id="equity-model" class="py-16 sm:py-20 lg:py-24 bg-white">
+<section id="equity-model" class="py-16 sm:py-20 lg:py-24 bg-canvas-050">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl sm:text-4xl font-bold text-black mb-4 text-center">
+    <h2 class="text-3xl sm:text-4xl font-bold text-ink-900 mb-4 text-center">
       {t("equity.title")}
     </h2>
-    <p class="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-12">
+    <p class="text-lg text-graphite-600 text-center max-w-2xl mx-auto mb-12">
       {t("equity.subtitle")}
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
       {valueProps.map((prop) => (
         <div class="text-center">
-          <div class="w-16 h-16 mx-auto mb-6 bg-black rounded-full flex items-center justify-center">
+          <div class="w-16 h-16 mx-auto mb-6 bg-ink-900 rounded-full flex items-center justify-center">
             {prop.icon === "dollar-off" && (
               <svg
-                class="w-8 h-8 text-white"
+                class="w-8 h-8 text-canvas-050"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -50,7 +50,7 @@ const valueProps = [
             )}
             {prop.icon === "handshake" && (
               <svg
-                class="w-8 h-8 text-white"
+                class="w-8 h-8 text-canvas-050"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -62,7 +62,7 @@ const valueProps = [
             )}
             {prop.icon === "users" && (
               <svg
-                class="w-8 h-8 text-white"
+                class="w-8 h-8 text-canvas-050"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -77,10 +77,10 @@ const valueProps = [
               </svg>
             )}
           </div>
-          <h3 class="text-xl font-bold text-black mb-2">
+          <h3 class="text-xl font-bold text-ink-900 mb-2">
             {t(`equity.${prop.key}.title` as const)}
           </h3>
-          <p class="text-gray-600 leading-relaxed">
+          <p class="text-graphite-600 leading-relaxed">
             {t(`equity.${prop.key}.description` as const)}
           </p>
         </div>

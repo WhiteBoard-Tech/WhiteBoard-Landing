@@ -30,6 +30,7 @@ export const ui = {
 
     // Hero section
     "hero.headline": "We Build Your Technology for Equity. Your Venture Tech Partner.",
+    "hero.highlight": "Equity",
     "hero.subheadline": "CTO + dedicated squad. 60% of platform ready on day one. Full technical leadership — our success is tied to yours.",
     "hero.cta.primary": "Apply for Venture Evaluation",
     "hero.cta.secondary": "Watch How It Works",
@@ -139,6 +140,7 @@ export const ui = {
 
     // Hero section
     "hero.headline": "Construimos tu Tecnología a cambio de Equity. Tu Venture Tech Partner.",
+    "hero.highlight": "Equity",
     "hero.subheadline": "CTO + squad dedicado. 60% de plataforma lista desde el día uno. Liderazgo técnico completo — nuestro éxito está atado al tuyo.",
     "hero.cta.primary": "Aplicar para Evaluación de Venture",
     "hero.cta.secondary": "Mira Como Funciona",

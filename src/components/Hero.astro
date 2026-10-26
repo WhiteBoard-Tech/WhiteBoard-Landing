@@ -4,6 +4,9 @@ import CTAButton from './CTAButton.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// One Fluoro highlight per screen: the word the headline turns on
+const [headlineStart, headlineEnd] = t('hero.headline').split(t('hero.highlight'));
 ---
 
 <section id="hero" class="min-h-[calc(100vh-4rem)] flex items-center px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
@@ -11,11 +14,11 @@ const t = useTranslations(lang);
     <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       <!-- Text content - flexible container for text expansion -->
       <div class="max-w-xl lg:max-w-none">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-black leading-tight">
-          {t('hero.headline')}
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink-900 leading-tight">
+          {headlineStart}<mark>{t('hero.highlight')}</mark>{headlineEnd}
         </h1>
 
-        <p class="mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
+        <p class="mt-6 text-lg sm:text-xl text-graphite-600 leading-relaxed">
           {t('hero.subheadline')}
         </p>
 
@@ -28,7 +31,7 @@ const t = useTranslations(lang);
           <!-- Secondary CTA - visually subordinate text link with icon -->
           <a
             href="#video"
-            class="text-gray-600 hover:text-black transition-colors duration-200 text-sm font-medium inline-flex items-center gap-2"
+            class="text-graphite-600 hover:text-ink-900 transition-colors duration-200 text-sm font-medium inline-flex items-center gap-2"
           >
             <span>{t('hero.cta.secondary')}</span>
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -39,13 +42,13 @@ const t = useTranslations(lang);
         </div>
 
         <!-- Exclusivity microcopy -->
-        <p class="mt-4 text-sm text-gray-500 italic">
+        <p class="mt-4 font-mono text-sm text-graphite-500">
           {t('hero.microcopy')}
         </p>
 
         <!-- Venture logos section -->
         <div class="mt-8 flex items-center gap-6">
-          <span class="text-xs text-gray-400 uppercase tracking-wider">{t('hero.logos.label')}</span>
+          <span class="font-mono text-xs text-graphite-500 uppercase tracking-wider">{t('hero.logos.label')}</span>
           <div class="flex items-center gap-4">
             <img
               src="/images/logos/radarum.svg"
