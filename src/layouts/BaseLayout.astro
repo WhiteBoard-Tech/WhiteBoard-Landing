@@ -21,10 +21,10 @@ const {
 } = Astro.props;
 
 const navLinks = [
-  { href: "#services", key: "nav.why" },
-  { href: "#equity-model", key: "nav.model" },
+  { href: "#services", key: "nav.services" },
   { href: "#process", key: "nav.process" },
-  { href: "#portfolio", key: "nav.ventures" },
+  { href: "#products", key: "nav.products" },
+  { href: "#governance", key: "nav.governance" },
   { href: "#faq", key: "nav.faq" },
 ] as const;
 ---
@@ -95,5 +95,14 @@ const navLinks = [
 
     <!-- Footer component -->
     <Footer />
+
+    <script>
+      // Section animations run only while they are on screen
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => entry.target.classList.toggle("is-visible", entry.isIntersecting)),
+        { threshold: 0.3 },
+      );
+      document.querySelectorAll("[data-animate]").forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>

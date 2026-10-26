@@ -1,0 +1,87 @@
+---
+// Whiteboard sketch that turns into a working product. Sample figures only.
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<!-- Plays only while on screen (see data-animate in BaseLayout) -->
+<div data-animate class="sketch relative w-full aspect-[680/560] bg-canvas-000 border border-canvas-200 rounded-lg shadow-lg overflow-hidden" aria-hidden="true">
+  <div class="absolute inset-[3%] bottom-[7%]">
+    <svg viewBox="0 0 640 480" class="absolute inset-0 w-full h-full" fill="none" stroke="#16181C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path class="sk" pathLength="1" d="M20 20 L618 23 L616 76 L22 73 Z" />
+      <path class="sk" pathLength="1" d="M44 48 Q64 38 84 48 T124 48 T164 48" style="animation-delay: .3s" />
+      <path class="sk" pathLength="1" d="M20 104 L304 101 L306 214 L22 217 Z" style="animation-delay: .5s" />
+      <path class="sk" pathLength="1" d="M336 103 L618 105 L616 215 L334 213 Z" style="animation-delay: .7s" />
+      <path class="sk" pathLength="1" d="M48 150 L120 150 M48 182 L200 180" style="animation-delay: .9s" />
+      <path class="sk" pathLength="1" d="M364 150 L436 150 M364 182 L520 180" style="animation-delay: 1s" />
+      <path class="sk" pathLength="1" d="M20 246 L618 249 L616 462 L22 459 Z" style="animation-delay: 1.2s" />
+      <path class="sk" pathLength="1" d="M60 430 C150 420 180 350 260 370 S400 318 470 306 S560 276 590 284" style="animation-delay: 1.5s" />
+      <path class="sk" pathLength="1" d="M566 270 L592 284 L578 308" style="animation-delay: 2s" />
+    </svg>
+
+    <!-- The sketch turned real -->
+    <div class="ui absolute inset-0 flex flex-col gap-[3.5%]">
+      <div class="h-[11%] border border-canvas-200 rounded-md flex items-center justify-between px-[3%] bg-canvas-050">
+        <span class="flex items-center gap-2.5"><span class="w-2.5 h-2.5 bg-ink-900 rounded-[2px]"></span><span class="font-semibold text-[clamp(11px,1.2vw,15px)]">{t('sketch.title')}</span></span>
+        <span class="flex items-center gap-1.5 font-mono text-[11px] text-success bg-success-bg px-2 py-1 rounded-sm">
+          <svg class="w-3 h-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6.5" /><path d="M5 8.2l2.1 2.1L11 6.4" /></svg>
+          {t('sketch.status')}
+        </span>
+      </div>
+      <div class="flex gap-[3.5%] h-[23%]">
+        <div class="flex-1 border border-canvas-200 rounded-md p-[3%]">
+          <div class="font-mono text-[10px] tracking-[0.9px] uppercase text-graphite-500">{t('sketch.kpi1')}</div>
+          <div class="relative inline-block mt-1.5">
+            <span class="hl absolute -inset-x-1.5 inset-y-0.5 bg-marker-500"></span>
+            <span class="relative font-mono text-[clamp(22px,2.6vw,40px)] font-semibold tracking-[-1.5px]">1.284</span>
+          </div>
+        </div>
+        <div class="flex-1 border border-canvas-200 rounded-md p-[3%]">
+          <div class="font-mono text-[10px] tracking-[0.9px] uppercase text-graphite-500">{t('sketch.kpi2')}</div>
+          <div class="font-mono text-[clamp(22px,2.6vw,40px)] font-semibold tracking-[-1.5px] mt-1.5">312</div>
+        </div>
+      </div>
+      <div class="flex-1 border border-canvas-200 rounded-md p-[3%] flex items-end gap-[2.5%]">
+        {[30, 42, 38, 55, 63, 72, 88].map((h, i) => (
+          <div
+            class="bar flex-1 rounded-t-sm"
+            style={`height: ${h}%; background: ${['#C4CBD5', '#C4CBD5', '#C4CBD5', '#98A1AD', '#98A1AD', '#636C79', '#16181C'][i]}; animation-delay: ${i * 0.1}s`}
+          ></div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Marker pen -->
+  <svg class="pen absolute w-[13%] h-auto" viewBox="0 0 90 22">
+    <rect x="0" y="4" width="64" height="14" rx="3" fill="#16181C" /><rect x="64" y="6" width="14" height="10" fill="#3A414A" />
+    <path d="M78 7 L90 11 L78 15 Z" fill="#16181C" /><rect x="8" y="4" width="16" height="14" fill="#CDF03F" />
+  </svg>
+
+  <!-- Marker tray -->
+  <div class="absolute inset-x-0 bottom-0 h-[4.5%] bg-canvas-100 border-t border-canvas-200"></div>
+</div>
+
+<style>
+  .sk { stroke-dasharray: 1; stroke-dashoffset: 1; animation: sa-sk 10s ease-in-out infinite both; }
+  .ui { animation: sa-ui 10s ease-in-out infinite both; }
+  .bar { transform-origin: bottom; animation: sa-bar 10s cubic-bezier(.2, .7, .2, 1) infinite both; }
+  .hl { transform-origin: left; animation: sa-hl 10s ease-out infinite both; }
+  .pen { transform: rotate(-20deg); animation: sa-pen 10s ease-in-out infinite both; }
+  @keyframes sa-sk { 0% { stroke-dashoffset: 1; opacity: 1; } 30% { stroke-dashoffset: 0; opacity: 1; } 46% { opacity: 1; } 54%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+  @keyframes sa-ui { 0%, 48% { opacity: 0; transform: translateY(14px); } 58%, 92% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; } }
+  @keyframes sa-bar { 0%, 56% { transform: scaleY(0); } 70%, 92% { transform: scaleY(1); } 98%, 100% { transform: scaleY(0); } }
+  @keyframes sa-hl { 0%, 72% { transform: scaleX(0); } 78%, 92% { transform: scaleX(1); } 98%, 100% { transform: scaleX(0); } }
+  @keyframes sa-pen {
+    0% { left: 6%; top: 6%; opacity: 1; }
+    10% { left: 82%; top: 10%; }
+    20% { left: 44%; top: 42%; }
+    30% { left: 82%; top: 52%; opacity: 1; }
+    38%, 100% { left: 100%; top: 95%; opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sk, .pen { display: none; }
+    .ui, .bar, .hl { animation: none; opacity: 1; transform: none; }
+  }
+</style>

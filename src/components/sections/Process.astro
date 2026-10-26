@@ -1,11 +1,11 @@
 ---
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import SketchAnimation from "../SketchAnimation.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const steps = ["discovery", "build", "scale"] as const;
-const bullets = ["bullet1", "bullet2", "bullet3"] as const;
+const steps = ["diagnosis", "pilot", "rollout", "operation"] as const;
 ---
 
 <section id="process" class="py-20 lg:py-32">
@@ -15,26 +15,23 @@ const bullets = ["bullet1", "bullet2", "bullet3"] as const;
       {t("process.title")}
     </h2>
 
-    <ol class="grid lg:grid-cols-3 gap-6 mt-16">
-      {steps.map((step, i) => (
-        <li class="bg-canvas-000 border border-canvas-200 rounded-lg p-8">
-          <div class="flex items-center gap-4">
-            <span class="w-12 h-12 rounded-md bg-ink-900 text-canvas-050 flex items-center justify-center font-mono text-lg font-semibold">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mt-16">
+      <SketchAnimation />
+
+      <ol class="border-t border-canvas-200">
+        {steps.map((step, i) => (
+          <li class="flex gap-5 py-6 border-b border-canvas-200">
+            <span class="w-12 h-12 flex-none rounded-md bg-ink-900 text-canvas-050 flex items-center justify-center font-mono text-lg font-semibold">
               {String(i + 1).padStart(2, "0")}
             </span>
-            <span class="font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-500">{t(`process.${step}.when` as const)}</span>
-          </div>
-          <h3 class="mt-7 mb-4 text-[26px] font-bold tracking-[-0.6px]">{t(`process.${step}.title` as const)}</h3>
-          <ul class="flex flex-col gap-3 text-[15px] text-graphite-600">
-            {bullets.map((bullet) => (
-              <li class="flex gap-3">
-                <span class="font-mono text-graphite-450" aria-hidden="true">—</span>
-                <span>{t(`process.${step}.${bullet}` as const)}</span>
-              </li>
-            ))}
-          </ul>
-        </li>
-      ))}
-    </ol>
+            <div>
+              <span class="font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-500">{t(`process.${step}.when` as const)}</span>
+              <h3 class="mt-1 mb-1.5 text-[22px] font-bold tracking-[-0.5px]">{t(`process.${step}.title` as const)}</h3>
+              <p class="text-[15px] leading-relaxed text-graphite-600">{t(`process.${step}.description` as const)}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>

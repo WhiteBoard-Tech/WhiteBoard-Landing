@@ -1,0 +1,44 @@
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const products = [
+  { key: 'hoolik', name: 'Hoolik', url: 'https://hoolik.com' },
+  { key: 'auditore', name: 'Auditore', url: undefined },
+] as const;
+---
+
+<section id="products" class="py-20 lg:py-32 bg-canvas-000 border-y border-canvas-200">
+  <div class="max-w-[1240px] mx-auto px-5 lg:px-8">
+    <p class="font-mono text-xs text-graphite-500 mb-4">{t('products.kicker')}</p>
+    <h2 class="text-[38px] lg:text-[56px] leading-none font-bold tracking-[-1.2px] lg:tracking-[-2px] max-w-[14em]">
+      {t('products.title')}
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-14">
+      {products.map((product) => (
+        <article class="flex flex-col gap-5 min-h-[360px] p-8 lg:p-10 bg-canvas-050 border border-canvas-200 rounded-lg">
+          <div class="flex flex-wrap justify-between items-center gap-3">
+            <span class="font-mono text-xs text-graphite-600 border border-canvas-300 px-3 py-1.5 rounded-full">
+              {t(`products.${product.key}.category` as const)}
+            </span>
+            <!-- Status: icon and label, never colour alone -->
+            <span class="flex items-center gap-2 text-[13px] font-semibold text-success bg-success-bg px-2.5 py-1.5 rounded-sm">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="8" cy="8" r="6.5" /><path d="M5 8.2l2.1 2.1L11 6.4" />
+              </svg>
+              {t(`products.${product.key}.status` as const)}
+            </span>
+          </div>
+          <h3 class="mt-auto text-[44px] font-bold tracking-[-1.6px]">
+            {product.url ? <a href={product.url} class="hover:underline underline-offset-4">{product.name}</a> : product.name}
+          </h3>
+          <p class="text-[17px] leading-relaxed text-graphite-600 max-w-[32em]">{t(`products.${product.key}.description` as const)}</p>
+          <p class="font-mono text-xs leading-relaxed text-graphite-500 pt-5 border-t border-canvas-200">{t(`products.${product.key}.features` as const)}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

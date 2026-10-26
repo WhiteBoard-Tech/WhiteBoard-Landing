@@ -1,15 +1,16 @@
 ---
 import { getLangFromUrl, useTranslations } from '@i18n/utils';
 import ServiceCard from '../ServiceCard.astro';
+import LayersAnimation from '../LayersAnimation.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const services = [
-  { key: 'platformReady', icon: 'layers' as const },
-  { key: 'skinInGame', icon: 'handshake' as const },
-  { key: 'governance', icon: 'target' as const },
-  { key: 'aiNative', icon: 'cpu' as const },
+  { key: 'ai', icon: 'cpu' as const },
+  { key: 'software', icon: 'code' as const },
+  { key: 'consulting', icon: 'compass' as const },
+  { key: 'governance', icon: 'shield' as const },
 ];
 ---
 
@@ -25,15 +26,18 @@ const services = [
       <p class="text-[17px] text-graphite-600 max-w-[30em]">{t('services.subtitle')}</p>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {services.map((service, i) => (
-        <ServiceCard
-          index={i + 1}
-          title={t(`services.${service.key}.title` as any)}
-          tagline={t(`services.${service.key}.tagline` as any)}
-          icon={service.icon}
-        />
-      ))}
+    <div class="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-4">
+      <LayersAnimation />
+      <div class="grid sm:grid-cols-2 gap-4">
+        {services.map((service, i) => (
+          <ServiceCard
+            index={i + 1}
+            title={t(`services.${service.key}.title` as any)}
+            tagline={t(`services.${service.key}.tagline` as any)}
+            icon={service.icon}
+          />
+        ))}
+      </div>
     </div>
   </div>
 </section>

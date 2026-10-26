@@ -1,20 +1,19 @@
 ---
 interface Props {
   href: string;
-  variant?: 'primary' | 'inverse' | 'secondary' | 'secondary-dark';
+  variant?: 'inverse' | 'secondary-dark';
   arrow?: boolean;
   class?: string;
 }
 
-const { href, variant = 'primary', arrow = false, class: className = '' } = Astro.props;
+const { href, variant = 'inverse', arrow = false, class: className = '' } = Astro.props;
 
-const baseStyles = 'inline-flex items-center justify-center gap-2.5 min-h-12 px-5.5 text-[15px] font-semibold rounded-md border transition-colors duration-200';
+const baseStyles = 'inline-flex items-center justify-center gap-2.5 min-h-12 px-5.5 text-[15px] font-semibold rounded-md border transition-colors duration-200 focus-visible:outline-marker-500';
 
+// Both variants sit on dark surfaces
 const variants = {
-  primary: 'bg-ink-900 text-canvas-050 border-transparent hover:bg-graphite-800',
-  inverse: 'bg-canvas-050 text-ink-900 border-transparent hover:bg-canvas-200 focus-visible:outline-marker-500',
-  secondary: 'text-ink-900 border-graphite-450 hover:bg-canvas-100',
-  'secondary-dark': 'text-canvas-050 border-graphite-650 hover:bg-ink-900 focus-visible:outline-marker-500',
+  inverse: 'bg-canvas-050 text-ink-900 border-transparent hover:bg-canvas-200',
+  'secondary-dark': 'text-canvas-050 border-graphite-650 hover:bg-ink-900',
 };
 ---
 

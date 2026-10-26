@@ -1,0 +1,28 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const reasons = ["product", "management", "regulated", "governance"] as const;
+---
+
+<section id="why" class="py-20 lg:py-32 bg-ink-900 text-canvas-050">
+  <div class="max-w-[1240px] mx-auto px-5 lg:px-8">
+    <p class="font-mono text-xs text-graphite-400 mb-4">{t("why.kicker")}</p>
+    <h2 class="text-[44px] lg:text-[72px] leading-[0.96] font-bold tracking-[-1.5px] lg:tracking-[-2.8px] max-w-[14em]">
+      {t("why.title")}
+    </h2>
+    <p class="mt-6 text-xl text-graphite-400 max-w-[36em]">{t("why.subtitle")}</p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-0 mt-20">
+      {reasons.map((reason, i) => (
+        <div class="border-t border-graphite-700 pt-7 lg:pr-8">
+          <div class="font-mono text-5xl font-semibold tracking-[-1.5px] leading-none" aria-hidden="true">{String(i + 1).padStart(2, "0")}</div>
+          <h3 class="mt-6 mb-2 text-[22px] font-semibold">{t(`why.${reason}.title` as const)}</h3>
+          <p class="text-base leading-relaxed text-canvas-300">{t(`why.${reason}.description` as const)}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

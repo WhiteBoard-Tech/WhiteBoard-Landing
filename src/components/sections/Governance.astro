@@ -1,0 +1,41 @@
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const standards = ['iso27001', 'iso42001'] as const;
+const cases = ['case1', 'case2'] as const;
+---
+
+<section id="governance" class="py-20 lg:py-32">
+  <div class="max-w-[1240px] mx-auto px-5 lg:px-8 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-16 items-start">
+    <div>
+      <p class="font-mono text-xs text-graphite-500 mb-4">{t('governance.kicker')}</p>
+      <h2 class="text-[38px] lg:text-[56px] leading-none font-bold tracking-[-1.2px] lg:tracking-[-2px]">
+        {t('governance.title')}
+      </h2>
+      <p class="mt-6 text-[17px] leading-relaxed text-graphite-600 max-w-[30em]">{t('governance.subtitle')}</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      {standards.map((key) => (
+        <div class="bg-canvas-000 border border-canvas-200 rounded-lg p-7">
+          <div class="w-11 h-11 rounded-md bg-ink-900 text-canvas-050 flex items-center justify-center">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4" />
+            </svg>
+          </div>
+          <h3 class="mt-6 mb-2 font-mono text-xl font-semibold">{t(`governance.${key}.title` as const)}</h3>
+          <p class="text-[15px] leading-relaxed text-graphite-600">{t(`governance.${key}.description` as const)}</p>
+        </div>
+      ))}
+      {cases.map((key) => (
+        <div class="bg-ink-900 text-canvas-050 rounded-lg p-7">
+          <span class="font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-400">{t(`governance.${key}.label` as const)}</span>
+          <p class="mt-4 text-[17px] leading-relaxed">{t(`governance.${key}.description` as const)}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

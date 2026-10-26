@@ -1,0 +1,72 @@
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Bottom to top; the last layer is the client's solution and lands in Fluoro
+const layers = [
+  { key: 'layers.infra', bg: '#16181C', border: '#3A414A', text: '#98A1AD' },
+  { key: 'layers.security', bg: '#1C2026', border: '#3A414A', text: '#98A1AD' },
+  { key: 'layers.ai', bg: '#252A31', border: '#5B6470', text: '#C4CBD5' },
+  { key: 'layers.integrations', bg: '#3A414A', border: '#636C79', text: '#DDE2E9' },
+  { key: 'layers.governance', bg: '#515A66', border: '#7C8593', text: '#F7F9FB' },
+] as const;
+---
+
+<!-- Plays only while on screen (see data-animate in BaseLayout) -->
+<div data-animate class="layers relative h-[440px] lg:h-full min-h-[440px] bg-ink-950 rounded-lg overflow-hidden" aria-hidden="true">
+  <div class="absolute top-6 left-6 right-6 flex justify-between items-start text-canvas-050">
+    <span class="font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-400">{t('layers.caption')}</span>
+    <span class="relative h-14 w-36 font-mono text-5xl font-semibold tracking-[-2px] text-right">
+      <span class="p60 absolute right-0">60%</span>
+      <span class="p100 absolute right-0">100%</span>
+    </span>
+  </div>
+
+  <div class="stage">
+    {layers.map((layer, i) => (
+      <div
+        class="layer font-mono text-[11px] uppercase"
+        style={`--z: ${i * 30}px; background: ${layer.bg}; border: 1.5px solid ${layer.border}; color: ${layer.text}; animation-delay: ${i * 0.8}s`}
+      >
+        {t(layer.key)}
+      </div>
+    ))}
+    <div class="layer text-lg font-bold text-ink-900" style="--z: 196px; background: #CDF03F; border: 1.5px solid #16181C; animation-delay: 4.6s">
+      {t('layers.product')}
+    </div>
+  </div>
+
+  <div class="p100 absolute bottom-6 left-6 font-mono text-xs text-graphite-400">
+    {t('layers.product')} · {t('layers.weeks')}
+  </div>
+</div>
+
+<style>
+  .stage {
+    position: absolute; left: 50%; top: 58%;
+    width: 200px; height: 200px; margin: -100px 0 0 -100px;
+    transform: rotateX(58deg) rotateZ(-45deg); transform-style: preserve-3d;
+  }
+  .layer {
+    position: absolute; inset: 0; border-radius: 10px; padding: 14px;
+    display: flex; align-items: flex-end;
+    transform: translateZ(var(--z));
+    animation: ly-drop 11s cubic-bezier(.2, .8, .2, 1) infinite both;
+  }
+  .p60 { animation: ly-p60 11s linear infinite both; }
+  .p100 { animation: ly-p100 11s linear infinite both; }
+  @keyframes ly-drop {
+    0% { opacity: 0; transform: translateZ(calc(var(--z) + 240px)); }
+    8%, 86% { opacity: 1; transform: translateZ(var(--z)); }
+    94%, 100% { opacity: 0; transform: translateZ(calc(var(--z) + 240px)); }
+  }
+  @keyframes ly-p60 { 0%, 30% { opacity: 0; } 36%, 46% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  @keyframes ly-p100 { 0%, 48% { opacity: 0; } 52%, 86% { opacity: 1; } 94%, 100% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .layer { animation: none; }
+    .p60 { display: none; }
+    .p100 { animation: none; opacity: 1; }
+  }
+</style>

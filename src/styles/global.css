@@ -99,6 +99,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Section animations wait until they scroll into view */
+[data-animate]:not(.is-visible) * {
+  animation-play-state: paused !important;
+}
+
 /* Focus: 2px outline with 2px offset */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--color-ink-900);

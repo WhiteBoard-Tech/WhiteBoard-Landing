@@ -3,24 +3,24 @@ export interface Props {
   index: number;
   title: string;
   tagline: string;
-  icon: 'layers' | 'handshake' | 'target' | 'cpu';
+  icon: 'cpu' | 'code' | 'compass' | 'shield';
 }
 
 const { index, title, tagline, icon } = Astro.props;
 
 const iconPaths: Record<Props['icon'], string> = {
-  // Layers - stacked components representing platform foundation
-  layers: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
-  // Two linked rings - partnership and equity alignment
-  handshake: 'M9 7a5 5 0 1 0 0 10 5 5 0 1 0 0-10zM15 7a5 5 0 1 0 0 10 5 5 0 1 0 0-10z',
-  // Eye - visible progress, no black boxes
-  target: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 1 0 0-6z',
-  // Chip - AI and data native
+  // Chip - AI and agents
   cpu: 'M7 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM9.5 9.5h5v5h-5zM9 2v3M15 2v3M9 19v3M15 19v3M19 9h3M19 15h3M2 9h3M2 15h3',
+  // Brackets - custom software
+  code: 'M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16',
+  // Map - consulting and roadmap
+  compass: 'M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15',
+  // Shield with check - governance and audit
+  shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4',
 };
 ---
 
-<div class="flex flex-col gap-4 min-h-[260px] p-7 bg-canvas-050 border border-canvas-200 rounded-lg">
+<div class="flex flex-col gap-4 p-7 bg-canvas-050 border border-canvas-200 rounded-lg">
   <div class="flex justify-between items-start">
     <div class="w-11 h-11 rounded-md bg-ink-900 text-canvas-050 flex items-center justify-center">
       <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -29,6 +29,6 @@ const iconPaths: Record<Props['icon'], string> = {
     </div>
     <span class="font-mono text-xs text-graphite-500">{String(index).padStart(2, '0')}</span>
   </div>
-  <h3 class="mt-auto text-[22px] font-semibold tracking-[-0.4px]">{title}</h3>
+  <h3 class="mt-4 text-[22px] font-semibold tracking-[-0.4px]">{title}</h3>
   <p class="text-[15px] leading-relaxed text-graphite-600">{tagline}</p>
 </div>

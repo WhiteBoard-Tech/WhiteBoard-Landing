@@ -3,6 +3,12 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const contactLines = [
+  { key: "contact.card.email", value: "WBAdmin@whibotech.com", href: "mailto:WBAdmin@whibotech.com" },
+  { key: "contact.card.whatsapp", value: "+57 301 708 3266", href: "https://wa.me/573017083266" },
+  { key: "contact.card.web", value: "whibotech.com", href: "https://whibotech.com" },
+] as const;
 ---
 
 <section id="contact" class="pt-24 lg:pt-32 pb-20 lg:pb-24 bg-ink-900 text-canvas-050">
@@ -33,22 +39,19 @@ const t = useTranslations(lang);
       </div>
     </div>
 
-    <!-- Testimonial - placeholder content for replacement -->
-    <figure class="border border-graphite-700 rounded-lg p-9">
-      <svg class="w-8 h-6 text-graphite-650" viewBox="0 0 32 24" fill="currentColor" aria-hidden="true">
-        <path d="M0 24V14C0 6 4 1 12 0v5c-4 1-6 4-6 8h6v11H0zm18 0V14c0-8 4-13 12-14v5c-4 1-6 4-6 8h6v11H18z" />
-      </svg>
-      <blockquote class="mt-5 text-[22px] leading-snug tracking-[-0.3px]">
-        <p>{t("testimonial.quote")}</p>
-      </blockquote>
-      <figcaption class="flex items-center gap-3 mt-7">
-        <span class="w-10 h-10 rounded-md bg-graphite-800 text-canvas-300 flex items-center justify-center font-mono text-[13px]" aria-hidden="true">FN</span>
-        <span class="flex flex-col">
-          <span class="text-[15px] font-semibold">{t("testimonial.name")}</span>
-          <span class="font-mono text-xs text-graphite-400">{t("testimonial.role")}</span>
-        </span>
-      </figcaption>
-    </figure>
+    <div class="border border-graphite-700 rounded-lg p-9">
+      <p class="font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-400">{t("contact.card.title")}</p>
+      <dl class="mt-6">
+        {contactLines.map((line) => (
+          <div class="flex flex-wrap justify-between gap-x-6 gap-y-1 py-4 border-t border-graphite-800">
+            <dt class="text-[15px] text-graphite-400">{t(line.key)}</dt>
+            <dd>
+              <a href={line.href} class="font-mono text-[15px] text-canvas-050 hover:underline underline-offset-4 focus-visible:outline-marker-500">{line.value}</a>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
 
     <script>
       import { loadCalendly, openCalendlyPopup } from '@scripts/calendly';

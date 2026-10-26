@@ -5,52 +5,49 @@ import CTAButton from './CTAButton.astro';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// One Fluoro highlight per screen: the word the headline turns on
-const [headlineStart, headlineEnd] = t('hero.headline').split(t('hero.highlight'));
+// Left column: what the client already has. Right column: what we build.
+const sources = [
+  { name: 'ERP', sub: t('hero.src.erp') },
+  { name: 'CRM', sub: t('hero.src.crm') },
+  { name: 'WhatsApp', sub: t('hero.src.whatsapp') },
+  { name: 'Excel / CSV', sub: t('hero.src.excel') },
+  { name: 'E-commerce', sub: t('hero.src.ecommerce') },
+  { name: t('hero.src.banks'), sub: t('hero.src.banksSub') },
+].map((item, i) => ({ ...item, y: 30 + i * 90 }));
 
-const modules = ['hero.card.auth', 'hero.card.tenant', 'hero.card.admin', 'hero.card.ai'] as const;
+const outputs = [
+  { name: t('hero.out.mobile'), sub: t('hero.out.mobileSub') },
+  { name: t('hero.out.web'), sub: t('hero.out.webSub') },
+  { name: t('hero.out.portal'), sub: t('hero.out.portalSub') },
+  { name: t('hero.out.dashboards'), sub: t('hero.out.dashboardsSub') },
+  { name: t('hero.out.automation'), sub: t('hero.out.automationSub') },
+  { name: t('hero.out.agents'), sub: t('hero.out.agentsSub') },
+].map((item, i) => ({ ...item, y: 30 + i * 90 }));
 
 const stats = [
-  { value: '0', key: 'stats.cost' },
-  { value: '6–10', key: 'stats.mvp' },
-  { value: '3–5', key: 'stats.ventures' },
+  { value: '18', key: 'stats.years' },
+  { value: '2', key: 'stats.products' },
+  { value: '3', key: 'stats.countries' },
 ] as const;
 ---
 
-<section id="hero" class="relative overflow-hidden bg-ink-950 text-canvas-050 pt-20 lg:pt-28">
-  <!-- Background loop: the poster stays when motion is reduced or the video is loading -->
-  <img src="/videos/hero-bg.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" />
-  <video
-    class="absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-    poster="/videos/hero-bg.jpg"
-    aria-hidden="true"
-  >
-    <source src="/videos/hero-bg.mp4" type="video/mp4" />
-  </video>
-  <!-- Flat scrim keeps the copy at full contrast over the video -->
-  <div class="absolute inset-0 bg-ink-950/60" aria-hidden="true"></div>
-
+<section id="hero" class="relative overflow-hidden bg-ink-950 text-canvas-050 pt-20 lg:pt-24">
   <div class="relative max-w-[1240px] mx-auto px-5 lg:px-8">
-    <div class="grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-14 lg:gap-16 items-center">
+    <div class="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-10 items-center">
       <div>
-        <span class="inline-block font-mono text-xs text-canvas-300 bg-ink-950 border border-graphite-700 px-3 py-1.5 rounded-full mb-8">
+        <span class="inline-block font-mono text-xs text-canvas-300 border border-graphite-700 px-3 py-1.5 rounded-full mb-8">
           {t('hero.tag')}
         </span>
 
-        <h1 class="text-[52px] lg:text-[88px] leading-[0.94] font-bold tracking-[-1.8px] lg:tracking-[-3.4px]">
-          {headlineStart}<mark class="px-2.5">{t('hero.highlight')}</mark>{headlineEnd}
+        <h1 class="text-[44px] lg:text-[64px] leading-[0.96] font-bold tracking-[-1.5px] lg:tracking-[-2.4px]">
+          {t('hero.headline')}
         </h1>
 
-        <p class="mt-8 text-lg lg:text-xl leading-relaxed text-canvas-300 max-w-[34em]">
+        <p class="mt-7 text-lg leading-relaxed text-canvas-300 max-w-[32em]">
           {t('hero.subheadline')}
         </p>
 
-        <div class="mt-10 flex flex-wrap gap-3">
+        <div class="mt-9 flex flex-wrap gap-3">
           <CTAButton href="#contact" variant="inverse" arrow>
             {t('hero.cta.primary')}
           </CTAButton>
@@ -59,57 +56,93 @@ const stats = [
           </CTAButton>
         </div>
 
-        <div class="mt-10 flex flex-wrap items-center gap-5">
+        <div class="mt-9 flex flex-wrap items-center gap-5">
           <span class="font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-400">{t('hero.logos.label')}</span>
-          <span class="text-[17px] font-semibold text-canvas-200">Radarum</span>
+          <a href="https://hoolik.com" class="text-[17px] font-semibold text-canvas-200 hover:text-canvas-050 focus-visible:outline-marker-500">Hoolik</a>
           <span class="w-1 h-1 bg-graphite-650" aria-hidden="true"></span>
-          <span class="text-[17px] font-semibold text-canvas-200">Alwon</span>
+          <span class="text-[17px] font-semibold text-canvas-200">Auditore</span>
         </div>
       </div>
 
-      <!-- Platform card: what is already built on day one -->
-      <div class="bg-ink-900 border border-graphite-800 rounded-lg p-8 shadow-lg">
-        <div class="flex justify-between items-center font-mono text-[11px] uppercase tracking-[0.9px] text-graphite-400">
-          <span>{t('hero.card.label')}</span>
-          <span>v1</span>
-        </div>
-        <div class="mt-6 font-mono text-8xl font-semibold tracking-[-4px] leading-none">60%</div>
-        <p class="mt-2 text-[15px] text-canvas-300">{t('hero.card.caption')}</p>
-        <div role="img" aria-label={t('hero.card.progress')} class="h-2 bg-graphite-800 rounded-sm my-6 overflow-hidden">
-          <div class="w-3/5 h-full bg-canvas-050"></div>
-        </div>
-        <ul>
-          {modules.map((key) => (
-            <li class="flex items-center justify-between py-3 border-t border-graphite-800">
-              <span class="text-[15px]">{t(key)}</span>
-              <span class="flex items-center gap-1.5 font-mono text-xs text-success-dark">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <circle cx="8" cy="8" r="6.5" /><path d="M5 8.2l2.1 2.1L11 6.4" />
-                </svg>
-                {t('hero.card.ready')}
-              </span>
-            </li>
+      <!-- Systems in, software out: the single Fluoro element of this screen is the core -->
+      <svg viewBox="0 0 760 600" class="w-full h-auto connect" role="img" aria-label={t('hero.anim.label')}>
+        <defs>
+          <pattern id="hc-dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="#1C2026" /></pattern>
+          {sources.map((s, i) => <path id={`hc-s${i}`} d={`M178 ${s.y + 26} C260 ${s.y + 26} 260 300 320 300`} />)}
+          {outputs.map((o, i) => <path id={`hc-o${i}`} d={`M440 300 C510 300 510 ${o.y + 26} 582 ${o.y + 26}`} />)}
+        </defs>
+        <rect width="760" height="600" fill="url(#hc-dots)" />
+
+        <g fill="none" stroke="#3A414A" stroke-width="1.5">
+          {sources.map((_, i) => <use href={`#hc-s${i}`} />)}
+          {outputs.map((_, i) => <use href={`#hc-o${i}`} />)}
+        </g>
+
+        {sources.map((s, i) => (
+          <g>
+            <rect class="src" x="8" y={s.y} width="170" height="52" rx="6" fill="#16181C" stroke="#3A414A" stroke-width="1.5" style={`animation-delay: ${i}s`} />
+            <text x="24" y={s.y + 24} font-size="15" font-weight="600" fill="#F7F9FB">{s.name}</text>
+            <text x="24" y={s.y + 41} font-size="11" fill="#98A1AD" class="font-mono">{s.sub}</text>
+          </g>
+        ))}
+
+        <g class="pulse" fill="#F7F9FB">
+          {sources.map((_, i) => (
+            <circle r="3.5">
+              <animateMotion dur={`${2 + (i % 2) * 0.4}s`} begin={`${(i * 0.35).toFixed(2)}s`} repeatCount="indefinite"><mpath href={`#hc-s${i}`} /></animateMotion>
+            </circle>
           ))}
-          <li class="flex items-center justify-between py-3 border-t border-graphite-800">
-            <span class="text-[15px] font-semibold">{t('hero.card.product')}</span>
-            <span class="flex items-center gap-1.5 font-mono text-xs text-graphite-400">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2" aria-hidden="true">
-                <circle cx="8" cy="8" r="6.5" />
-              </svg>
-              {t('hero.card.together')}
-            </span>
-          </li>
-        </ul>
-      </div>
+        </g>
+        <g class="pulse" fill="#3FBF9E">
+          {outputs.map((_, i) => (
+            <circle r="3.5">
+              <animateMotion dur="1.8s" begin={`${(0.9 + i * 0.5).toFixed(1)}s`} repeatCount="indefinite"><mpath href={`#hc-o${i}`} /></animateMotion>
+            </circle>
+          ))}
+        </g>
+
+        <circle class="ring" cx="380" cy="300" r="70" fill="none" stroke="#5B6470" stroke-width="1.5" />
+        <circle class="ring" cx="380" cy="300" r="70" fill="none" stroke="#5B6470" stroke-width="1.5" style="animation-delay: 1.5s" />
+        <g class="core">
+          <rect x="320" y="240" width="120" height="120" rx="10" fill="#CDF03F" stroke="#16181C" stroke-width="1.5" />
+          <g transform="translate(352 268) scale(0.56)" fill="#16181C">
+            <path d="M0 0 L22 90 L50 45 L40 0 Z" /><path d="M100 0 L78 90 L50 45 L60 0 Z" /><path d="M40 0 L50 20 L60 0 Z" />
+          </g>
+        </g>
+        <text x="380" y="392" text-anchor="middle" font-size="11" fill="#98A1AD" class="font-mono" letter-spacing="1">{t('hero.core')}</text>
+
+        {outputs.map((o, i) => (
+          <g>
+            <rect class="out" x="582" y={o.y} width="170" height="52" rx="6" fill="#16181C" stroke="#3A414A" stroke-width="1.5" style={`animation-delay: ${i * 0.5}s`} />
+            <text x="598" y={o.y + 24} font-size="15" font-weight="600" fill="#F7F9FB">{o.name}</text>
+            <text x="598" y={o.y + 41} font-size="11" fill="#98A1AD" class="font-mono">{o.sub}</text>
+          </g>
+        ))}
+      </svg>
     </div>
 
-    <div class="grid sm:grid-cols-3 gap-8 mt-24 lg:mt-28 pt-10 pb-20 lg:pb-24 border-t border-graphite-800">
+    <div class="grid sm:grid-cols-3 gap-8 mt-16 lg:mt-20 pt-10 pb-20 lg:pb-24 border-t border-graphite-800">
       {stats.map((stat) => (
         <div>
           <div class="font-mono text-[40px] lg:text-[56px] font-semibold tracking-[-2px] leading-none">{stat.value}</div>
-          <div class="mt-2 text-sm text-graphite-400 max-w-[28ch]">{t(stat.key)}</div>
+          <div class="mt-2 text-sm text-graphite-400 max-w-[30ch]">{t(stat.key)}</div>
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .connect .ring { transform-origin: 380px 300px; animation: hc-ring 3s ease-out infinite both; }
+  .connect .core { transform-origin: 380px 300px; animation: hc-core 3s ease-in-out infinite both; }
+  .connect .src { animation: hc-src 6s ease-in-out infinite both; }
+  .connect .out { animation: hc-out 6s ease-in-out infinite both; }
+  @keyframes hc-ring { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(1.9); opacity: 0; } }
+  @keyframes hc-core { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+  @keyframes hc-src { 0%, 100% { stroke: #3A414A; } 8%, 20% { stroke: #F7F9FB; } }
+  @keyframes hc-out { 0%, 40% { stroke: #3A414A; } 50%, 62% { stroke: #3FBF9E; } 72%, 100% { stroke: #3A414A; } }
+  @media (prefers-reduced-motion: reduce) {
+    .connect .ring, .connect .pulse { display: none; }
+    .connect .src, .connect .out, .connect .core { animation: none; }
+  }
+</style>
