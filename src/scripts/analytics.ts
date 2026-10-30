@@ -1,31 +1,9 @@
 /**
  * Analytics setup for Plausible custom events
  * - Section visibility tracking
- * - Calendly booking conversion tracking
  */
 
 const TRACKED_SECTIONS = ['services', 'team', 'equity-model', 'process', 'contact'];
-
-function isCalendlyEvent(e: MessageEvent): boolean {
-  return e.origin === 'https://calendly.com' &&
-         typeof e.data?.event === 'string' &&
-         e.data.event.startsWith('calendly.');
-}
-
-function setupCalendlyTracking(): void {
-  window.addEventListener('message', (e) => {
-    if (!isCalendlyEvent(e)) return;
-
-    switch (e.data.event) {
-      case 'calendly.event_scheduled':
-        window.plausible?.('booking_confirmed');
-        break;
-      case 'calendly.date_and_time_selected':
-        window.plausible?.('date_time_selected', { interactive: false });
-        break;
-    }
-  });
-}
 
 function setupSectionTracking(): void {
   const observer = new IntersectionObserver(
@@ -56,7 +34,6 @@ function setupSectionTracking(): void {
 }
 
 export function setupAnalytics(): void {
-  setupCalendlyTracking();
   setupSectionTracking();
 }
 
