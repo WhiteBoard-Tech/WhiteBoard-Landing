@@ -24,17 +24,19 @@ const contactLines = [
 
       <div class="mt-10 flex flex-wrap items-center gap-5">
         <!-- The single Fluoro accent of this screen -->
-        <button
-          type="button"
-          id="calendly-cta"
-          data-calendly-locale={lang}
-          class="inline-flex items-center justify-center gap-2.5 min-h-14 px-7 text-base font-semibold text-ink-900 bg-marker-500 border border-ink-900 rounded-md hover:bg-marker-400 active:bg-marker-600 transition-colors duration-200 focus-visible:outline-marker-500 disabled:opacity-50 disabled:cursor-wait cursor-pointer"
+        <a
+          href="https://calendar.app.google/FZFd91rudKEzdpuR8"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="booking-cta"
+          data-locale={lang}
+          class="inline-flex items-center justify-center gap-2.5 min-h-14 px-7 text-base font-semibold text-ink-900 bg-marker-500 border border-ink-900 rounded-md hover:bg-marker-400 active:bg-marker-600 transition-colors duration-200 focus-visible:outline-marker-500"
         >
           {t("contact.cta")}
           <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" />
           </svg>
-        </button>
+        </a>
         <span class="font-mono text-xs text-graphite-400">{t("contact.microcopy")}</span>
       </div>
     </div>
@@ -54,25 +56,14 @@ const contactLines = [
     </div>
 
     <script>
-      import { loadCalendly, openCalendlyPopup } from '@scripts/calendly';
       import '@scripts/analytics';
 
-      const button = document.getElementById('calendly-cta') as HTMLButtonElement;
-      const locale = button.dataset.calendlyLocale || 'en';
+      const link = document.getElementById('booking-cta') as HTMLAnchorElement;
+      const locale = link.dataset.locale || 'en';
 
-      button.addEventListener('click', async () => {
-        // Track popup opened
+      link.addEventListener('click', () => {
+        // Track booking link opened
         window.plausible?.('popup_opened', { props: { locale } });
-
-        button.disabled = true;
-        try {
-          await loadCalendly();
-          openCalendlyPopup(locale);
-        } catch (error) {
-          console.error('Failed to load Calendly:', error);
-        } finally {
-          button.disabled = false;
-        }
       });
     </script>
   </div>
